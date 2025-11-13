@@ -1,0 +1,56 @@
+<div class="about-page">
+  <!-- Tab Navigation -->
+  <nav class="tab-navigation">
+    <div class="tab-container">
+      <button
+        *ngFor="let tab of tabs"
+        class="tab-button"
+        [class.active]="activeTab === tab.id"
+        (click)="selectTab(tab.id)"
+        [attr.aria-label]="tab.label">
+        <i [class]="tab.icon"></i>
+        <span class="tab-label">{{ tab.label }}</span>
+      </button>
+      <div class="active-indicator"></div>
+    </div>
+  </nav>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- Dean's Message -->
+    <div
+      class="tab-pane"
+      [class.active]="activeTab === 'dean-message'"
+      [@fadeInOut]>
+      <app-dean-message></app-dean-message>
+    </div>
+
+    <!-- Vision & Mission -->
+    <div
+      class="tab-pane"
+      [class.active]="activeTab === 'vision-mission'"
+      [@fadeInOut]>
+      <app-vision-mission-page></app-vision-mission-page>
+    </div>
+
+    <!-- Objectives -->
+    <div
+      class="tab-pane"
+      [class.active]="activeTab === 'objectives'"
+      [@fadeInOut]>
+      <app-objectives></app-objectives>
+    </div>
+
+    <!-- Administrative Structure -->
+    <div
+      class="tab-pane"
+      [class.active]="activeTab === 'admin-structure'"
+      [@fadeInOut]>
+      <app-admin-structure></app-admin-structure>
+    </div>
+  </div>
+</div>
+
+
+
+<app-footer></app-footer>

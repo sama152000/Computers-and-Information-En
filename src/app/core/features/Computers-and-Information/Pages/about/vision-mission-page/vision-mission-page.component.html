@@ -1,0 +1,29 @@
+<section class="vision-mission-section" *ngIf="visionMissionpageData">
+  <div class="vm-container">
+    <div class="vm-card vision-card">
+      <div class="card-icon">
+        <i class="pi pi-lightbulb"></i>
+      </div>
+      <h3 class="card-title">Vision</h3>
+      <p class="card-content">{{ visionMissionpageData.vision }}</p>
+      <div class="card-footer">
+        <span class="icon-accent">◆</span>
+      </div>
+    </div>
+
+    <div class="divider">
+      <span class="divider-dot"></span>
+    </div>
+
+    <div class="vm-card mission-card">
+      <div class="card-icon">
+        <i class="pi pi-check"></i>
+      </div>
+      <h3 class="card-title">Mission</h3>
+      <p class="card-content">{{ visionMissionpageData.mission }}</p>
+      <div class="card-footer">
+        <span class="icon-accent">◆</span>
+      </div>
+    </div>
+  </div>
+</section>

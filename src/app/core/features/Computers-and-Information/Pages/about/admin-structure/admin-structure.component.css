@@ -1,0 +1,208 @@
+.admin-structure-section {
+ padding: var(--section-padding);
+   padding-left:var(--l-r-padding);
+    padding-right:var(--l-r-padding);
+      background: var(--white, #fff);
+  position: relative;
+}
+
+.admin-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section-title {
+  font-size: 2.5rem;
+  color: var(--primary-red, #740a1f);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--secondary-red, #d32f2f), var(--primary-red, #740a1f));
+  margin: 1rem auto 0;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  color: var(--text-light, #666);
+  margin-top: 1rem;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2.5rem;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideUp 0.8s ease-out both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.admin-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 16px 40px rgba(116, 10, 31, 0.2);
+}
+
+.card-image {
+  position: relative;
+  width: 100%;
+  padding-top: 120%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
+}
+
+.card-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.admin-card:hover .card-image img {
+  transform: scale(1.08);
+}
+
+.image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(116, 10, 31, 0.8), rgba(211, 47, 47, 0.8));
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.admin-card:hover .image-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+}
+
+.department-badge {
+  display: inline-block;
+  background: white;
+  color: var(--primary-red, #740a1f);
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  animation: slideUp 0.4s ease-out;
+}
+
+.card-content {
+  padding: 2rem;
+  text-align: center;
+}
+
+.member-name {
+  font-size: 1.3rem;
+  color: var(--primary-red, #740a1f);
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.member-position {
+  font-size: 0.95rem;
+  color: var(--text-light, #666);
+  margin: 0 0 1.2rem 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.position-indicator {
+  width: 40px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--secondary-red, #d32f2f), var(--primary-red, #740a1f));
+  margin: 0 auto;
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+.admin-card:hover .position-indicator {
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .admin-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-structure-section {
+    padding: 60px 0;
+  }
+
+  .admin-container {
+    padding: 0 5%;
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.6rem;
+  }
+
+  .card-content {
+    padding: 1.5rem;
+  }
+}

@@ -1,0 +1,21 @@
+<section class="dean-section" *ngIf="deanData">
+  <div class="dean-container">
+    <div class="dean-photo-wrapper">
+      <div class="dean-photo">
+        <img [src]="deanData.photoUrl" [alt]="deanData.name" />
+        <div class="photo-frame"></div>
+      </div>
+      <div class="photo-decoration"></div>
+    </div>
+    <div class="dean-content">
+      <div class="header-decoration">
+        <h2 class="section-heading">Dean's Message</h2>
+      </div>
+      <p class="dean-quote">{{ deanData.message }}</p>
+      <div class="dean-signature">
+        <p class="dean-name">— {{ deanData.name }}</p>
+        <p class="dean-title">{{ deanData.title }}</p>
+      </div>
+    </div>
+  </div>
+</section>

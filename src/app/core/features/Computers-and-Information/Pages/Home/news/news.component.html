@@ -19,7 +19,7 @@
             {{ article.date | date:'MMMM dd, yyyy' }}
           </div>
           <p>{{ article.excerpt }}</p>
-          <button class="btn btn-primary-custom">
+          <button class="btn btn-primary-custom" (click)="navigateToDetails(article)">
             <i class="pi pi-arrow-right me-2"></i>
             Read More
           </button>
@@ -35,3 +35,4 @@
     </div>
   </div>
 </section>
+

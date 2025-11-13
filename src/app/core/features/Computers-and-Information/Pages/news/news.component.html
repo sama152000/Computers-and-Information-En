@@ -1,0 +1,125 @@
+<div class="news-page">
+  <!-- Page Header -->
+ 
+
+  <!-- Main Content -->
+  <section class="news-content">
+    <div class="container">
+      <!-- Tabs Navigation -->
+      <div class="tabs-container">
+        <div class="custom-tabs">
+          <button 
+            class="tab-btn" 
+            [class.active]="activeTab === 'news'"
+            (click)="onTabChange('news')">
+            <i class="fas fa-newspaper"></i>
+            News
+          </button>
+          <button 
+            class="tab-btn" 
+            [class.active]="activeTab === 'event'"
+            (click)="onTabChange('event')">
+            <i class="fas fa-calendar-alt"></i>
+            Events
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div *ngIf="loading" class="loading-container">
+        <div class="loading-spinner">
+          <div class="spinner"></div>
+          <p>Loading {{ activeTab === 'news' ? 'news' : 'events' }}...</p>
+        </div>
+      </div>
+
+      <!-- News/Events Grid -->
+      <div *ngIf="!loading" class="blog-grid">
+        <article 
+          *ngFor="let item of newsItems" 
+          class="blog-card"
+          (click)="navigateToDetails(item)">
+          <div class="card-image">
+            <img [src]="item.imageUrl" [alt]="item.title" />
+            <div class="card-overlay">
+              <span class="card-type" [class.news-type]="item.type === 'news'" [class.event-type]="item.type === 'event'">
+                <i [class]="item.type === 'news' ? 'fas fa-newspaper' : 'fas fa-calendar-alt'"></i>
+                {{ item.type === 'news' ? 'News' : 'Event' }}
+              </span>
+            </div>
+          </div>
+          <div class="blog-content">
+            <div class="card-meta">
+              <span class="card-category">{{ item.category }}</span>
+              <span class="card-date">
+                <i class="fas fa-calendar"></i>
+                {{ formatDate(item.date) }}
+              </span>
+            </div>
+            <h3 class="card-title">{{ item.title }}</h3>
+            <p class="card-description">{{ item.description }}</p>
+            <div class="card-footer">
+              <span class="card-author">
+                <i class="fas fa-user"></i>
+                {{ item.author }}
+              </span>
+              <span class="read-more">
+                Read More <i class="fas fa-arrow-right"></i>
+              </span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <!-- No Results -->
+      <div *ngIf="!loading && newsItems.length === 0" class="no-results">
+        <div class="no-results-content">
+          <i class="fas fa-info-circle"></i>
+          <h3>No {{ activeTab === 'news' ? 'news' : 'events' }} found</h3>
+          <p>Check back later for new {{ activeTab === 'news' ? 'news' : 'events' }} updates.</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div *ngIf="!loading && totalPages > 1" class="pagination-container">
+        <nav class="pagination-nav">
+          <ul class="pagination">
+            <!-- Previous Button -->
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button 
+                class="page-link" 
+                (click)="onPageChange(currentPage - 1)"
+                [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i>
+                Previous
+              </button>
+            </li>
+
+            <!-- Page Numbers -->
+            <li 
+              *ngFor="let page of getPaginationArray()" 
+              class="page-item" 
+              [class.active]="page === currentPage">
+              <button class="page-link" (click)="onPageChange(page)">
+                {{ page }}
+              </button>
+            </li>
+
+            <!-- Next Button -->
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button 
+                class="page-link" 
+                (click)="onPageChange(currentPage + 1)"
+                [disabled]="currentPage === totalPages">
+                Next
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </section>
+</div>
+
+<app-footer></app-footer>

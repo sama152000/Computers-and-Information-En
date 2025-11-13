@@ -1,0 +1,194 @@
+<div class="news-details-page" *ngIf="!loading && currentItem">
+
+  <!-- Breadcrumb -->
+
+  <div class="container">
+    <div class="row">
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <article class="blog-article">
+          <!-- Article Header -->
+          <header class="article-header">
+            <div class="article-meta">
+              <span class="article-type" [class.news-type]="currentItem.type === 'news'" [class.event-type]="currentItem.type === 'event'">
+                <i [class]="currentItem.type === 'news' ? 'fas fa-newspaper' : 'fas fa-calendar-alt'"></i>
+                {{ currentItem.type === 'news' ? 'News Article' : 'Event' }}
+              </span>
+              <span class="article-category">{{ currentItem.category }}</span>
+            </div>
+            
+            <h1 class="blog-title">{{ currentItem.title }}</h1>
+            
+            <div class="blog-meta">
+              <div class="meta-left">
+                <span class="meta-item">
+                  <i class="fas fa-calendar"></i>
+                  {{ formatDate(currentItem.date) }}
+                </span>
+                <span class="meta-item">
+                  <i class="fas fa-user"></i>
+                  {{ currentItem.author }}
+                </span>
+                <span class="meta-item" *ngIf="currentItem.views">
+                  <i class="fas fa-eye"></i>
+                  {{ currentItem.views }} views
+                </span>
+              </div>
+              
+              <div class="share-buttons">
+                <span class="share-label">Share:</span>
+                <button class="share-btn facebook" (click)="shareOnFacebook()" title="Share on Facebook">
+                  <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="share-btn twitter" (click)="shareOnTwitter()" title="Share on Twitter">
+                  <i class="fab fa-twitter"></i>
+                </button>
+                <button class="share-btn linkedin" (click)="shareOnLinkedIn()" title="Share on LinkedIn">
+                  <i class="fab fa-linkedin-in"></i>
+                </button>
+                <button class="share-btn copy" (click)="copyLink()" title="Copy Link">
+                  <i class="fas fa-link"></i>
+                </button>
+                <button class="share-btn print" (click)="printArticle()" title="Print Article">
+                  <i class="fas fa-print"></i>
+                </button>
+              </div>
+            </div>
+          </header>
+
+          <!-- Featured Image -->
+          <div class="article-image">
+            <img [src]="currentItem.imageUrl" [alt]="currentItem.title" class="blog-feature-img" />
+          </div>
+
+          <!-- Article Content -->
+          <div class="article-content">
+            <div class="blog-text" [innerHTML]="currentItem.content"></div>
+            
+            <!-- Tags -->
+            <div class="article-tags" *ngIf="currentItem.tags && currentItem.tags.length > 0">
+              <h4 class="tags-title">
+                <i class="fas fa-tags"></i>
+                Tags:
+              </h4>
+              <div class="tags-list">
+                <span class="tag" *ngFor="let tag of currentItem.tags">
+                  {{ tag }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Navigation Buttons -->
+          <div class="post-navigation">
+            <button 
+              class="nav-btn prev-post" 
+              (click)="navigateToPrevious()" 
+              *ngIf="previousItem"
+              [title]="previousItem.title">
+              <i class="fas fa-arrow-left"></i>
+              <div class="nav-content">
+                <span class="nav-label">Previous</span>
+                <!-- <span class="nav-title">{{ previousItem.title }}</span> -->
+              </div>
+            </button>
+
+            <button 
+              class="nav-btn next-post" 
+              (click)="navigateToNext()" 
+              *ngIf="nextItem"
+              [title]="nextItem.title">
+              <div class="nav-content">
+                <span class="nav-label">Next</span>
+                <!-- <span class="nav-title">{{ nextItem.title }}</span> -->
+              </div>
+              <i class="fas fa-arrow-right"></i>
+            </button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <!-- Navigation Links -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Navigation</h3>
+            <div class="nav-links">
+              <button class="nav-link-btn" (click)="navigateToAllNews()">
+                <i class="fas fa-newspaper"></i>
+                All News
+              </button>
+              <button class="nav-link-btn" (click)="navigateToAllEvents()">
+                <i class="fas fa-calendar-alt"></i>
+                All Events
+              </button>
+            </div>
+          </div>
+
+          <!-- Related Items
+          <div class="sidebar-section" *ngIf="relatedItems.length > 0">
+            <h3 class="sidebar-title">
+              Related {{ currentItem.type === 'news' ? 'News' : 'Events' }}
+            </h3>
+            
+            <div class="related-items">
+              <article 
+                class="related-item" 
+                *ngFor="let item of relatedItems"
+                (click)="navigateToItem(item)">
+                <div class="related-image">
+                  <img [src]="item.imageUrl" [alt]="item.title">
+                </div>
+                <div class="related-content">
+                  <h4 class="related-title">{{ item.title }}</h4>
+                  <div class="related-meta">
+                    <span class="related-date">
+                      <i class="fas fa-calendar"></i>
+                      {{ formatDate(item.date) }}
+                    </span>
+                    <span class="related-category">{{ item.category }}</span>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div> -->
+
+          <!-- Quick Info -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Quick Info</h3>
+            <div class="quick-info">
+              <div class="info-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <strong>Contact</strong>
+                  <p>info@csdept.edu</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-phone"></i>
+                <div>
+                  <strong>Phone</strong>
+                  <p>+20 123 456 789</p>
+                </div>
+              </div>
+              <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <strong>Location</strong>
+                  <p>Luxor, Egypt</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading State -->
+
+<app-footer></app-footer>
+
+

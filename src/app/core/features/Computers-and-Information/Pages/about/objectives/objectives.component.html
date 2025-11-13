@@ -1,0 +1,21 @@
+<section class="objectives-section">
+  <div class="objectives-container">
+  
+
+    <div class="objectives-grid">
+      <div
+        class="objective-card"
+        *ngFor="let obj of objectives; let i = index"
+        [style.animation-delay]="(i * 0.1) + 's'">
+        <div class="card-header">
+          <div class="icon-wrapper">
+            <i [class]="obj.icon"></i>
+          </div>
+          <h3 class="objective-title">{{ obj.title }}</h3>
+        </div>
+        <p class="objective-description">{{ obj.description }}</p>
+        <div class="card-badge">{{ i + 1 }}</div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,215 @@
+.about-page {
+  min-height: 50vh;
+  background: var(--light-gray, #f8f9fa);
+}
+
+/* Tab Navigation */
+.tab-navigation {
+  background: linear-gradient(135deg, var(--primary-red, #740a1f) 0%, var(--primary-red) 100%);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tab-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tab-container::-webkit-scrollbar {
+  height: 4px;
+}
+
+.tab-container::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.tab-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+.tab-button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 1.2rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  position: relative;
+  opacity: 0.8;
+}
+
+.tab-button:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.tab-button.active {
+  opacity: 1;
+  color: #ffd90094;
+}
+
+.tab-button i {
+  font-size: 1.1rem;
+}
+
+.tab-label {
+  display: inline;
+}
+
+.active-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  background: var(--white);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Smooth indicator movement based on active tab */
+.tab-button.active ~ .active-indicator {
+  left: calc(var(--tab-index, 0) * 100%);
+  width: calc(100% / var(--tab-count, 4));
+}
+
+/* Tab Content */
+.tab-content {
+  position: relative;
+  min-height: 600px;
+}
+
+.tab-pane {
+  opacity: 0;
+  visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.tab-pane.active {
+  opacity: 1;
+  visibility: visible;
+  position: static;
+  pointer-events: auto;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .tab-container {
+    padding: 0 5%;
+    gap: 0.3rem;
+  }
+
+  .tab-button {
+    padding: 1rem 1.2rem;
+    font-size: 0.9rem;
+  }
+
+  .tab-label {
+    display: none;
+  }
+
+  .tab-button i {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .tab-container {
+    padding: 0 3%;
+    gap: 0.2rem;
+  }
+
+  .tab-button {
+    padding: 0.8rem 1rem;
+    min-width: auto;
+  }
+
+  .tab-button i {
+    font-size: 1.2rem;
+  }
+
+  .tab-pane {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .tab-navigation {
+    position: relative;
+  }
+
+  .tab-button {
+    padding: 0.7rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .tab-button i {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .tab-container {
+    padding: 0 2%;
+    gap: 0.1rem;
+  }
+
+  .tab-button {
+    padding: 0.6rem 0.7rem;
+    font-size: 0.75rem;
+    min-width: 50px;
+  }
+
+  .tab-button i {
+    font-size: 0.9rem;
+  }
+
+  .tab-label {
+    display: none;
+  }
+}

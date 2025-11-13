@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { FooterComponent } from "../../shared/footer/footer.component";
 
 interface NewsArticle {
   id: number;
@@ -13,11 +15,13 @@ interface NewsArticle {
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FooterComponent],
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })
 export class NewsComponent implements OnInit {
+  constructor(private router: Router) {}
+
   newsArticles: NewsArticle[] = [
     {
       id: 1,
@@ -47,6 +51,10 @@ export class NewsComponent implements OnInit {
 
   ngOnInit() {
     this.observeElements();
+  }
+
+  navigateToDetails(article: NewsArticle): void {
+    this.router.navigate(['/news', 'news', article.id]);
   }
 
   private observeElements() {
