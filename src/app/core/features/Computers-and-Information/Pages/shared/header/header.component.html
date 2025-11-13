@@ -1,0 +1,104 @@
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="social-icons">
+          <a href="#" class="social-link">
+            <i class="pi pi-facebook"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="pi pi-twitter"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="pi pi-linkedin"></i>
+          </a>
+          <a href="#" class="social-link">
+            <i class="pi pi-instagram"></i>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-6 text-end">
+        <button class="lang-btn">
+          <i class="pi pi-globe me-2"></i>
+          عربي
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Header -->
+<header class="main-header">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-lg-6">
+        <div class="logo-section d-flex align-items-center">
+          <div class="logo-frame">
+            <img src="assets/comp-logo.jpg" alt="CS Logo" class="logo" />
+          </div>
+          <div class="dept-info ms-3">
+            <h1 class="dept-title">Faculty of Computers and Information</h1>
+            <p class="university-name">Luxor University</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="contact-info d-flex justify-content-end align-items-center gap-4">
+          <div class="contact-item">
+            <i class="pi pi-envelope"></i>
+            <span>info@csdept.edu</span>
+          </div>
+          <div class="contact-item">
+            <i class="pi pi-phone"></i>
+            <span>+20 123 456 789</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg main-navbar">
+  <div class="container-fluid">
+    <button 
+      class="navbar-toggler" 
+      type="button" 
+      data-bs-toggle="collapse" 
+      data-bs-target="#navbarNav"
+      [attr.aria-expanded]="!isNavbarCollapsed"
+      (click)="toggleNavbar()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" [class.show]="!isNavbarCollapsed" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item">
+          <a class="nav-link active" href="#hero">
+            <i class="pi pi-home me-2"></i>Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#programs">Programs</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#sectors">Sectors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#services">Services</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#news">News</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#contact">Contact</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

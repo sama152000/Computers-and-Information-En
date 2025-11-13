@@ -1,0 +1,19 @@
+<section class="statistics-section">
+  <div class="stats-overlay"></div>
+  <div class="container-fluid">
+    <div class="stats-grid">
+      <div 
+        *ngFor="let stat of statistics; let i = index"
+        class="stat-card fade-in"
+        [style.animation-delay.ms]="i * 200"
+      >
+        <div class="stat-icon">
+          <i [class]="stat.icon"></i>
+        </div>
+        <h3 class="stat-number" [attr.data-target]="stat.value">{{ displayValues[i] }}</h3>
+        <p class="stat-label">{{ stat.label }}</p>
+        <div class="stat-description">{{ stat.description }}</div>
+      </div>
+    </div>
+  </div>
+</section>

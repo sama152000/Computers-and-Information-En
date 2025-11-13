@@ -1,0 +1,46 @@
+<section class="events-section">
+  <div class="container-fluid">
+    <h2 class="section-title">Upcoming Events</h2>
+    
+    <div class="timeline">
+      <div 
+        *ngFor="let event of events; let i = index"
+        class="timeline-item"
+        [class.left]="i % 2 === 0"
+        [class.right]="i % 2 === 1"
+      >
+        <div class="timeline-date">{{ event.date | date:'MMM dd, yyyy' }}</div>
+        <div class="timeline-content">
+          <div class="event-image">
+            <img [src]="event.image" [alt]="event.title" />
+          </div>
+          <div class="event-info">
+            <h3>{{ event.title }}</h3>
+            <p>{{ event.description }}</p>
+            <div class="event-meta">
+              <!-- <span class="event-time">
+                <i class="pi pi-clock"></i>
+                {{ event.time }}
+              </span>
+              <span class="event-location">
+                <i class="pi pi-map-marker"></i>
+                {{ event.location }}
+              </span> -->
+            </div>
+            <!-- <button class="btn btn-primary-custom btn-sm">
+              <i class="pi pi-calendar-plus me-2"></i>
+              Register
+            </button>-->
+          </div> 
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-5">
+      <button class="btn btn-secondary-custom btn-lg">
+        <i class="pi pi-calendar me-2"></i>
+        View All Events
+      </button>
+    </div>
+  </div>
+</section>

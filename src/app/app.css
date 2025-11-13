@@ -1,0 +1,50 @@
+/* Scroll Up Indicator - نفس ستايل Scroll Down */
+.scroll-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  text-align: center;
+  color: white;
+  z-index: 1000;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  background: none;
+  border: none;
+}
+
+.scroll-to-top-btn.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-to-top-btn .scroll-arrow {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 0.5rem;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.scroll-to-top-btn:hover .scroll-arrow {
+  border-color: var(--accent-gold, #d4a017);
+  color: var(--accent-gold, #d4a017);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.scroll-to-top-btn .pi {
+  font-size: 1.2rem;
+}
+
+.scroll-to-top-btn .scroll-text {
+  font-size: 0.9rem;
+  margin: 0;
+  opacity: 0.8;
+}

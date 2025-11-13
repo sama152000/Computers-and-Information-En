@@ -1,0 +1,52 @@
+<section class="hero-slider">
+  <div class="slide-container">
+    <div 
+      *ngFor="let slide of slides; let i = index" 
+      class="slide"
+      [class.active]="i === currentSlide"
+    >
+      <img [src]="slide.image" [alt]="slide.title" />
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-12 col-md-10 mx-auto text-center">
+              <h2 class="hero-title fade-in">{{ slide.title }}</h2>
+              <p class="hero-subtitle fade-in">{{ slide.subtitle }}</p>
+              <div class="hero-actions fade-in">
+                <button class="btn btn-primary-custom me-3">
+                  <i class="pi pi-arrow-right me-2"></i>
+                  Learn More
+                </button>
+                <button class="btn btn-secondary-custom">
+                  <i class="pi pi-play me-2"></i>
+                  Watch Video
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="slider-dots">
+    <button 
+      *ngFor="let slide of slides; let i = index"
+      class="dot"
+      [class.active]="i === currentSlide"
+      (click)="goToSlide(i)"
+    >
+      <i class="pi pi-desktop"></i>
+    </button>
+  </div>
+
+  <!-- Navigation Arrows -->
+  <button class="nav-arrow prev" (click)="previousSlide()">
+    <i class="pi pi-chevron-left"></i>
+  </button>
+  <button class="nav-arrow next" (click)="nextSlide()">
+    <i class="pi pi-chevron-right"></i>
+  </button>
+</section>

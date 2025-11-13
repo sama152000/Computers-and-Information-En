@@ -1,0 +1,20 @@
+.home-page {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Section spacing consistency */
+.home-page > * {
+  width: 100%;
+}
+
+/* Ensure proper stacking */
+.home-page {
+  position: relative;
+  z-index: 1;
+}

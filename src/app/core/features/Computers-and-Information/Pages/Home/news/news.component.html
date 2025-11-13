@@ -1,0 +1,37 @@
+<section class="news-section">
+  <div class="container-fluid">
+    <h2 class="section-title">Latest News</h2>
+    
+    <div class="news-grid">
+      <div 
+        *ngFor="let article of newsArticles; let i = index"
+        class="news-card fade-in"
+        [style.animation-delay.ms]="i * 200"
+      >
+        <div class="news-image">
+          <img [src]="article.image" [alt]="article.title" />
+          <div class="news-category">{{ article.category }}</div>
+        </div>
+        <div class="news-content">
+          <h3>{{ article.title }}</h3>
+          <div class="news-date">
+            <i class="pi pi-calendar"></i>
+            {{ article.date | date:'MMMM dd, yyyy' }}
+          </div>
+          <p>{{ article.excerpt }}</p>
+          <button class="btn btn-primary-custom">
+            <i class="pi pi-arrow-right me-2"></i>
+            Read More
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-5">
+      <button class="btn btn-secondary-custom btn-lg">
+        <i class="pi pi-list me-2"></i>
+        View All News
+      </button>
+    </div>
+  </div>
+</section>

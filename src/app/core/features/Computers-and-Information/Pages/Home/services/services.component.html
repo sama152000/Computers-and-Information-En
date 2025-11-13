@@ -1,0 +1,48 @@
+<section class="services-section">
+  <div class="container-fluid">
+    <h2 class="section-title">Services</h2>
+    
+    <div class="services-carousel">
+      <div class="services-track" [style.transform]="'translateX(' + transformPosition + 'px)'">
+        <div
+          *ngFor="let service of displayServices; let i = index"
+          class="service-card"
+          [class.active]="i === currentIndex"
+        >
+          <div class="service-icon">
+            <i [class]="service.icon" style="color: var(--primary-red);"></i>
+          </div>
+          <h3>{{ service.title }}</h3>
+          <p>{{ service.description }}</p>
+          <!-- <div class="service-features">
+            <div *ngFor="let feature of service.features" class="feature-item">
+              <i class="pi pi-check"></i>
+              <span>{{ feature }}</span>
+            </div>
+          </div> -->
+          <button class="btn btn-primary-custom">
+            <i class="pi pi-arrow-right me-2"></i>
+            Learn More
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="carousel-controls">
+      <button class="control-btn prev" (click)="previousSlide()">
+        <i class="pi pi-chevron-left"></i>
+      </button>
+      <div class="carousel-indicators">
+        <button
+          *ngFor="let service of services; let i = index"
+          class="indicator"
+          [class.active]="i === activeIndex"
+          (click)="goToSlide(i)"
+        ></button>
+      </div>
+      <button class="control-btn next" (click)="nextSlide()">
+        <i class="pi pi-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</section>
