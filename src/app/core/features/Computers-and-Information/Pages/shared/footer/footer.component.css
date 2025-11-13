@@ -271,6 +271,11 @@
     text-align: center;
     gap: 0.5rem;
   }
+
+  .contact-item i {
+    display: block;
+    margin: 0 auto;
+  }
   
   .footer-bottom-links {
     justify-content: center;

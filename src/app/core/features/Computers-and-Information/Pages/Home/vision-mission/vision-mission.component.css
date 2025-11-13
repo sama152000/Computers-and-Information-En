@@ -43,7 +43,7 @@
 
 .glow-ring {
   position: absolute;
-  inset: -5px;
+  inset: -45px;
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
@@ -61,7 +61,7 @@
 .glow-ring::after {
   content: "";
   position: absolute;
-  inset: 8px;
+  inset: 48px;
   background: radial-gradient(circle at 30% 30%, #0a0a0a, #111);
   border-radius: 50%;
 }

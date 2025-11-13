@@ -33,6 +33,8 @@
   font-weight: 600;
   transition: var(--transition-normal);
   cursor: pointer;
+  /* space between language button and social icons */
+  margin-left: 20px;
 }
 
 .lang-btn:hover {
@@ -168,19 +170,24 @@
 
 /* Responsive */
 @media (max-width: 992px) {
+  
+.lang-btn {
+
+  margin-left: 20px;
+}
   .logo-section {
     flex-direction: column;
     text-align: center;
     gap: 10px;
   }
-  
+
   .contact-info {
     justify-content: center;
     margin-top: 15px;
     flex-wrap: wrap;
     gap: 15px;
   }
-  
+
   .dept-title {
     font-size: 1.2rem;
   }
@@ -188,21 +195,96 @@
 
 @media (max-width: 768px) {
   .top-bar {
+    align-items: space-between;
     text-align: center;
+    gap:1rem;
   }
-  
+
   .social-icons {
     justify-content: center;
     margin-bottom: 10px;
   }
-  
+
   .contact-info {
     flex-direction: column;
     gap: 10px;
   }
-  
+
   .nav-link {
     padding: 12px 15px !important;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+@media (max-width: 576px) {
+  .top-bar {
+    padding: 5px 0;
+    font-size: 12px;
+  }
+
+  .top-bar .row {
+    display: block;
+  }
+
+  .top-bar .col-md-6 {
+    display: inline-block;
+    width: auto;
+    vertical-align: middle;
+  }
+
+  .social-icons {
+    gap: 10px;
+    margin-bottom: 0;
+  }
+
+  .social-link {
+    font-size: 14px;
+  }
+
+  .lang-btn {
+    padding: 4px 10px;
+    font-size: 12px;
+    /* reset spacing on very small screens */
+    margin-left: 0;
+  }
+
+  .main-header {
+    padding: 10px 0;
+  }
+
+  .logo {
+    width: 50px;
+    height: 40px;
+  }
+
+  .dept-title {
+    font-size: 1rem;
+  }
+
+  .university-name {
+    font-size: 0.9rem;
+  }
+
+  .contact-info {
+    gap: 10px;
+  }
+
+  .contact-item {
+    font-size: 12px;
+  }
+
+  .contact-item i {
+    font-size: 14px;
+  }
+
+  .nav-link {
+    padding: 10px 12px !important;
+    font-size: 14px;
+  }
+
+  .navbar-toggler {
+    padding: 10px 15px;
+    margin: 0 auto;
+    display: block;
   }
 }
