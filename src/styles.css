@@ -288,3 +288,25 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--dark-red);
 }
+
+
+
+.it-department .table th {
+  background-color: var(--light-gray);
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.it-department .table td {
+  vertical-align: middle;
+}
+
+.it-department .table a {
+  color: var(--primary-red);
+  text-decoration: none;
+}
+
+.it-department .table a:hover {
+  color: var(--dark-red);
+  text-decoration: underline;
+}

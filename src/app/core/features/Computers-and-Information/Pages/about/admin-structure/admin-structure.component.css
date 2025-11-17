@@ -87,7 +87,7 @@
 .card-image {
   position: relative;
   width: 100%;
-  padding-top: 120%;
+  padding-top: 80%;
   overflow: hidden;
   background: linear-gradient(135deg, #e0e0e0, #f0f0f0);
 }

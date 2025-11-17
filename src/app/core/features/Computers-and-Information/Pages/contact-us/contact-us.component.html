@@ -1,0 +1,136 @@
+<section class="hero-section">
+  <div class="overlay"></div>
+  <div class="container-fluid">
+    <h1 class="hero-title">Get in Touch</h1>
+    <p class="hero-subtitle">We're here to help and answer any question you might have</p>
+  </div>
+</section>
+<div class="contact-us-page">
+  <!-- Hero Section -->
+
+  <div class="container-fluid">
+    <div class="contact-content">
+      <!-- Contact Info Cards -->
+      <div class="row g-4 mb-5">
+        <div class="col-lg-4 col-md-6">
+          <div class="info-card">
+            <div class="icon-wrapper">
+              <i class="pi pi-map-marker"></i>
+            </div>
+            <h3>Location</h3>
+            <p>{{ contact.address }}</p>
+            <a href="{{ contact.googleMapsLink }}" target="_blank" class="view-map">
+              View on Google Maps <i class="pi pi-external-link"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="info-card">
+            <div class="icon-wrapper">
+              <i class="pi pi-phone"></i>
+            </div>
+            <h3>Phone & Fax</h3>
+            <div class="phone-list">
+              @for (phone of contact.phone; track phone) {
+                <p>
+                  <a [href]="'tel:' + phone">{{ phone }}</a>
+                </p>
+              }
+              @if (contact.fax) {
+                <p class="text-muted">Fax: {{ contact.fax }}</p>
+              }
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4 col-md-6">
+          <div class="info-card">
+            <div class="icon-wrapper">
+              <i class="pi pi-clock"></i>
+            </div>
+            <h3>Working Hours</h3>
+            <p>{{ contact.workingHours }}</p>
+            <small class="text-muted">Friday & Saturday: Closed</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Email & Social -->
+      <div class="row g-4 mb-5">
+        <div class="col-lg-6">
+          <div class="email-card">
+            <i class="pi pi-envelope"></i>
+            <h3>Send us an Email</h3>
+            <p>We typically reply within 24 hours</p>
+            <a href="mailto:{{ contact.email }}" class="btn-email">
+              {{ contact.email }}
+            </a>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="social-card">
+            <h3>Follow Us</h3>
+            <div class="social-links">
+              @for (link of socialLinks; track link) {
+                <a [href]="link.url" target="_blank" class="social-btn">
+                  <i [class]="link.icon"></i>
+                </a>
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Departments Contact Table -->
+      <div class="departments-section">
+        <h2 class="section-title">Direct Department Contacts</h2>
+        <div class="table-responsive">
+          <table class="departments-table">
+            <thead>
+              <tr>
+                <th>Department / Office</th>
+                <th>Phone Extension</th>
+                <th>Email</th>
+                <th>Location</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (dept of departments; track dept) {
+                <tr>
+                  <td><strong>{{ dept.name }}</strong></td>
+                  <td>{{ dept.phone || '-' }}</td>
+                  <td>
+                    @if (dept.email) {
+                      <a [href]="'mailto:' + dept.email">{{ dept.email }}</a>
+                    } @else {
+                      <span>-</span>
+                    }
+                  </td>
+                  <td>{{ dept.location || '-' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Map Embed -->
+      <div class="map-section">
+        <h2 class="section-title">Find Us on the Map</h2>
+        <div class="map-container">
+          <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3628.944979237888!2d32.6462!3d25.6991!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14497e4a4b9c1d8d%3A0x8f8e8e8e8e8e8e8e!2sLuxor%20University!5e0!3m2!1sen!2seg!4v1699999999999" 
+            width="100%" 
+            height="450" 
+            style="border:0;" 
+            allowfullscreen="" 
+            loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>

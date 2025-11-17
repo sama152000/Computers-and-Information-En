@@ -1,0 +1,340 @@
+.contact-us-page {
+  background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+  min-height: 100vh;
+    padding: var(--section-padding);
+    padding-left: var(--l-r-padding);
+    padding-right: var(--l-r-padding);
+
+}
+
+.hero-section {
+  position: relative;
+  background: linear-gradient(rgba(116, 10, 31, 0.555), rgba(116, 10, 31, 0.562)), url('/assets/slide4.jpg') center/cover no-repeat;
+  color: white;
+  padding: 120px 0 80px;
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  opacity: 0.95;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.info-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: all 0.4s ease;
+  height: 100%;
+  border: 1px solid #eee;
+}
+
+.info-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(116, 10, 31, 0.15);
+}
+
+.icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #740a1f, #9a0f2d);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 2rem;
+  color: white;
+}
+
+.info-card h3 {
+  color: #740a1f;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.view-map {
+  color: #740a1f;
+  font-weight: 600;
+  text-decoration: none;
+  margin-top: 1rem;
+  display: inline-block;
+}
+
+.email-card {
+  background: linear-gradient(135deg, #740a1f, #9a0f2d);
+  color: white;
+  padding: 3rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 15px 35px rgba(116, 10, 31, 0.3);
+  height: 100%;
+}
+
+.email-card i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.btn-email {
+  display: inline-block;
+  background: white;
+  color: #740a1f;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 700;
+  margin-top: 1rem;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.btn-email:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.social-card {
+  background: white;
+  padding: 2.5rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  border: 1px solid #eee;
+  height: 100%;
+}
+
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  justify-items: center;
+  align-items: center;
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.social-btn {
+  width: 55px;
+  height: 55px;
+  background: #f8f9fa;
+  border: 2px solid #eee;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #740a1f;
+  transition: all 0.3s;
+}
+
+.social-btn:hover {
+  background: #740a1f;
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(116, 10, 31, 0.2);
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.2rem;
+  color: #740a1f;
+  margin-bottom: 3rem;
+  font-weight: 700;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(90deg, #740a1f, transparent);
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 2px;
+}
+
+.departments-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.departments-table th {
+  background: #740a1f;
+  color: white;
+  padding: 1.2rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.departments-table td {
+  padding: 1rem;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.departments-table tr:hover {
+  background: #fdf2f4;
+}
+
+.map-container {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .contact-us-page {
+    padding: 1rem var(--l-r-padding) !important;
+  }
+  .hero-title { font-size: 2.5rem; }
+  .info-card, .email-card, .social-card { padding: 1.5rem; }
+  .departments-table { font-size: 0.9rem; }
+}
+
+@media (max-width: 576px) {
+  .contact-us-page {
+    padding: 1rem var(--l-r-padding) !important;
+  }
+
+  .hero-section {
+    padding: 80px 0 60px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .info-card, .email-card, .social-card {
+    padding: 1rem;
+  }
+
+  .icon-wrapper {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .social-links {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+
+  .social-btn {
+    width: 45px;
+    height: 45px;
+    font-size: 1.2rem;
+  }
+
+  .departments-table {
+    font-size: 0.8rem;
+  }
+
+  .departments-table th,
+  .departments-table td {
+    padding: 0.75rem 0.5rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .map-container iframe {
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-us-page {
+    padding: 0.75rem var(--l-r-padding);
+  }
+
+  .hero-section {
+    padding: 60px 0 40px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .info-card, .email-card, .social-card {
+    padding: 0.75rem;
+  }
+
+  .icon-wrapper {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .social-links {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .social-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+
+  .departments-table {
+    font-size: 0.75rem;
+  }
+
+  .departments-table th,
+  .departments-table td {
+    padding: 0.5rem 0.25rem;
+  }
+
+  .map-container iframe {
+    height: 250px;
+  }
+
+  .email-card i {
+    font-size: 2.5rem;
+  }
+
+  .btn-email {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}

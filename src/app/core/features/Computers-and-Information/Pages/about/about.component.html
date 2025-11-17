@@ -2,15 +2,16 @@
   <!-- Tab Navigation -->
   <nav class="tab-navigation">
     <div class="tab-container">
-      <button
-        *ngFor="let tab of tabs"
-        class="tab-button"
-        [class.active]="activeTab === tab.id"
-        (click)="selectTab(tab.id)"
-        [attr.aria-label]="tab.label">
-        <i [class]="tab.icon"></i>
-        <span class="tab-label">{{ tab.label }}</span>
-      </button>
+      @for (tab of tabs; track tab.id) {
+        <button
+          class="tab-button"
+          [class.active]="activeTab === tab.id"
+          (click)="selectTab(tab.id)"
+          [attr.aria-label]="tab.label">
+          <i [class]="tab.icon"></i>
+          <span class="tab-label">{{ tab.label }}</span>
+        </button>
+      }
       <div class="active-indicator"></div>
     </div>
   </nav>
@@ -50,7 +51,5 @@
     </div>
   </div>
 </div>
-
-
 
 <app-footer></app-footer>

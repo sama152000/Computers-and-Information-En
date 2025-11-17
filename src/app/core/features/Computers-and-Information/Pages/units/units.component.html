@@ -1,0 +1,243 @@
+<div class="units-page">
+  <div class="container">
+    <div class="row">
+      <!-- Left Sidebar -->
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <!-- Unit Sections Sidebar -->
+          <div class="sidebar-section" *ngIf="currentUnit">
+            <h3 class="sidebar-title">{{ currentUnit.name }}</h3>
+            <div class="nav-links">
+              <button
+                class="nav-link-btn"
+                *ngFor="let section of unitSections"
+                [class.active]="currentSection?.id === section.id"
+                (click)="selectSection(section)">
+                <i [class]="section.icon + ' me-2'"></i>
+                {{ section.title }}
+              </button>
+            </div>
+          </div>
+
+          <!-- Other Units List -->
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Faculty Units</h3>
+            <div class="units-list">
+              <button
+                class="unit-btn"
+                *ngFor="let unit of allUnits"
+                [class.active]="currentUnit?.id === unit.id"
+                (click)="selectUnit(unit)">
+                <div class="unit-info">
+                  <h5>{{ unit.name }}</h5>
+                </div>
+                <i class="pi pi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+
+        </aside>
+      </div>
+
+      <!-- Main Content Area -->
+      <div class="col-lg-8">
+        <div class="unit-content" *ngIf="currentUnit && currentSection">
+          <div class="content-header">
+            <h2 class="content-title">
+              <i [class]="currentSection.icon + ' me-3'"></i>
+              {{ currentSection.title }}
+            </h2>
+          </div>
+
+          <div class="content-body">
+            <!-- About Section -->
+            <div *ngIf="currentSection.id === 'about'" class="section-content">
+              <div class="department-overview">
+                <h3>{{ currentUnit.name }}</h3>
+                <p class="description">{{ currentUnit.description }}</p>
+
+                <div class="establishment-info" *ngIf="currentUnit.establishmentInfo">
+                  <h4>Establishment Information</h4>
+                  <p>{{ currentUnit.establishmentInfo }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Vision Section -->
+            <div *ngIf="currentSection.id === 'vision'" class="section-content">
+              <div class="vision-content">
+                <h3>Unit Vision</h3>
+                <p class="vision-text">{{ currentUnit.vision }}</p>
+              </div>
+            </div>
+
+            <!-- Mission Section -->
+            <div *ngIf="currentSection.id === 'mission'" class="section-content">
+              <div class="mission-content">
+                <h3>Unit Mission</h3>
+                <p class="mission-text">{{ currentUnit.mission }}</p>
+              </div>
+            </div>
+
+            <!-- Objectives Section -->
+            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
+              <div class="objectives-content">
+                <h3>Unit Objectives</h3>
+                <ul class="objectives-list">
+                  <li *ngFor="let objective of currentUnit.objectives" class="objective-item">
+                    {{ objective }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Research Areas Section -->
+            <div *ngIf="currentSection.id === 'research'" class="section-content">
+              <div class="research-content">
+                <h3>Scientific Research Areas</h3>
+                <div class="research-areas">
+                  <div class="row">
+                    <div class="col-12">
+                      <ul class="research-list">
+                        <li *ngFor="let area of currentUnit.researchAreas">{{ area }}</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Research Grants -->
+                <div class="research-grants" *ngIf="currentUnit.researchGrants && currentUnit.researchGrants.length > 0">
+                  <h4>Research Grants & Awards</h4>
+                  <ul class="awards-list">
+                    <li *ngFor="let grant of currentUnit.researchGrants" class="award-item">
+                      <strong>{{ grant.year }}:</strong>
+                      <span class="grant-description">
+                        {{ grant.description || grant.title }}
+                        <em *ngIf="grant.principalInvestigator"> - {{ grant.principalInvestigator }}</em>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Administrative Structure Section -->
+            <div *ngIf="currentSection.id === 'structure'" class="section-content">
+              <div class="structure-content">
+                <h3>Unit Organizational Structure</h3>
+                <ul class="org-list">
+                  <li *ngFor="let item of currentUnit.organizationalStructure">{{ item }}</li>
+                </ul>
+
+                <h3>Administrative Structure</h3>
+                <ul class="admin-list">
+                  <li><strong>Head of Unit</strong></li>
+                  <li><strong>Teaching Staff</strong></li>
+                  <li *ngFor="let staff of (currentUnit.teachingStaff || [])" class="staff-member">
+                    {{ staff.name }} – {{ staff.position }}
+                    <a href="#" class="cv-link" *ngIf="staff.cvUrl">View CV</a>
+                  </li>
+                  <li *ngIf="currentUnit && currentUnit.teachingAssistants && currentUnit.teachingAssistants.length > 0"><strong>Teaching Assistants</strong></li>
+                  <li *ngFor="let assistant of (currentUnit.teachingAssistants || [])" class="staff-member">
+                    {{ assistant.name }}
+                    <span class="text-muted" *ngIf="!assistant.cvUrl">(CV not available)</span>
+                    <a href="#" class="cv-link" *ngIf="assistant.cvUrl">View CV</a>
+                  </li>
+                  <li *ngIf="currentUnit && currentUnit.administrativeStaff && currentUnit.administrativeStaff.length > 0"><strong>Administrative Staff</strong></li>
+                  <li *ngFor="let admin of (currentUnit.administrativeStaff || [])">{{ admin.name }}</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Teaching Staff Section -->
+            <div *ngIf="currentSection.id === 'staff'" class="section-content">
+              <div class="staff-content">
+                <h3>Teaching Staff</h3>
+                <div class="table-responsive" *ngIf="currentUnit && currentUnit.teachingStaff && currentUnit.teachingStaff.length > 0">
+                  <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let staff of (currentUnit.teachingStaff || []); let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ staff.name }}</td>
+                        <td>{{ staff.position }}</td>
+                        <td>
+                          <a [href]="'mailto:' + staff.email" *ngIf="staff.email">{{ staff.email }}</a>
+                          <span *ngIf="!staff.email" class="text-muted">Not available</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <!-- Teaching Assistants -->
+                <h4 *ngIf="currentUnit && currentUnit.teachingAssistants && currentUnit.teachingAssistants.length > 0">Teaching Assistants</h4>
+                <div class="table-responsive" *ngIf="currentUnit && currentUnit.teachingAssistants && currentUnit.teachingAssistants.length > 0">
+                  <table class="table table-bordered table-hover">
+                    <thead class="table-light">
+                      <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Position</th>
+                        <th>Email</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let assistant of (currentUnit.teachingAssistants || []); let i = index">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ assistant.name }}</td>
+                        <td>{{ assistant.position }}</td>
+                        <td>
+                          <a [href]="'mailto:' + assistant.email" *ngIf="assistant.email">{{ assistant.email }}</a>
+                          <span *ngIf="!assistant.email" class="text-muted">Not available</span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Supervisor Card -->
+            <div class="supervisor-card text-center mt-5 p-4 border rounded shadow-sm" *ngIf="currentUnit.supervisor">
+              <h4 class="mb-1">{{ currentUnit.supervisor.name }}</h4>
+              <p class="text-muted mb-0">{{ currentUnit.supervisor.position }}</p>
+            </div>
+
+            <!-- Back to Units Button -->
+            <div class="back-to-units text-center mt-4">
+              <button class="btn btn-primary btn-lg" (click)="goToUnits()">
+                <i class="pi pi-arrow-left me-2"></i>
+                Back to Units
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default Content when no unit is selected -->
+        <div class="default-content" *ngIf="!currentUnit">
+          <div class="welcome-section">
+            <h2>Welcome to Our Units</h2>
+            <p>Select a unit from the sidebar to explore detailed information about our academic programs, faculty, research areas, and more.</p>
+            <div class="units-grid">
+              <div class="unit-card" *ngFor="let unit of allUnits" (click)="selectUnit(unit)">
+                <h4>{{ unit.name }}</h4>
+                <span class="learn-more">Learn More <i class="pi pi-arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

@@ -1,0 +1,245 @@
+@if (department && currentSection) {
+  <div class="department-content">
+    <div class="content-header">
+      <h2 class="content-title">
+        <i [class]="currentSection.icon + ' me-3'"></i>
+        {{ currentSection.title }}
+      </h2>
+    </div>
+
+    <div class="content-body">
+      <!-- About Section -->
+      @if (currentSection.id === 'about') {
+        <div class="section-content">
+          <div class="department-overview">
+            <h3>{{ department.name }}</h3>
+            <p class="description">{{ department.description }}</p>
+
+            @if (department.establishmentInfo) {
+              <div class="establishment-info">
+                <h4>Establishment Information</h4>
+                <p>{{ department.establishmentInfo }}</p>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Vision Section -->
+      @if (currentSection.id === 'vision') {
+        <div class="section-content">
+          <div class="vision-content">
+            <h3>Department Vision</h3>
+            <p class="vision-text">{{ department.vision }}</p>
+          </div>
+        </div>
+      }
+
+      <!-- Mission Section -->
+      @if (currentSection.id === 'mission') {
+        <div class="section-content">
+          <div class="mission-content">
+            <h3>Department Mission</h3>
+            <p class="mission-text">{{ department.mission }}</p>
+          </div>
+        </div>
+      }
+
+      <!-- Objectives Section -->
+      @if (currentSection.id === 'objectives') {
+        <div class="section-content">
+          <div class="objectives-content">
+            <h3>Department Objectives</h3>
+            <ul class="objectives-list">
+              @for (objective of department.objectives; track objective) {
+                <li class="objective-item">
+                  {{ objective }}
+                </li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <!-- Research Areas Section -->
+      @if (currentSection.id === 'research') {
+        <div class="section-content">
+          <div class="research-content">
+            <h3>Scientific Research Areas</h3>
+            <div class="research-areas">
+              <div class="row">
+                <div class="col-12">
+                  <ul class="research-list">
+                    @for (area of department.researchAreas; track area) {
+                      <li>{{ area }}</li>
+                    }
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Research Grants -->
+            @if (department.researchGrants && department.researchGrants.length > 0) {
+              <div class="research-grants">
+                <h4>Research Grants & Awards</h4>
+                <ul class="awards-list">
+                  @for (grant of department.researchGrants; track grant) {
+                    <li class="award-item">
+                      <strong>{{ grant.year }}:</strong>
+                      <span class="grant-description">
+                        {{ grant.description || grant.title }}
+                        @if (grant.principalInvestigator) {
+                          <em> - {{ grant.principalInvestigator }}</em>
+                        }
+                      </span>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Administrative Structure Section -->
+      @if (currentSection.id === 'structure') {
+        <div class="section-content">
+          <div class="structure-content">
+            <h3>Department Organizational Structure</h3>
+            <ul class="org-list">
+              @for (item of department.organizationalStructure; track item) {
+                <li>{{ item }}</li>
+              }
+            </ul>
+
+            <h3>Administrative Structure</h3>
+            <ul class="admin-list">
+              <li><strong>Head of Department</strong></li>
+              <li><strong>Teaching Staff</strong></li>
+              @for (staff of department.teachingStaff; track staff) {
+                <li class="staff-member">
+                  {{ staff.name }} – {{ staff.position }}
+                  @if (staff.cvUrl) {
+                    <a href="#" class="cv-link">View CV</a>
+                  }
+                </li>
+              }
+              @if (department.teachingAssistants.length > 0) {
+                <li><strong>Teaching Assistants</strong></li>
+              }
+              @for (assistant of department.teachingAssistants; track assistant) {
+                <li class="staff-member">
+                  {{ assistant.name }}
+                  @if (!assistant.cvUrl) {
+                    <span class="text-muted">(CV not available)</span>
+                  }
+                  @if (assistant.cvUrl) {
+                    <a href="#" class="cv-link">View CV</a>
+                  }
+                </li>
+              }
+              @if (department.administrativeStaff.length > 0) {
+                <li><strong>Administrative Staff</strong></li>
+              }
+              @for (admin of department.administrativeStaff; track admin) {
+                <li>{{ admin.name }}</li>
+              }
+            </ul>
+          </div>
+        </div>
+      }
+
+      <!-- Teaching Staff Section -->
+      @if (currentSection.id === 'staff') {
+        <div class="section-content">
+          <div class="staff-content">
+            <h3>Teaching Staff</h3>
+            @if (department.teachingStaff.length > 0) {
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-light">
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (staff of department.teachingStaff; track staff; let i = $index) {
+                      <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ staff.name }}</td>
+                        <td>{{ staff.position }}</td>
+                        <td>
+                          @if (staff.email) {
+                            <a [href]="'mailto:' + staff.email">{{ staff.email }}</a>
+                          }
+                          @if (!staff.email) {
+                            <span class="text-muted">Not available</span>
+                          }
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+
+            <!-- Teaching Assistants -->
+            @if (department.teachingAssistants.length > 0) {
+              <h4>Teaching Assistants</h4>
+            }
+            @if (department.teachingAssistants.length > 0) {
+              <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                  <thead class="table-light">
+                    <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Position</th>
+                      <th>Email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @for (assistant of department.teachingAssistants; track assistant; let i = $index) {
+                      <tr>
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ assistant.name }}</td>
+                        <td>{{ assistant.position }}</td>
+                        <td>
+                          @if (assistant.email) {
+                            <a [href]="'mailto:' + assistant.email">{{ assistant.email }}</a>
+                          }
+                          @if (!assistant.email) {
+                            <span class="text-muted">Not available</span>
+                          }
+                        </td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            }
+          </div>
+        </div>
+      }
+
+      <!-- Supervisor Card -->
+      @if (department.supervisor) {
+        <div class="supervisor-card text-center mt-5 p-4 border rounded shadow-sm">
+          <h4 class="mb-1">{{ department.supervisor.name }}</h4>
+          <p class="text-muted mb-0">{{ department.supervisor.position }}</p>
+        </div>
+      }
+
+      <!-- Back to Departments Button -->
+    </div>
+  </div>
+}
+<div class="back-to-departments text-center mt-4">
+  <button class="btn btn-primary btn-lg" (click)="goToDepartments()">
+    <i class="pi pi-arrow-left me-2"></i>
+    Back to Departments
+  </button>
+</div>

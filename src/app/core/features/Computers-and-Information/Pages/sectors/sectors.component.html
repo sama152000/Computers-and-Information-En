@@ -1,0 +1,133 @@
+<div class="sectors-page">
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <div class="sidebar-section" *ngIf="currentSector">
+            <h3 class="sidebar-title">{{ currentSector.name }}</h3>
+            <div class="nav-links">
+              <button class="nav-link-btn"
+                *ngFor="let section of sectorSections"
+                [class.active]="currentSection?.id === section.id"
+                (click)="selectSection(section)">
+                <i [class]="section.icon + ' me-2'"></i>
+                {{ section.title }}
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Scientific Sections</h3>
+            <div class="sectors-list">
+              <button class="sector-btn"
+                *ngFor="let sector of allSectors"
+                [class.active]="currentSector?.id === sector.id"
+                (click)="selectSector(sector)">
+                <div class="sector-info">
+                  <h5>{{ sector.name }}</h5>
+                </div>
+                <i class="pi pi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <div class="sector-content" *ngIf="currentSector && currentSection">
+          <div class="content-header">
+            <h2 class="content-title">
+              <i [class]="currentSection.icon + ' me-3'"></i>
+              {{ currentSection.title }}
+            </h2>
+          </div>
+
+          <div class="content-body">
+            <!-- About -->
+            <div *ngIf="currentSection.id === 'about'" class="section-content">
+              <h3>{{ currentSector.name }}</h3>
+              <p class="description">{{ currentSector.description }}</p>
+              <p *ngIf="currentSector.establishmentYear">
+                <strong>Establishment Year:</strong> {{ currentSector.establishmentYear }}
+              </p>
+            </div>
+
+            <!-- Vision & Mission -->
+            <div *ngIf="currentSection.id === 'vision'" class="section-content">
+              <h4>Vision</h4>
+              <p class="vision-text">{{ currentSector.vision }}</p>
+              <h4 class="mt-4">Mission</h4>
+              <p class="mission-text">{{ currentSector.mission }}</p>
+            </div>
+
+            <!-- Objectives -->
+            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
+              <h3>Department Objectives</h3>
+              <ul class="modern-list">
+                <li *ngFor="let obj of currentSector.objectives">{{ obj }}</li>
+              </ul>
+            </div>
+
+            <!-- Research Areas -->
+            <div *ngIf="currentSection.id === 'research'" class="section-content">
+              <h3>Scientific Research Areas</h3>
+              <ul class="research-list">
+                <li *ngFor="let area of currentSector.researchAreas">{{ area }}</li>
+              </ul>
+            </div>
+
+            <!-- Programs -->
+            <div *ngIf="currentSection.id === 'programs'" class="section-content">
+              <h3>Academic Programs</h3>
+              <ul class="objectives-list">
+                <li *ngFor="let prog of currentSector.programs">{{ prog }}</li>
+              </ul>
+              <div *ngIf="currentSector.labs">
+                <h4 class="mt-4">Specialized Laboratories</h4>
+                <ul class="objectives-list">
+                  <li *ngFor="let lab of currentSector.labs">{{ lab }}</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Staff -->
+            <div *ngIf="currentSection.id === 'staff'" class="section-content">
+              <h3>Head of Department</h3>
+              <div class="director-card text-center p-4 mb-4">
+                <h5>{{ currentSector.headOfDepartment.name }}</h5>
+                <p class="text-muted">{{ currentSector.headOfDepartment.position }}</p>
+                <p *ngIf="currentSector.headOfDepartment.office">Office: {{ currentSector.headOfDepartment.office }}</p>
+              </div>
+            </div>
+
+            <!-- Contact -->
+            <div *ngIf="currentSection.id === 'contact'" class="section-content">
+              <h3>Contact Information</h3>
+              <div class="contact-card p-4 border rounded">
+                <p><strong>Email:</strong> <a href="mailto:{{ currentSector.contactInfo?.email }}">{{ currentSector.contactInfo?.email }}</a></p>
+                <p><strong>Phone:</strong> {{ currentSector.contactInfo?.phone }}</p>
+                <p><strong>Location:</strong> {{ currentSector.contactInfo?.location }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default View -->
+        <div class="default-content" *ngIf="!currentSector">
+          <h2>Scientific Sections of the Faculty</h2>
+          <p>Choose a section from the list to view its full details, programs, scientific research, and faculty members.</p>
+          <div class="sectors-grid">
+            <div class="sector-card" *ngFor="let sector of allSectors" (click)="selectSector(sector)">
+              <h4>{{ sector.name }}</h4>
+              <span class="learn-more">View Details <i class="pi pi-arrow-right"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <app-footer></app-footer>

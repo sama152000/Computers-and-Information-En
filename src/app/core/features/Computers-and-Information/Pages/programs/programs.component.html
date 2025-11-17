@@ -1,0 +1,130 @@
+<div class="programs-page">
+  <div class="container">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <div class="sidebar-section" *ngIf="currentProgram">
+            <h3 class="sidebar-title">{{ currentProgram.name }}</h3>
+            <div class="nav-links">
+              <button class="nav-link-btn"
+                *ngFor="let section of programSections"
+                [class.active]="currentSection?.id === section.id"
+                (click)="selectSection(section)">
+                <i [class]="section.icon + ' me-2'"></i>
+                {{ section.title }}
+              </button>
+            </div>
+          </div>
+
+          <div class="sidebar-section">
+            <h3 class="sidebar-title">Academic Programs</h3>
+            <div class="programs-list">
+              <button class="program-btn"
+                *ngFor="let program of allPrograms"
+                [class.active]="currentProgram?.id === program.id"
+                (click)="selectProgram(program)">
+                <div class="program-info">
+                  <h5>{{ program.name }}</h5>
+                  <p>{{ program.degree }}</p>
+                </div>
+                <i class="pi pi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <div class="program-content" *ngIf="currentProgram && currentSection">
+          <div class="content-header">
+            <h2 class="content-title">
+              <i [class]="currentSection.icon + ' me-3'"></i>
+              {{ currentSection.title }}
+            </h2>
+          </div>
+
+          <div class="content-body">
+            <!-- About -->
+            <div *ngIf="currentSection.id === 'about'" class="section-content">
+              <h3>{{ currentProgram.name }}</h3>
+              <p class="description">{{ currentProgram.description }}</p>
+              <div class="program-details">
+                <p><strong>Degree:</strong> {{ currentProgram.degree }}</p>
+                <p><strong>Duration:</strong> {{ currentProgram.duration }}</p>
+                <p><strong>Credit Hours:</strong> {{ currentProgram.creditHours }}</p>
+                <p><strong>Department:</strong> {{ currentProgram.department }}</p>
+                <p><strong>Start Year:</strong> {{ currentProgram.startYear }}</p>
+                <p *ngIf="currentProgram.accreditation"><strong>Accreditation:</strong> {{ currentProgram.accreditation }}</p>
+              </div>
+            </div>
+
+            <!-- Vision & Mission -->
+            <div *ngIf="currentSection.id === 'vision'" class="section-content">
+              <h4>Vision</h4>
+              <p class="vision-text">{{ currentProgram.vision }}</p>
+              <h4 class="mt-4">Mission</h4>
+              <p class="mission-text">{{ currentProgram.mission }}</p>
+            </div>
+
+            <!-- Objectives -->
+            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
+              <h3>Program Objectives</h3>
+              <ul class="objectives-list">
+                <li *ngFor="let obj of currentProgram.objectives">{{ obj }}</li>
+              </ul>
+            </div>
+
+            <!-- Admission Requirements -->
+            <div *ngIf="currentSection.id === 'admission'" class="section-content">
+              <h3>Admission Requirements</h3>
+              <ul class="objectives-list">
+                <li *ngFor="let req of currentProgram.admissionRequirements">{{ req }}</li>
+              </ul>
+            </div>
+
+            <!-- Key Courses -->
+            <div *ngIf="currentSection.id === 'courses'" class="section-content">
+              <h3>Key Courses</h3>
+              <ul class="research-list">
+                <li *ngFor="let course of currentProgram.courses">{{ course }}</li>
+              </ul>
+            </div>
+
+            <!-- Coordinator -->
+            <div *ngIf="currentSection.id === 'coordinator'" class="section-content">
+              <h3>Program Coordinator</h3>
+              <div class="supervisor-card text-center p-4">
+                <h4>{{ currentProgram.coordinator?.name }}</h4>
+                <p class="text-muted">{{ currentProgram.coordinator?.position }}</p>
+                <p *ngIf="currentProgram.coordinator?.email">
+                  <strong>Email:</strong>
+                  <a href="mailto:{{ currentProgram.coordinator?.email }}">{{ currentProgram.coordinator?.email }}</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default View -->
+        <div class="default-content" *ngIf="!currentProgram">
+          <div class="welcome-section">
+            <h2>Academic Programs</h2>
+            <p>Select a program to explore its curriculum, objectives, admission requirements, and coordinator information.</p>
+            <div class="programs-grid">
+              <div class="program-card" *ngFor="let program of allPrograms" (click)="selectProgram(program)">
+                <h4>{{ program.name }}</h4>
+                <p>{{ program.degree }}</p>
+                <span class="learn-more">Explore Program <i class="pi pi-arrow-right"></i></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <app-footer></app-footer>

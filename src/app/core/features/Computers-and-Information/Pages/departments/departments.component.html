@@ -1,0 +1,74 @@
+ <div class="departments-page">
+      <div class="container">
+        <div class="row">
+          <!-- Left Sidebar -->
+          <div class="col-lg-4">
+            <aside class="sidebar">
+              <!-- Department Sections Sidebar -->
+              @if (currentDepartment) {
+                <div class="sidebar-section">
+                  <h3 class="sidebar-title">{{ currentDepartment.name }}</h3>
+                  <div class="nav-links">
+                    <button
+                      class="nav-link-btn"
+                      *ngFor="let section of departmentSections"
+                      [class.active]="currentSection?.id === section.id"
+                      (click)="selectSection(section)">
+                      <i [class]="section.icon + ' me-2'"></i>
+                      {{ section.title }}
+                    </button>
+                  </div>
+                </div>
+              }
+
+              <!-- Other Departments List -->
+              <div class="sidebar-section">
+                <h3 class="sidebar-title">Other Departments</h3>
+                <div class="departments-list">
+                  <button 
+                    class="department-btn"
+                    *ngFor="let dept of allDepartments"
+                    [class.active]="currentDepartment?.id === dept.id"
+                    (click)="selectDepartment(dept)">
+                    <div class="dept-info">
+                      <h5>{{ dept.name }}</h5>
+                      <p>{{ dept.nameAr }}</p>
+                    </div>
+                    <i class="pi pi-chevron-right"></i>
+                  </button>
+                </div>
+              </div>
+
+
+            </aside>
+          </div> 
+
+          <!-- Main Content Area -->
+          <div class="col-lg-8">
+            @if (currentDepartment && currentSection) {
+              <app-department-content
+                [department]="currentDepartment"
+                [currentSection]="currentSection">
+              </app-department-content>
+            }
+
+            <!-- Default Content when no department is selected -->
+            <div class="default-content" *ngIf="!currentDepartment">
+              <div class="welcome-section">
+                <h2>Welcome to Our Departments</h2>
+                <p>Select a department from the sidebar to explore detailed information about our academic programs, faculty, research areas, and more.</p>
+                <div class="departments-grid">
+                  <div class="dept-card" *ngFor="let dept of allDepartments" (click)="selectDepartment(dept)">
+                    <h4>{{ dept.name }}</h4>
+                    <p>{{ dept.nameAr }}</p>
+                    <span class="learn-more">Learn More <i class="pi pi-arrow-right"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <app-footer></app-footer>

@@ -21,6 +21,7 @@
 .dean-photo-wrapper {
   position: relative;
   animation: slideInLeft 0.8s ease-out;
+  justify-self: center;
 }
 
 @keyframes slideInLeft {
@@ -39,7 +40,9 @@
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 5 / 4;
+
+
 }
 
 .dean-photo img {

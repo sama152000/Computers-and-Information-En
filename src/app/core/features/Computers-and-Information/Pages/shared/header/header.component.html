@@ -75,28 +75,30 @@
     
     <div class="collapse navbar-collapse" [class.show]="!isNavbarCollapsed" id="navbarNav">
       <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a class="nav-link active" href="#hero">
-            <i class="pi pi-home me-2"></i>Home
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#programs">Programs</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#sectors">Sectors</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#services">Services</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="news">News</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact</a>
+        <li class="nav-item dropdown" *ngFor="let item of navigationItems">
+          <ng-container *ngIf="item.children && item.children.length > 0; else singleLink">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{item.id}}" role="button" [attr.aria-expanded]="item.isOpen" (click)="toggleDropdown(item, $event)">
+              <i [class]="item.icon + ' me-2'" *ngIf="item.icon"></i>{{ item.label }}
+            </a>
+            <ul class="dropdown-menu" [class.show]="item.isOpen" [attr.aria-labelledby]="'navbarDropdown' + item.id">
+              <li *ngFor="let child of item.children">
+                <a
+                  class="dropdown-item"
+                  [routerLink]="child.route"
+                  [fragment]="child.fragment"
+                  [queryParams]="child.queryParams"
+                  routerLinkActive="active"
+                  (click)="closeDropdown(item)">
+                  <i [class]="child.icon + ' me-2'" *ngIf="child.icon"></i>{{ child.label }}
+                </a>
+              </li>
+            </ul>
+          </ng-container>
+          <ng-template #singleLink>
+            <a class="nav-link" [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+              <i [class]="item.icon + ' me-2'" *ngIf="item.icon"></i>{{ item.label }}
+            </a>
+          </ng-template>
         </li>
       </ul>
     </div>

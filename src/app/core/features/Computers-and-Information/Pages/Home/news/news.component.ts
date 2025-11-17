@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { FooterComponent } from "../../shared/footer/footer.component";
 
 interface NewsArticle {
   id: number;
@@ -15,7 +14,7 @@ interface NewsArticle {
 @Component({
   selector: 'app-news',
   standalone: true,
-  imports: [CommonModule, FooterComponent],
+  imports: [CommonModule,],
   templateUrl: './news.component.html',
   styleUrls: ['./news.component.css']
 })

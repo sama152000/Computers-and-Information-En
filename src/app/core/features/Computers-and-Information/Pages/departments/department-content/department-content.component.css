@@ -1,0 +1,205 @@
+  .department-content {
+      background: var(--white);
+      border-radius: var(--border-radius-md);
+      padding: 2.5rem;
+      box-shadow: var(--shadow-light);
+      min-height: 600px;
+    }
+
+    .content-header {
+      margin-bottom: 2rem;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--primary-red);
+    }
+
+    .content-title {
+      color: var(--primary-red);
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0;
+      display: flex;
+      align-items: center;
+    }
+
+    .section-content h3 {
+      color: var(--text-dark);
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-content h4 {
+      color: var(--primary-red);
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin: 2rem 0 1rem 0;
+    }
+
+    .description, .vision-text, .mission-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-dark);
+      margin-bottom: 1.5rem;
+    }
+
+    .objectives-list, .org-list, .admin-list, .research-list, .awards-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .objectives-list li, .org-list li, .admin-list li, .research-list li {
+      position: relative;
+      padding: 0.75rem 0 0.75rem 2rem;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .objectives-list li::before, .org-list li::before, .admin-list li::before, .research-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      color: var(--primary-red);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .objectives-list li:hover, .org-list li:hover, .admin-list li:hover, .research-list li:hover {
+      background-color: rgba(220, 53, 69, 0.05);
+      padding-left: 2.5rem;
+      transform: translateX(5px);
+    }
+
+    .staff-member {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .cv-link {
+      color: var(--primary-red);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .cv-link:hover {
+      color: var(--dark-red);
+      text-decoration: underline;
+    }
+
+    .table {
+      margin-top: 1rem;
+    }
+
+    .table th {
+      background: var(--light-gray);
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .table td {
+      vertical-align: middle;
+    }
+
+    .supervisor-card {
+      background: var(--light-gray);
+      border: 1px solid #e0e0e0 !important;
+    }
+
+    .supervisor-card h4 {
+      color: var(--primary-red);
+      margin-bottom: 0.5rem !important;
+    }
+
+    .back-to-departments {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--light-gray);
+    }
+
+    .back-to-departments .btn {
+      background: var(--primary-red);
+      border: 2px solid var(--primary-red);
+      color: var(--white);
+      font-weight: 600;
+      padding: 0.75rem 2rem;
+      border-radius: var(--border-radius-md);
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .back-to-departments .btn:hover {
+      background: var(--dark-red);
+      border-color: var(--dark-red);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-to-departments .btn i {
+      font-size: 1.1rem;
+    }
+
+    .research-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .research-list li {
+      position: relative;
+      padding: 0.75rem 0 0.75rem 2rem;
+      line-height: 1.6;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .research-list li::before {
+      content: "▸";
+      position: absolute;
+      left: 0;
+      top: 0.75rem;
+      color: var(--primary-red);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .research-list li:hover {
+      background-color: rgba(220, 53, 69, 0.05);
+      padding-left: 2.5rem;
+      transform: translateX(5px);
+    }
+
+    .awards-list .award-item {
+      margin-bottom: 1.5rem;
+      padding: 1rem;
+      background: var(--light-gray);
+      border-radius: var(--border-radius-sm);
+    }
+
+    .grant-description {
+      display: block;
+      margin-top: 0.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .department-content {
+        padding: 1.5rem;
+      }
+
+      .content-title {
+        font-size: 1.5rem;
+      }
+
+      .research-areas .row {
+        flex-direction: column;
+        gap: 1rem;
+      }
+    }

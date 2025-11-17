@@ -32,14 +32,14 @@
           "configurations": {
             "production": {
               "budgets": [
-               {
+                {
                   "type": "initial",
                     "maximumWarning": "1.5mb",
     "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kB",
+                  "maximumWarning": "10kB",
                    "maximumError": "15kB"
 
                 }
