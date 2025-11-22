@@ -106,7 +106,7 @@
 }
 
 .vmg-card:hover .icon-container i {
-  color: var(--accent-gold);
+  color: var(--white);
   transform: scale(1.2);
 }
 

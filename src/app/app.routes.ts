@@ -2,6 +2,10 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './core/features/Computers-and-Information/Pages/Home/Home.component';
 import { ComputersAndInformationComponent } from './core/features/Computers-and-Information/Computers-and-Information.component';
 import { AboutComponent } from './core/features/Computers-and-Information/Pages/about/about.component';
+import { DeanMessageComponent } from './core/features/Computers-and-Information/Pages/about/dean-message/dean-message.component';
+import { VisionMissionpageComponent } from './core/features/Computers-and-Information/Pages/about/vision-mission-page/vision-mission-page.component';
+import { ObjectivesComponent } from './core/features/Computers-and-Information/Pages/about/objectives/objectives.component';
+import { AdminStructureComponent } from './core/features/Computers-and-Information/Pages/about/admin-structure/admin-structure.component';
 import { NewsComponent } from './core/features/Computers-and-Information/Pages/news/news.component';
 import { NewsDetailsComponent } from './core/features/Computers-and-Information/Pages/news/news-details/news-details.component';
 import { DepartmentsComponent } from './core/features/Computers-and-Information/Pages/departments/departments.component';
@@ -17,7 +21,13 @@ export const routes: Routes = [
     component: ComputersAndInformationComponent,
     children: [
       { path: 'home', component: HomeComponent },
-      { path: 'about', component: AboutComponent },
+      { path: 'about', component: AboutComponent, children: [
+        { path: 'dean-message', component: DeanMessageComponent },
+        { path: 'vision-mission', component: VisionMissionpageComponent },
+        { path: 'objectives', component: ObjectivesComponent },
+        { path: 'admin-structure', component: AdminStructureComponent },
+        { path: '', redirectTo: 'dean-message', pathMatch: 'full' }
+      ] },
   { path: 'news', component: NewsComponent },
   // Explicit filtered list routes so tab navigation (e.g. /news/events) works
   { path: 'news/events', component: NewsComponent },

@@ -15,6 +15,19 @@ export interface Program {
   department: string;
   accreditation?: string;
   startYear: number;
+  image?: string;
+  icon?: string;
+  students?: number;
+}
+
+export interface HomeProgram {
+  id: string;
+  name: string;
+  description: string;
+  duration: string;
+  image: string;
+  icon: string;
+  students: number;
 }
 
 export interface ProgramCoordinator {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HeaderService } from '../../../Services/header.service';
@@ -50,5 +50,18 @@ export class HeaderComponent implements OnInit {
     item['isOpen'] = false;
     // Also close navbar on mobile
     this.isNavbarCollapsed = true;
+  }
+
+  closeAllDropdowns() {
+    this.navigationItems.forEach(item => {
+      if (item.children && item.children.length > 0) {
+        item.isOpen = false;
+      }
+    });
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: Event) {
+    this.closeAllDropdowns();
   }
 }

@@ -1,10 +1,12 @@
 <section class="vision-mission-section">
   <div class="container-fluid">
     <div class="vmg-container">
-      <div 
+      <div
         *ngFor="let item of visionMissionData; let i = index"
         class="vmg-card fade-in"
         [style.animation-delay.ms]="i * 200"
+        (click)="navigateTo(item)"
+        [style.cursor]="item.routes ? 'pointer' : 'default'"
       >
         <div class="card-content">
           <div class="icon-container">

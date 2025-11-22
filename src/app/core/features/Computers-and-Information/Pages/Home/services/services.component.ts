@@ -1,7 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ServicesService } from '../../../Services/services.service';
+import { Service } from '../../../model/service.model';
 
-interface Service {
+interface HomeService {
   id: number;
   title: string;
   description: string;
@@ -17,47 +19,29 @@ interface Service {
   styleUrls: ['./services.component.css']
 })
 export class ServicesComponent implements OnInit, OnDestroy {
+  constructor(private servicesService: ServicesService) {}
+
   currentIndex = 0;
   transformPosition = 0;
   cardWidth = 350; // Width of each card + gap
   autoplayInterval: any;
-  displayServices: Service[] = [];
+  displayServices: HomeService[] = [];
 
-  services: Service[] = [
-    {
-      id: 1,
-      title: 'Computer Labs',
-      description: 'Access to high-performance computing and software tools.',
-      icon: 'pi pi-desktop',
-      features: ['24/7 Access', 'Latest Software', 'High-Speed Internet', 'Technical Support']
-    },
-    {
-      id: 2,
-      title: 'Research Support',
-      description: 'Encouraging innovative research through grants and mentorship.',
-      icon: 'pi pi-user',
-      features: ['Research Grants', 'Expert Mentorship', 'Publication Support', 'Conference Funding']
-    },
-    {
-      id: 3,
-      title: 'Library',
-      description: 'Comprehensive digital and physical resources for all students.',
-      icon: 'pi pi-book',
-      features: ['Digital Library', 'Study Spaces', 'Research Databases', 'Extended Hours']
-    },
-    {
-      id: 4,
-      title: 'Community Outreach',
-      description: 'Collaborating with industry and society for a better tech future.',
-      icon: 'pi pi-users',
-      features: ['Industry Partnerships', 'Internship Programs', 'Community Projects', 'Tech Workshops']
-    }
-  ];
+  services: HomeService[] = [];
 
   ngOnInit() {
-    this.displayServices = this.services.concat(this.services);
-    this.startAutoplay();
-    this.updateCardWidth();
+    this.servicesService.getAllServices().subscribe(services => {
+      this.services = services.map((service, index) => ({
+        id: index + 1,
+        title: service.name,
+        description: service.description || '',
+        icon: 'pi pi-cog', // Default icon since not in data
+        features: service.servicesOffered || []
+      }));
+      this.displayServices = this.services.concat(this.services);
+      this.startAutoplay();
+      this.updateCardWidth();
+    });
   }
 
   ngOnDestroy() {

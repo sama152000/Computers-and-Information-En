@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 interface Event {
   id: number;
@@ -14,7 +15,7 @@ interface Event {
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.css']
 })
@@ -22,30 +23,30 @@ export class EventsComponent implements OnInit {
   events: Event[] = [
     {
       id: 1,
-      title: 'Tech Talk: Future of AI',
-      description: 'Join experts discussing advancements in Artificial Intelligence, ethical challenges, and future research directions.',
+      title: 'Awareness Seminar: "How to Protect Your Device and Data from Hacking',
+      description: 'Organized by Luxor Tech Society (LTS), the Faculty sponsored a cybersecurity awareness seminar for students.',
       date: new Date('2025-11-05'),
       time: '2:00 PM - 4:00 PM',
       location: 'Main Auditorium',
-      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60'
+      image:  '/assets/new6.jpg'
     },
     {
       id: 2,
-      title: 'Workshop: Secure Coding Practices',
-      description: 'Hands-on session on writing secure applications — perfect for students preparing for cybersecurity roles.',
+      title: 'Faculty Five-a-Side Football Championship Results',
+      description: 'As part of its ongoing support for student activities .',
       date: new Date('2025-12-01'),
       time: '10:00 AM - 3:00 PM',
       location: 'Computer Lab 1',
-      image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=60'
+      image:  '/assets/new3.jpg'
     },
     {
       id: 3,
-      title: 'Career Fair: Meet Top IT Companies',
-      description: 'Network with leading IT companies and explore career opportunities in software development and data analytics.',
+      title: 'Faculty Five-a-Side Football Championship Results',
+      description: 'As part of its ongoing support for student activities .',
       date: new Date('2026-01-10'),
       time: '9:00 AM - 5:00 PM',
       location: 'University Hall',
-      image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=800&q=60'
+      image:  '/assets/new3.jpg'
     }
   ];
 

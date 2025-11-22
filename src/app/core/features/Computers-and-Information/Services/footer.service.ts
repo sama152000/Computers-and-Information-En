@@ -91,13 +91,13 @@ export class FooterService {
       {
         id: 1,
         platform: 'Facebook',
-        url: 'https://facebook.com/facultycomputers',
+        url: 'https://www.facebook.com/FCI.LuxorUniversity/',
         icon: 'pi pi-facebook'
       },
       {
         id: 2,
         platform: 'Twitter',
-        url: 'https://twitter.com/facultycomp',
+        url: 'https://www.facebook.com/FCI.LuxorUniversity/',
         icon: 'pi pi-twitter'
       },
       {

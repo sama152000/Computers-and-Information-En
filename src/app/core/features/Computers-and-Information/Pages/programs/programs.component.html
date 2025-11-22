@@ -46,6 +46,18 @@
           </div>
 
           <div class="content-body">
+            <!-- Overview -->
+            <div *ngIf="currentSection.id === 'overview'" class="section-content">
+              <h3>Program Overview</h3>
+              <p class="description">{{ currentProgram.description }}</p>
+              <p>Welcome to the {{ currentProgram.name }}, a comprehensive program designed to equip students with cutting-edge knowledge and practical skills in the field. Our curriculum combines theoretical foundations with hands-on experience, preparing graduates for successful careers in technology and innovation.</p>
+              <p>The program emphasizes critical thinking, problem-solving, and collaboration, ensuring that our students are well-prepared to meet the challenges of the modern digital world. With experienced faculty, state-of-the-art facilities, and strong industry connections, we provide an environment conducive to academic excellence and professional growth.</p>
+              <h4>Vision</h4>
+              <p class="vision-text">{{ currentProgram.vision }}</p>
+              <h4 class="mt-4">Mission</h4>
+              <p class="mission-text">{{ currentProgram.mission }}</p>
+            </div>
+
             <!-- About -->
             <div *ngIf="currentSection.id === 'about'" class="section-content">
               <h3>{{ currentProgram.name }}</h3>
@@ -61,7 +73,7 @@
             </div>
 
             <!-- Vision & Mission -->
-            <div *ngIf="currentSection.id === 'vision'" class="section-content">
+            <div *ngIf="currentSection.id === 'vision-mission'" class="section-content">
               <h4>Vision</h4>
               <p class="vision-text">{{ currentProgram.vision }}</p>
               <h4 class="mt-4">Mission</h4>

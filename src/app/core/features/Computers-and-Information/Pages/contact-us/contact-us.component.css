@@ -1,10 +1,10 @@
 .contact-us-page {
   background: linear-gradient(to bottom, #f8f9fa, #ffffff);
   min-height: 100vh;
-    padding: var(--section-padding);
-    padding-left: var(--l-r-padding);
-    padding-right: var(--l-r-padding);
-
+  min-width: 100%;
+  padding: var(--section-padding);
+  padding-left: var(--l-r-padding);
+  padding-right: var(--l-r-padding);
 }
 
 .hero-section {
@@ -203,138 +203,32 @@
   margin-top: 2rem;
 }
 
-@media (max-width: 768px) {
-  .contact-us-page {
-    padding: 1rem var(--l-r-padding) !important;
+
+
+/* Temporary override to fix large horizontal padding on contact-us page at max-width 576px */
+@media (max-width: 576px) {
+  :where(.contact-us-page) {
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    width: 100% !important;
   }
-  .hero-title { font-size: 2.5rem; }
-  .info-card, .email-card, .social-card { padding: 1.5rem; }
-  .departments-table { font-size: 0.9rem; }
 }
 
 @media (max-width: 576px) {
-  .contact-us-page {
-    padding: 1rem var(--l-r-padding) !important;
-  }
+  .row > [class*="col-"] {
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
+        width: 100% !important;
 
-  .hero-section {
-    padding: 80px 0 60px;
   }
-
-  .hero-title {
-    font-size: 2rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1.1rem;
-  }
-
+  
   .info-card, .email-card, .social-card {
-    padding: 1rem;
+    margin-bottom: 1.5rem;
   }
-
-  .icon-wrapper {
-    width: 60px;
-    height: 60px;
-    font-size: 1.5rem;
-  }
-
-  .section-title {
-    font-size: 1.8rem;
-    margin-bottom: 2rem;
-  }
-
-  .social-links {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-  }
-
-  .social-btn {
-    width: 45px;
-    height: 45px;
-    font-size: 1.2rem;
-  }
-
-  .departments-table {
-    font-size: 0.8rem;
-  }
-
+  
   .departments-table th,
   .departments-table td {
     padding: 0.75rem 0.5rem;
-  }
-
-  .table-responsive {
-    overflow-x: auto;
-  }
-
-  .map-container iframe {
-    height: 300px;
-  }
-}
-
-@media (max-width: 480px) {
-  .contact-us-page {
-    padding: 0.75rem var(--l-r-padding);
-  }
-
-  .hero-section {
-    padding: 60px 0 40px;
-  }
-
-  .hero-title {
-    font-size: 1.8rem;
-  }
-
-  .hero-subtitle {
-    font-size: 1rem;
-  }
-
-  .info-card, .email-card, .social-card {
-    padding: 0.75rem;
-  }
-
-  .icon-wrapper {
-    width: 50px;
-    height: 50px;
-    font-size: 1.2rem;
-  }
-
-  .section-title {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .social-links {
-    grid-template-columns: 1fr;
-    gap: 0.5rem;
-  }
-
-  .social-btn {
-    width: 40px;
-    height: 40px;
-    font-size: 1rem;
-  }
-
-  .departments-table {
-    font-size: 0.75rem;
-  }
-
-  .departments-table th,
-  .departments-table td {
-    padding: 0.5rem 0.25rem;
-  }
-
-  .map-container iframe {
-    height: 250px;
-  }
-
-  .email-card i {
-    font-size: 2.5rem;
-  }
-
-  .btn-email {
-    padding: 10px 20px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
   }
 }

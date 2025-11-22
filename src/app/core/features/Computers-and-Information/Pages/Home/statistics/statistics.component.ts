@@ -1,13 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface Statistic {
-  id: number;
-  value: number;
-  label: string;
-  description: string;
-  icon: string;
-}
+import { Statistic } from '../../../model/statistics.model';
+import { StatisticsService } from '../../../Services/statistics.service';
 
 @Component({
   selector: 'app-statistics',
@@ -18,41 +12,17 @@ interface Statistic {
 })
 export class StatisticsComponent implements OnInit {
   displayValues: number[] = [];
-  
-  statistics: Statistic[] = [
-    {
-      id: 1,
-      value: 1200,
-      label: 'Active Students',
-      description: 'Enrolled across all programs',
-      icon: 'pi pi-users'
-    },
-    {
-      id: 2,
-      value: 45,
-      label: 'Computer Labs',
-      description: 'State-of-the-art facilities',
-      icon: 'pi pi-desktop'
-    },
-    {
-      id: 3,
-      value: 320,
-      label: 'Research Projects',
-      description: 'Ongoing and completed',
-      icon: 'pi pi-chart-line'
-    },
-    {
-      id: 4,
-      value: 150,
-      label: 'Awards & Grants',
-      description: 'Recognition and funding',
-      icon: 'pi pi-star'
-    }
-  ];
+
+  statistics: Statistic[] = [];
+
+  constructor(private statisticsService: StatisticsService) {}
 
   ngOnInit() {
-    this.displayValues = new Array(this.statistics.length).fill(0);
-    this.observeElements();
+    this.statisticsService.getStatistics().subscribe(stats => {
+      this.statistics = stats;
+      this.displayValues = new Array(this.statistics.length).fill(0);
+      this.observeElements();
+    });
   }
 
   private observeElements() {

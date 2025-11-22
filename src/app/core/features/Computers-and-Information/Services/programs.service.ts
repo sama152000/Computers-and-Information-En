@@ -1,7 +1,7 @@
-// src/app/Services/programs.service.ts
+// src/app/services/programs.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Program, ProgramSection } from '../model/program.model';
+import { Program, ProgramSection, HomeProgram } from '../model/program.model';
 
 @Injectable({
   providedIn: 'root'
@@ -11,109 +11,166 @@ export class ProgramsService {
   private programs: Program[] = [
     {
       id: 'cs-general',
-      name: 'Computer Science - General Program',
+      name: 'Computer Science Program',
       degree: 'Bachelor of Science in Computer Science',
-      duration: '4 Years',
+      duration: '4 Academic Years',
       creditHours: 144,
-      department: 'Computer Science',
+      department: 'Computer Science Department',
       startYear: 1995,
       accreditation: 'Accredited by the Supreme Council of Universities',
-      description: 'The flagship program offering comprehensive education in algorithms, software engineering, artificial intelligence, and advanced computing systems.',
-      vision: 'To be a leading program in computer science education and research in Upper Egypt and beyond.',
-      mission: 'Preparing highly qualified graduates capable of innovation and leadership in the field of computing and information technology.',
+      description: 'The main and oldest program of the faculty, providing comprehensive education in theoretical and applied computer science, algorithms, software development, and advanced systems.',
+      vision: 'Leadership in computer science education and scientific research in Upper Egypt.',
+      mission: 'Graduating distinguished competencies capable of innovation and competing globally in software industry and scientific research.',
       objectives: [
-        'Develop strong theoretical foundations in computer science',
-        'Enhance practical programming and problem-solving skills',
-        'Foster research capabilities and innovation',
-        'Prepare graduates for global competition'
+        'Building strong theoretical foundations in computer science',
+        'Developing advanced programming and problem-solving skills',
+        'Preparing graduates for postgraduate studies and scientific research',
+        'Meeting the needs of the local and regional labor market'
       ],
       admissionRequirements: [
-        'High school certificate (Thanaweya Amma - Science section)',
-        'Minimum score determined annually by the coordination office',
-        'Pass faculty admission tests (if applicable)'
+        'General Secondary Certificate (Thanaweya Amma) - Science (Mathematics) section',
+        'Minimum score determined annually by the Coordination Office',
+        'Success in faculty aptitude tests (if any)'
       ],
       courses: [
         'Data Structures and Algorithms',
         'Operating Systems',
+        'Computer Architecture',
         'Database Systems',
-        'Artificial Intelligence',
-        'Machine Learning',
-        'Computer Networks',
-        'Software Engineering'
+        'Artificial Intelligence Fundamentals',
+        'Software Engineering',
+        'Compiler Design'
       ],
       coordinator: {
-        name: 'Prof. Ahmed Mahmoud Ali',
-        position: 'Program Coordinator',
-        email: 'ahmed.mahmoud@fci.edu.eg'
-      }
+        name: 'Prof. Dr. Mohamed Abdelrahman Elsayed',
+        position: 'Head of Computer Science Department',
+        email: 'mohamed.abdelrahman@fci.luxor.edu.eg',
+      },
+      image: 'assets/img1.jpg',
+      icon: 'pi pi-code',
+      students: 450
+
     },
     {
       id: 'ai',
       name: 'Artificial Intelligence Program',
       degree: 'Bachelor of Science in Artificial Intelligence',
-      duration: '4 Years',
+      duration: '4 Academic Years',
       creditHours: 140,
-      department: 'Computer Science',
-      startYear: 2023,
-      accreditation: 'New program - Under review for accreditation',
-      description: 'A modern program focused on AI, machine learning, deep learning, natural language processing, and intelligent systems.',
-      vision: 'To lead AI education and research in the region.',
-      mission: 'Graduate AI specialists capable of developing intelligent solutions for real-world challenges.',
+      department: 'Computer Science Department',
+      startYear: 2024,
+      accreditation: 'New Program - Under Accreditation Process',
+      description: 'A modern program launched in 2024 focusing on artificial intelligence, machine learning, deep learning, computer vision, and natural language processing.',
+      vision: 'To be a pioneer in AI education in Upper Egypt and a center for applied AI research.',
+      mission: 'Graduating AI specialists capable of developing intelligent systems that solve real-world problems in health, education, agriculture, and industry.',
       objectives: [
-        'Master AI and machine learning fundamentals',
-        'Develop expertise in deep learning and neural networks',
-        'Apply AI in various domains including healthcare, finance, and education',
-        'Promote ethical AI development and deployment'
+        'Mastering fundamentals of AI and machine learning',
+        'Practical application of deep learning and neural networks',
+        'Developing AI solutions in Arabic language processing',
+        'Promoting ethical and responsible AI practices'
+      ],
+      admissionRequirements: [
+        'General Secondary Certificate (Thanaweya Amma) - Science (Mathematics)',
+        'High score in Mathematics and English',
+        'Passing the faculty admission interview'
       ],
       courses: [
         'Introduction to Artificial Intelligence',
         'Machine Learning',
-        'Deep Learning',
+        'Deep Learning and Neural Networks',
         'Natural Language Processing',
         'Computer Vision',
-        'Reinforcement Learning',
-        'AI Ethics and Society'
+        'AI Ethics and Society',
+        'Big Data Analytics'
       ],
       coordinator: {
-        name: 'Dr. Sara Mohamed Hassan',
-        position: 'AI Program Director',
-        email: 'sara.hassan@fci.edu.eg'
-      }
+        name: 'Dr. Ahmed Hassan Mahmoud',
+        position: 'AI Program Coordinator',
+        email: 'ahmed.hassan@fci.luxor.edu.eg'
+      },
+      image: 'assets/img2.jpg',
+      icon: 'pi pi-brain',
+      students: 120
+
     },
     {
       id: 'is',
       name: 'Information Systems Program',
       degree: 'Bachelor of Science in Information Systems',
-      duration: '4 Years',
+      duration: '4 Academic Years',
       creditHours: 142,
-      department: 'Information Systems',
-      startYear: 2000,
-      description: 'Focuses on business applications of information technology, systems analysis, database management, and enterprise systems.',
+      department: 'Information Systems Department',
+      startYear: 2008,
+      accreditation: 'Accredited',
+      description: 'Focuses on designing and developing enterprise information systems, business analysis, database management, and digital transformation solutions.',
+      vision: 'Excellence in preparing specialists in information systems and business technology.',
+      mission: 'Graduating professionals capable of analyzing requirements and building integrated information systems that support institutional decision-making.',
+      objectives: [
+        'Understanding business processes and information needs',
+        'Designing and implementing database systems',
+        'Developing enterprise resource planning (ERP) solutions',
+        'Applying business intelligence and data analysis'
+      ],
+      courses: [
+        'Systems Analysis and Design',
+        'Database Management Systems',
+        'Enterprise Systems',
+        'Business Intelligence',
+        'E-Commerce',
+        'Project Management'
+      ],
       coordinator: {
-        name: 'Prof. Fatima Osman',
-        position: 'Program Coordinator'
-      }
+        name: 'Dr. Amani Ashraf Salama',
+        position: 'Information Systems Department Supervisor',
+        email: 'amani.ashraf@fci.luxor.edu.eg'
+      },
+      image: 'assets/img3.jpg',
+      icon: 'pi pi-chart-line',
+      students: 200
+
     },
     {
       id: 'it',
       name: 'Information Technology Program',
       degree: 'Bachelor of Science in Information Technology',
-      duration: '4 Years',
+      duration: '4 Academic Years',
       creditHours: 138,
-      department: 'Information Technology',
-      startYear: 2005,
-      description: 'Emphasizes networking, cybersecurity, web development, cloud computing, and IT infrastructure management.',
+      department: 'Information Technology Department',
+      startYear: 2010,
+      accreditation: 'Accredited',
+      description: 'Specialized in networks, cybersecurity, cloud computing, Internet of Things (IoT), and IT infrastructure management.',
+      vision: 'Leadership in information technology and cybersecurity education.',
+      mission: 'Preparing professionals capable of designing, implementing, and securing modern information technology infrastructures.',
+      objectives: [
+        'Mastering network design and management',
+        'Understanding cybersecurity principles and ethical hacking',
+        'Cloud computing and virtualization technologies',
+        'Internet of Things and smart systems'
+      ],
+      courses: [
+        'Computer Networks',
+        'Network Security',
+        'Cloud Computing',
+        'Internet of Things',
+        'Mobile Application Development',
+        'Digital Forensics'
+      ],
       coordinator: {
-        name: 'Dr. Khaled Ibrahim',
-        position: 'IT Program Coordinator'
-      }
+        name: 'Dr. Hosny Ahmed Abbas',
+        position: 'Information Technology Department Coordinator',
+        email: 'hosny.abbas@fci.luxor.edu.eg'
+      },
+      image: 'assets/img4.jpg',
+      icon: 'pi pi-shield',
+      students: 180
+
     }
   ];
 
   private programSections: ProgramSection[] = [
-    { id: 'about', title: 'About the Program', icon: 'pi pi-info-circle', route: 'about' },
-    { id: 'vision', title: 'Vision & Mission', icon: 'pi pi-eye', route: 'vision' },
-    { id: 'objectives', title: 'Program Objectives', icon: 'pi pi-target', route: 'objectives' },
+    { id: 'overview', title: 'Program Overview', icon: 'pi pi-info-circle', route: 'overview' },
+    { id: 'vision-mission', title: 'Vision & Mission', icon: 'pi pi-eye', route: 'vision-mission' },
+    { id: 'objectives', title: 'Objectives', icon: 'pi pi-target', route: 'objectives' },
     { id: 'admission', title: 'Admission Requirements', icon: 'pi pi-user-plus', route: 'admission' },
     { id: 'courses', title: 'Key Courses', icon: 'pi pi-book', route: 'courses' },
     { id: 'coordinator', title: 'Program Coordinator', icon: 'pi pi-user', route: 'coordinator' }
@@ -123,6 +180,19 @@ export class ProgramsService {
     return of(this.programs);
   }
 
+  getProgramsForHome(): Observable<HomeProgram[]> {
+    const homePrograms: HomeProgram[] = this.programs.map(p => ({
+      id: p.id,
+      name: p.name,
+      description: p.description,
+      duration: p.duration,
+      image: p.image || '',
+      icon: p.icon || '',
+      students: p.students || 0
+    }));
+    return of(homePrograms);
+  }
+
   getProgramById(id: string): Observable<Program | undefined> {
     return of(this.programs.find(p => p.id === id));
   }
@@ -130,4 +200,5 @@ export class ProgramsService {
   getProgramSections(): Observable<ProgramSection[]> {
     return of(this.programSections);
   }
+
 }

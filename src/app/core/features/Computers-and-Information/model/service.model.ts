@@ -2,7 +2,7 @@
 export interface Service {
   id: string;
   name: string;
-  nameAr: string;
+  nameAr?: string;
   description?: string;
   establishmentInfo?: string;
   vision?: string;
@@ -27,6 +27,8 @@ export interface Service {
   contactInfo?: ContactInfo;
   workingHours?: string;
   location?: string;
+  featured?: boolean;
+  image?: string;
 }
 
 export interface ServiceMember {

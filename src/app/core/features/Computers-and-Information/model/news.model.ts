@@ -32,3 +32,12 @@ export interface NewsResponse {
   page: number;
   pageSize: number;
 }
+
+export interface NewsArticle {
+  id: number;
+  title: string;
+  excerpt: string;
+  imageUrl: string;
+  date: Date;
+  category: string;
+}
