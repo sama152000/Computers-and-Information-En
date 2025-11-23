@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface HeroSlide {
@@ -18,6 +18,8 @@ interface HeroSlide {
 export class HeroComponent implements OnInit, OnDestroy {
   currentSlide = 0;
   autoplayInterval: any;
+
+  constructor(private elRef: ElementRef) {}
 
   slides: HeroSlide[] = [
     {
@@ -47,11 +49,27 @@ export class HeroComponent implements OnInit, OnDestroy {
   ];
 
   ngOnInit() {
+    this.setSliderHeight();
     this.startAutoplay();
+    window.addEventListener('resize', this.onResize);
   }
 
   ngOnDestroy() {
     this.stopAutoplay();
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  @HostListener('window:resize')
+  onResize = () => {
+    this.setSliderHeight();
+  };
+
+  setSliderHeight() {
+    const slider = this.elRef.nativeElement.querySelector('.hero-slider');
+    if (slider) {
+      slider.style.height = window.innerHeight + 'px';
+      slider.style.minHeight = '280px'; // maintain min height for smaller devices
+    }
   }
 
   startAutoplay() {
