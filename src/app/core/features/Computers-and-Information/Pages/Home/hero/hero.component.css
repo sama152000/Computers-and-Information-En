@@ -185,8 +185,8 @@
 /* Responsive */
 @media (max-width: 768px) {
   .hero-slider {
-    height: 100vh;
-    min-height: 350px;
+    height: 100vh !important;
+    min-height: 350px !important;
   }
 
   .hero-title {
@@ -241,16 +241,16 @@
 
 @media (max-width: 576px) {
   .hero-slider {
-    height: 80vh;
-    min-height: 300px;
+    height: 80vh !important;
+    min-height: 300px !important;
   }
 
   .hero-content {
-    width: 100%;
-    top: 25%;
+    width: 100% !important;
+    top: 25% !important;
     transform: translate(-50%, 0);
-    padding-left: var(--l-r-padding);
-    padding-right: var(--l-r-padding);
+    padding-left: var(--l-r-padding) !important;
+    padding-right: var(--l-r-padding) !important;
   }
 
   .hero-title {
