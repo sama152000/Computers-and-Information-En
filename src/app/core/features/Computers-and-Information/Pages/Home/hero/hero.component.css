@@ -187,6 +187,7 @@
   .hero-slider {
     height: 100vh !important;
     min-height: 350px !important;
+  ;
   }
 
   .hero-title {
@@ -196,7 +197,9 @@
 
   .hero-content {
     padding-bottom: 3rem;
-    width: 100%;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    width: 100% !important;
   }
 
   .hero-subtitle {
