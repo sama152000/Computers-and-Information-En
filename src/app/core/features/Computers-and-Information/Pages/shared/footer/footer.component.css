@@ -244,6 +244,11 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .footer-bottom {
+  
+     padding-left:1rem;
+    padding-right:1rem;
+}
   .footer-content {
     padding: 3rem 0 1.5rem;
   }

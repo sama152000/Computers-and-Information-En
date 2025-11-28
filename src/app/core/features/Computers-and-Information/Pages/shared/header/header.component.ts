@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
 import { HeaderService } from '../../../Services/header.service';
 import { HeaderData, NavigationItem } from '../../../model/header.model';
 
@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   headerData!: HeaderData;
   navigationItems: NavigationItem[] = [];
 
-  constructor(private headerService: HeaderService) {}
+  constructor(private headerService: HeaderService, private router: Router) {}
 
   ngOnInit() {
     this.headerService.getHeaderData().subscribe(data => {
@@ -27,9 +27,16 @@ export class HeaderComponent implements OnInit {
       // Initialize isOpen property for items with children
       this.navigationItems.forEach(item => {
         if (item.children && item.children.length > 0) {
-          item.isOpen = false;
+          item['isOpen'] = false;
         }
       });
+    });
+
+    // Close dropdowns on navigation
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.closeAllDropdowns();
+      }
     });
   }
 
@@ -55,7 +62,7 @@ export class HeaderComponent implements OnInit {
   closeAllDropdowns() {
     this.navigationItems.forEach(item => {
       if (item.children && item.children.length > 0) {
-        item.isOpen = false;
+        item['isOpen'] = false;
       }
     });
   }
@@ -63,5 +70,9 @@ export class HeaderComponent implements OnInit {
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
     this.closeAllDropdowns();
+    // Close navbar on mobile when clicking outside
+    if (window.innerWidth < 768) {
+      this.isNavbarCollapsed = true;
+    }
   }
 }

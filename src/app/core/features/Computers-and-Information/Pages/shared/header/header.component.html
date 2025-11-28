@@ -64,13 +64,13 @@
 <!-- Navigation -->
 <nav class="navbar navbar-expand-lg main-navbar">
   <div class="container-fluid">
-    <button 
-      class="navbar-toggler" 
-      type="button" 
-      data-bs-toggle="collapse" 
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
       data-bs-target="#navbarNav"
       [attr.aria-expanded]="!isNavbarCollapsed"
-      (click)="toggleNavbar()"
+      (click)="$event.stopPropagation(); toggleNavbar()"
     >
       <span class="navbar-toggler-icon"></span>
     </button>

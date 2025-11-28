@@ -6,6 +6,8 @@
 /* PrimeIcons CSS */
 @import 'primeicons/primeicons.css';
 
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
+
 
 :root {
   /* Color Palette */
