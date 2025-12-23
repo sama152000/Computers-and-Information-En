@@ -1,22 +1,21 @@
 // src/app/services/news.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { NewsItem, NewsFilter, NewsResponse } from '../model/news.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NewsService {
-
-  private newsData: NewsItem[] = [
+  private newsData: any[] = [
     {
       id: 101,
       type: 'news',
       title: 'Student Excellence in University Chess Championship',
-      description: 'Students from the Faculty of Computers and Information secured first and second places in the university-wide Chess Championship.',
+      description:
+        'Students from the Faculty of Computers and Information secured first and second places in the university-wide Chess Championship.',
       content: `Under the patronage of Prof. Dr. Sabreen Abdel-Gelil, President of Luxor University, and with the supervision of the University’s Youth Welfare Administration, students from the Faculty of Computers and Information achieved outstanding success by winning first and second places in the university-wide Chess Championship.
 
-• First Place: Student Salah Yasser Salah  
+• First Place: Student Salah Yasser Salah
 • Second Place: Student Osama Ahmed Mahgoub
 
 On this joyful occasion, Prof. Dr. Osama Abul-Nasr, Dean of the Faculty, and Prof. Dr. Ibrahim Hamed, Vice Dean for Education and Student Affairs, extended their heartfelt congratulations and pride to the distinguished students. They also expressed sincere gratitude to the Faculty’s Youth Welfare team for their exceptional efforts in nurturing student talents.
@@ -28,14 +27,16 @@ We wish our champions continued success and brilliance, and the Faculty of Compu
       category: 'Student Achievements',
       featured: true,
       tags: ['Chess', 'Championship', 'Student Success', 'Youth Welfare'],
-      views: 892
+      views: 892,
     },
 
     {
       id: 102,
       type: 'news',
-      title: 'Community Engagement: Visit from Al-Aqsur Preparatory School for Girls',
-      description: 'The Faculty welcomed female students from Al-Aqsur Al-Edadiya Al-Jadida Preparatory School to explore academic programs and future tech careers.',
+      title:
+        'Community Engagement: Visit from Al-Aqsur Preparatory School for Girls',
+      description:
+        'The Faculty welcomed female students from Al-Aqsur Al-Edadiya Al-Jadida Preparatory School to explore academic programs and future tech careers.',
       content: `The Faculty of Computers and Information at Luxor University warmly welcomed a delegation of female students from Al-Aqsur Al-Edadiya Al-Jadida Preparatory School for Girls. The visit aimed to introduce the students to the various academic programs offered by the faculty and highlight future career opportunities in computing and information technology.
 
 The visit was supervised by Prof. Dr. Qershi Saadi, Vice Dean for Community Service and Environmental Development, and coordinated by Eng. Abdel-Rahim Al-Sadiq.
@@ -48,15 +49,22 @@ The Faculty of Computers and Information — always in service of the community.
       author: 'Community Service Sector',
       category: 'Community Engagement',
       featured: true,
-      tags: ['School Visit', 'Outreach', 'Career Guidance', 'Community Service'],
-      views: 756
+      tags: [
+        'School Visit',
+        'Outreach',
+        'Career Guidance',
+        'Community Service',
+      ],
+      views: 756,
     },
 
     {
       id: 103,
       type: 'event',
-      title: 'Awareness Seminar: "How to Protect Your Device and Data from Hacking"',
-      description: 'Organized by Luxor Tech Society (LTS), the Faculty sponsored a cybersecurity awareness seminar for students.',
+      title:
+        'Awareness Seminar: "How to Protect Your Device and Data from Hacking"',
+      description:
+        'Organized by Luxor Tech Society (LTS), the Faculty sponsored a cybersecurity awareness seminar for students.',
       content: `In continuous support of student initiatives, the Faculty proudly sponsored and hosted the awareness seminar titled:
 
 "How to Protect Your Device and Your Data from Hacking"
@@ -78,14 +86,15 @@ Well done to the Luxor Tech Society team for this valuable and impactful initiat
       category: 'Student Activities',
       featured: true,
       tags: ['Cybersecurity', 'Awareness', 'LTS', 'Student Initiative'],
-      views: 1024
+      views: 1024,
     },
 
     {
       id: 104,
       type: 'news',
       title: 'School Visit: Martyr Mohamed Raafat Official Language School',
-      description: 'The Faculty received students from Martyr Mohamed Raafat Official Language School to explore computing programs and career paths.',
+      description:
+        'The Faculty received students from Martyr Mohamed Raafat Official Language School to explore computing programs and career paths.',
       content: `The Faculty of Computers and Information received a delegation of students from Martyr Mohamed Raafat Official Language School. The visit aimed to introduce students to the academic programs and specializations offered, as well as promising career paths in computing and information technology.
 
 The visit was supervised by Prof. Dr. Qershi Saadi, Vice Dean for Community Service and Environmental Development, and coordinated by Eng. Doaa Abdel-Karim.
@@ -99,14 +108,15 @@ The Faculty of Computers and Information — proudly serving and shaping our com
       category: 'Community Engagement',
       featured: false,
       tags: ['School Visit', 'Career Guidance', 'Outreach'],
-      views: 689
+      views: 689,
     },
 
     {
       id: 105,
       type: 'event',
       title: 'Faculty Five-a-Side Football Championship Results"',
-      description: 'Faculty Five-a-Side Football Championship Results: Congratulations to the winning team and individual awardees!',
+      description:
+        'Faculty Five-a-Side Football Championship Results: Congratulations to the winning team and individual awardees!',
       content: `As part of its ongoing support for student activities, the Youth Welfare Administration at the Faculty of Computers and Information successfully organized the Faculty Five-a-Side Football Championship, with the participation of 10 competitive teams.
 Final Results:
 Champions – 1st Place
@@ -129,13 +139,14 @@ The Faculty of Computers and Information remains committed to its educational an
       category: 'Community Awareness',
       featured: true,
       tags: ['Dark Web', 'Online Gambling', 'Awareness', 'Al-Azhar', 'Ethics'],
-      views: 1347
+      views: 1347,
     },
     {
       id: 10,
       type: 'event',
       title: 'Faculty Five-a-Side Football Championship Results"',
-      description: 'Faculty Five-a-Side Football Championship Results: Congratulations to the winning team and individual awardees!',
+      description:
+        'Faculty Five-a-Side Football Championship Results: Congratulations to the winning team and individual awardees!',
       content: `As part of its ongoing support for student activities, the Youth Welfare Administration at the Faculty of Computers and Information successfully organized the Faculty Five-a-Side Football Championship, with the participation of 10 competitive teams.
 Final Results:
 Champions – 1st Place
@@ -158,26 +169,32 @@ The Faculty of Computers and Information remains committed to its educational an
       category: 'Community Awareness',
       featured: true,
       tags: ['Dark Web', 'Online Gambling', 'Awareness', 'Al-Azhar', 'Ethics'],
-      views: 1347
-    }
+      views: 1347,
+    },
   ];
 
   // Keep all methods exactly as before — they work perfectly with the new data
-  getNews(filter?: NewsFilter, page: number = 1, pageSize: number = 6): Observable<NewsResponse> {
+  getNews(
+    filter?: any,
+    page: number = 1,
+    pageSize: number = 6
+  ): Observable<any> {
     let filtered = [...this.newsData];
 
     if (filter?.type && filter.type !== 'all') {
-      filtered = filtered.filter(n => n.type === filter.type);
+      filtered = filtered.filter((n) => n.type === filter.type);
     }
     if (filter?.category) {
-      filtered = filtered.filter(n => n.category === filter.category);
+      filtered = filtered.filter((n) => n.category === filter.category);
     }
     if (filter?.searchTerm) {
       const term = filter.searchTerm.toLowerCase();
-      filtered = filtered.filter(n =>
-        n.title.toLowerCase().includes(term) ||
-        n.description.toLowerCase().includes(term) ||
-        n.content.toLowerCase().includes(term)       );
+      filtered = filtered.filter(
+        (n) =>
+          n.title.toLowerCase().includes(term) ||
+          n.description.toLowerCase().includes(term) ||
+          n.content.toLowerCase().includes(term)
+      );
     }
 
     filtered.sort((a, b) => b.date.getTime() - a.date.getTime());
@@ -189,40 +206,50 @@ The Faculty of Computers and Information remains committed to its educational an
       items: filtered.slice(start, end),
       total: filtered.length,
       page,
-      pageSize
+      pageSize,
     });
   }
 
-  getNewsById(id: number): Observable<NewsItem | null> {
-    return of(this.newsData.find(n => n.id === id) || null);
+  getNewsById(id: number): Observable<any | null> {
+    return of(this.newsData.find((n) => n.id === id) || null);
   }
 
-  getFeaturedNews(): Observable<NewsItem[]> {
-    return of(this.newsData.filter(n => n.featured));
+  getFeaturedNews(): Observable<any[]> {
+    return of(this.newsData.filter((n) => n.featured));
   }
 
   getCategories(): Observable<string[]> {
-    return of([...new Set(this.newsData.map(n => n.category))]);
+    return of([...new Set(this.newsData.map((n) => n.category))]);
   }
 
-  getRelatedNews(currentId: number, type: 'news' | 'event', limit = 4): Observable<NewsItem[]> {
+  getRelatedNews(
+    currentId: number,
+    type: 'news' | 'event',
+    limit = 4
+  ): Observable<any[]> {
     return of(
       this.newsData
-        .filter(n => n.id !== currentId && n.type === type)
+        .filter((n) => n.id !== currentId && n.type === type)
         .sort((a, b) => b.date.getTime() - a.date.getTime())
         .slice(0, limit)
     );
   }
 
-  getNextNews(currentId: number, type: 'news' | 'event'): Observable<NewsItem | null> {
-    const items = this.newsData.filter(n => n.type === type);
-    const idx = items.findIndex(n => n.id === currentId);
+  getNextNews(
+    currentId: number,
+    type: 'news' | 'event'
+  ): Observable<any | null> {
+    const items = this.newsData.filter((n) => n.type === type);
+    const idx = items.findIndex((n) => n.id === currentId);
     return of(idx >= 0 && idx < items.length - 1 ? items[idx + 1] : null);
   }
 
-  getPreviousNews(currentId: number, type: 'news' | 'event'): Observable<NewsItem | null> {
-    const items = this.newsData.filter(n => n.type === type);
-    const idx = items.findIndex(n => n.id === currentId);
+  getPreviousNews(
+    currentId: number,
+    type: 'news' | 'event'
+  ): Observable<any | null> {
+    const items = this.newsData.filter((n) => n.type === type);
+    const idx = items.findIndex((n) => n.id === currentId);
     return of(idx > 0 ? items[idx - 1] : null);
   }
 }

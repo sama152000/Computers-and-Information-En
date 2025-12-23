@@ -1,43 +1,59 @@
-export interface NewsItem {
-  id: number;
-  type: 'news' | 'event';
+//  export interface News {
+//    id: number;
+//    title: string;
+//    content: string;
+//    excerpt: string;
+//    image: string;
+//    date: Date;
+//    author?: string;
+//    category?: string;
+//    slug?: string;
+//   type: 'news' | 'article';
+//   tags: string[];
+//   relatedIds?: number[];
+//  }
+
+export interface News {
+  id: string;
   title: string;
-  titleAr?: string;
-  description: string;
-  descriptionAr?: string;
+  urlTitleEn: string;
   content: string;
-  contentAr?: string;
-  imageUrl: string;
-  date: Date;
-  author: string;
-  authorAr?: string;
-  category: string;
-  categoryAr?: string;
-  featured?: boolean;
-  tags?: string[];
-  views?: number;
+  status: string;
+  publishedDate?: string;
+  featuredImagePath: string;
+  pageId: string;
+  pageTittle: string;
+  createdDate: Date;
+  postCategories: PostCategory[];
+  postAttachments: PostAttachment[];
+  tags: Tag[];
 }
 
-export interface NewsFilter {
-  type?: 'news' | 'event' | 'all';
-  category?: string;
-  searchTerm?: string;
-  dateFrom?: Date;
-  dateTo?: Date;
+export interface PostCategory {
+  id: string;
+  postId: string;
+  categoryId: string;
+  categoryName?: string;
 }
 
-export interface NewsResponse {
-  items: NewsItem[];
-  total: number;
-  page: number;
-  pageSize: number;
+export interface PostAttachment {
+  id: string;
+  fileName: string;
+  isPublic: boolean;
+  relativePath: string;
+  folderName: string;
+  url: string;
+  postId: string;
 }
 
-export interface NewsArticle {
-  id: number;
-  title: string;
-  excerpt: string;
-  imageUrl: string;
-  date: Date;
-  category: string;
+export interface Tag {
+  postId: string;
+  index: number;
+  id: string;
+  name: string;
+}
+
+export interface Category {
+  id: string;
+  name: string;
 }

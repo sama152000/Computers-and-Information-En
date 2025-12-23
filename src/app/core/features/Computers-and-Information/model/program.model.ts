@@ -1,45 +1,72 @@
-// src/app/model/program.model.ts
+// export interface Program {
+//   id: string;
+//   name: string;
+//   description: string;
+//   icon: string;
+//   level: 'bachelor' | 'master' | 'phd' | 'diploma';
+//   duration: string;
+//   overview: string;
+//   objectives: string[];
+//   requirements: string[];
+//   courses: string[];
+//   careerOpportunities: string[];
+//   admissionRequirements: string[];
+//   fees?: string;
+//   coordinator?: string;
+//   department: string;
+//   creditsRequired: number;
+//   isActive: boolean;
+// }
+
+// ==================== PROGRAM MODELS ====================
+
+export interface ProgramAttachment {
+  id: string;
+  fileName: string;
+  isPublic: boolean;
+  relativePath: string;
+  folderName: string;
+  url: string;
+  programId: string;
+}
+
+export interface ProgramGoal {
+  id: string;
+  index: number;
+  goalName: string;
+  programId: string;
+}
+
 export interface Program {
   id: string;
-  name: string;
-  degree: string;
-  duration: string;
-  creditHours: number;
-  description: string;
-  vision?: string;
-  mission?: string;
-  objectives?: string[];
-  admissionRequirements?: string[];
-  courses?: string[];
-  coordinator?: ProgramCoordinator;
-  department: string;
-  accreditation?: string;
-  startYear: number;
-  image?: string;
-  icon?: string;
-  students?: number;
+  pageId: string;
+  pageTitle: string;
+  aboutId: string;
+  about: string;
+  mission: string;
+  vision: string;
+  goals: ProgramGoal[];
+  programAttachments: ProgramAttachment[];
 }
 
-export interface HomeProgram {
-  id: string;
-  name: string;
-  description: string;
-  duration: string;
-  image: string;
-  icon: string;
-  students: number;
-}
-
-export interface ProgramCoordinator {
-  name: string;
-  position: string;
-  email?: string;
-  phone?: string;
-}
-
-export interface ProgramSection {
+// ==================== PROGRAM DETAIL ====================
+export interface ProgramDetail {
   id: string;
   title: string;
-  icon: string;
-  route: string;
+  content: string;
+  programCategory: string;
+  facultyId: string;
+  facultyName: string;
+  programId: string;
+  programName: string;
+}
+
+// ==================== PROGRAM MEMBER ====================
+export interface ProgramMember {
+  id: string;
+  isLeader: boolean;
+  programId: string;
+  programName: string;
+  memberId: string;
+  memberName: string;
 }

@@ -1,33 +1,23 @@
-export interface DeanMessage {
-  name: string;
-  title: string;
-  message: string;
-  photoUrl: string;
-}
-
-export interface VisionMission {
-  vision: string;
-  mission: string;
-}
-
-export interface Objective {
+export interface AboutUsData {
   id: number;
   title: string;
-  description: string;
-  icon?: string;
+  description?: string;
+  mission?: string;
+  vision?: string;
+  objectives?: string[];
+  history?: string;
+  messageFromDean?: string;
+  deanName?: string;
+  deanTitle?: string;
+  deanImage?: string;
+  establishedYear?: number;
+  achievements?: string[];
 }
 
-export interface AdministrativeMember {
-  id: number;
-  name: string;
-  position: string;
-  photoUrl: string;
-  department?: string;
-}
-
-export interface AboutTabData {
-  deanMessage: DeanMessage;
-  visionMission: VisionMission;
-  objectives: Objective[];
-  administrativeStructure: AdministrativeMember[];
+export interface QuickNavItem {
+  id: string;
+  label: string;
+  route: string;
+  icon: string;
+  color: string;
 }

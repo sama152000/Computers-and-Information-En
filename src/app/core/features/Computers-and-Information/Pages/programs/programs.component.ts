@@ -2,20 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProgramsService } from '../../Services/programs.service';
-import { Program, ProgramSection } from '../../model/program.model';
-import { FooterComponent } from "../shared/footer/footer.component";
+import { FooterComponent } from '../shared/footer/footer.component';
 @Component({
   selector: 'app-programs',
   standalone: true,
   imports: [CommonModule, FooterComponent],
   templateUrl: './programs.component.html',
-  styleUrls: ['./programs.component.css']
+  styleUrls: ['./programs.component.css'],
 })
 export class ProgramsComponent implements OnInit {
-  allPrograms: Program[] = [];
-  currentProgram: Program | null = null;
-  programSections: ProgramSection[] = [];
-  currentSection: ProgramSection | null = null;
+  allPrograms: any[] = [];
+  currentProgram: any | null = null;
+  programSections: any[] = [];
+  currentSection: any | null = null;
 
   constructor(
     private programsService: ProgramsService,
@@ -27,7 +26,7 @@ export class ProgramsComponent implements OnInit {
     this.loadPrograms();
     this.loadProgramSections();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = params['id'];
       const section = params['section'];
       if (id) {
@@ -38,31 +37,43 @@ export class ProgramsComponent implements OnInit {
   }
 
   loadPrograms() {
-    this.programsService.getAllPrograms().subscribe(p => this.allPrograms = p);
+    this.programsService
+      .getAllPrograms()
+      .subscribe((p) => (this.allPrograms = p));
   }
 
   loadProgramSections() {
-    this.programsService.getProgramSections().subscribe(s => this.programSections = s);
+    this.programsService
+      .getProgramSections()
+      .subscribe((s) => (this.programSections = s));
   }
 
   loadProgram(id: string) {
-    this.programsService.getProgramById(id).subscribe(p => this.currentProgram = p || null);
+    this.programsService
+      .getProgramById(id)
+      .subscribe((p) => (this.currentProgram = p || null));
   }
 
   loadSection(sectionId: string) {
-    this.currentSection = this.programSections.find(s => s.id === sectionId) || this.programSections[0];
+    this.currentSection =
+      this.programSections.find((s) => s.id === sectionId) ||
+      this.programSections[0];
   }
 
-  selectProgram(program: Program) {
+  selectProgram(program: any) {
     this.currentProgram = program;
     this.currentSection = this.programSections[0];
     this.router.navigate(['/programs', program.id, 'about']);
   }
 
-  selectSection(section: ProgramSection) {
+  selectSection(section: any) {
     this.currentSection = section;
     if (this.currentProgram) {
-      this.router.navigate(['/programs', this.currentProgram.id, section.route]);
+      this.router.navigate([
+        '/programs',
+        this.currentProgram.id,
+        section.route,
+      ]);
     }
   }
 }

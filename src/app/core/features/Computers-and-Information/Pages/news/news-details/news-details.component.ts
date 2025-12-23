@@ -2,21 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { NewsService } from '../../../Services/news.service';
-import { NewsItem } from '../../../model/news.model';
-import { FooterComponent } from "../../shared/footer/footer.component";
+import { FooterComponent } from '../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-news-details',
   standalone: true,
   imports: [CommonModule, RouterModule, FooterComponent],
   templateUrl: './news-details.component.html',
-  styleUrls: ['./news-details.component.css']
+  styleUrls: ['./news-details.component.css'],
 })
 export class NewsDetailsComponent implements OnInit {
-  currentItem: NewsItem | null = null;
-  relatedItems: NewsItem[] = [];
-  nextItem: NewsItem | null = null;
-  previousItem: NewsItem | null = null;
+  currentItem: any | null = null;
+  relatedItems: any[] = [];
+  nextItem: any | null = null;
+  previousItem: any | null = null;
   loading = true;
 
   constructor(
@@ -26,10 +25,10 @@ export class NewsDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = +params['id'];
       const type = params['type'] as 'news' | 'event';
-      
+
       if (id && type) {
         this.loadItemDetails(id, type);
       } else {
@@ -40,13 +39,13 @@ export class NewsDetailsComponent implements OnInit {
 
   loadItemDetails(id: number, type: 'news' | 'event'): void {
     this.loading = true;
-    
-    this.newsService.getNewsById(id).subscribe(item => {
+
+    this.newsService.getNewsById(id).subscribe((item) => {
       if (item && item.type === type) {
         this.currentItem = item;
         this.loadRelatedItems(item);
         this.loadNavigationItems(id, type);
-        
+
         // Increment view count (in a real app, this would be handled by the backend)
         if (item.views) {
           item.views++;
@@ -58,24 +57,25 @@ export class NewsDetailsComponent implements OnInit {
     });
   }
 
-  loadRelatedItems(item: NewsItem): void {
-    this.newsService.getRelatedNews(item.id, item.type, 4)
-      .subscribe(items => {
+  loadRelatedItems(item: any): void {
+    this.newsService
+      .getRelatedNews(item.id, item.type, 4)
+      .subscribe((items) => {
         this.relatedItems = items;
       });
   }
 
   loadNavigationItems(id: number, type: 'news' | 'event'): void {
-    this.newsService.getNextNews(id, type).subscribe(item => {
+    this.newsService.getNextNews(id, type).subscribe((item) => {
       this.nextItem = item;
     });
-    
-    this.newsService.getPreviousNews(id, type).subscribe(item => {
+
+    this.newsService.getPreviousNews(id, type).subscribe((item) => {
       this.previousItem = item;
     });
   }
 
-  navigateToItem(item: NewsItem): void {
+  navigateToItem(item: any): void {
     this.router.navigate(['/news', item.type, item.id]);
   }
 
@@ -104,26 +104,35 @@ export class NewsDetailsComponent implements OnInit {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
-      weekday: 'long'
+      weekday: 'long',
     }).format(date);
   }
 
   shareOnFacebook(): void {
     const url = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(this.currentItem?.title || '');
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${title}`, '_blank');
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${title}`,
+      '_blank'
+    );
   }
 
   shareOnTwitter(): void {
     const url = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(this.currentItem?.title || '');
-    window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`, '_blank');
+    window.open(
+      `https://twitter.com/intent/tweet?url=${url}&text=${title}`,
+      '_blank'
+    );
   }
 
   shareOnLinkedIn(): void {
     const url = encodeURIComponent(window.location.href);
     const title = encodeURIComponent(this.currentItem?.title || '');
-    window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}`, '_blank');
+    window.open(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${title}`,
+      '_blank'
+    );
   }
 
   copyLink(): void {

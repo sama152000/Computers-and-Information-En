@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DeanMessage } from '../../../model/about.model';
 import { AboutService } from '../../../Services/about.service';
 
 @Component({
@@ -8,10 +7,10 @@ import { AboutService } from '../../../Services/about.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './dean-message.component.html',
-  styleUrls: ['./dean-message.component.css']
+  styleUrls: ['./dean-message.component.css'],
 })
 export class DeanMessageComponent implements OnInit {
-  deanData: DeanMessage | null = null;
+  deanData: any | null = null;
 
   constructor(private aboutService: AboutService) {}
 

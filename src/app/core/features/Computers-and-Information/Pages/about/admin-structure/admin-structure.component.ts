@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AdministrativeMember } from '../../../model/about.model';
 import { AboutService } from '../../../Services/about.service';
 
 @Component({
@@ -8,10 +7,10 @@ import { AboutService } from '../../../Services/about.service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './admin-structure.component.html',
-  styleUrls: ['./admin-structure.component.css']
+  styleUrls: ['./admin-structure.component.css'],
 })
 export class AdminStructureComponent implements OnInit {
-  administrators: AdministrativeMember[] = [];
+  administrators: any[] = [];
 
   constructor(private aboutService: AboutService) {}
 

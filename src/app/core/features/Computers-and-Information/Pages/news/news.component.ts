@@ -3,21 +3,20 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NewsService } from '../../Services/news.service';
-import { NewsItem, NewsFilter } from '../../model/news.model';
-import { FooterComponent } from "../shared/footer/footer.component";
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'app-news',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, FooterComponent],
   templateUrl: './news.component.html',
-  styleUrls: ['./news.component.css']
+  styleUrls: ['./news.component.css'],
 })
 export class NewsComponent implements OnInit {
-  newsItems: NewsItem[] = [];
+  newsItems: any[] = [];
   activeTab: 'news' | 'event' = 'news';
   loading = false;
-  
+
   // Pagination
   currentPage = 1;
   pageSize = 6;
@@ -32,8 +31,8 @@ export class NewsComponent implements OnInit {
 
   ngOnInit(): void {
     // Check route to determine active tab
-    this.route.url.subscribe(segments => {
-      const path = segments.map(s => s.path).join('/');
+    this.route.url.subscribe((segments) => {
+      const path = segments.map((s) => s.path).join('/');
       if (path.includes('events')) {
         this.activeTab = 'event';
       } else {
@@ -46,26 +45,27 @@ export class NewsComponent implements OnInit {
   onTabChange(tab: 'news' | 'event'): void {
     this.activeTab = tab;
     this.currentPage = 1;
-    
+
     // Update URL without reloading
     if (tab === 'event') {
       this.router.navigate(['/news/events'], { replaceUrl: true });
     } else {
       this.router.navigate(['/news'], { replaceUrl: true });
     }
-    
+
     this.loadNews();
   }
 
   loadNews(): void {
     this.loading = true;
-    
-    const filter: NewsFilter = {
-      type: this.activeTab
+
+    const filter: any = {
+      type: this.activeTab,
     };
 
-    this.newsService.getNews(filter, this.currentPage, this.pageSize)
-      .subscribe(response => {
+    this.newsService
+      .getNews(filter, this.currentPage, this.pageSize)
+      .subscribe((response) => {
         this.newsItems = response.items;
         this.totalItems = response.total;
         this.totalPages = Math.ceil(this.totalItems / this.pageSize);
@@ -79,7 +79,7 @@ export class NewsComponent implements OnInit {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  navigateToDetails(item: NewsItem): void {
+  navigateToDetails(item: any): void {
     this.router.navigate(['/news', item.type, item.id]);
   }
 
@@ -87,25 +87,28 @@ export class NewsComponent implements OnInit {
     return new Intl.DateTimeFormat('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     }).format(date);
   }
 
   getPaginationArray(): number[] {
     const pages: number[] = [];
     const maxVisiblePages = 5;
-    
-    let startPage = Math.max(1, this.currentPage - Math.floor(maxVisiblePages / 2));
+
+    let startPage = Math.max(
+      1,
+      this.currentPage - Math.floor(maxVisiblePages / 2)
+    );
     let endPage = Math.min(this.totalPages, startPage + maxVisiblePages - 1);
-    
+
     if (endPage - startPage + 1 < maxVisiblePages) {
       startPage = Math.max(1, endPage - maxVisiblePages + 1);
     }
-    
+
     for (let i = startPage; i <= endPage; i++) {
       pages.push(i);
     }
-    
+
     return pages;
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SectorsService } from '../../Services/sectors.service';
-import { Sector, SectorSection } from '../../model/sector.model';
 import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
@@ -10,13 +9,13 @@ import { FooterComponent } from '../shared/footer/footer.component';
   standalone: true,
   imports: [CommonModule, FooterComponent],
   templateUrl: './sectors.component.html',
-  styleUrls: ['./sectors.component.css']
+  styleUrls: ['./sectors.component.css'],
 })
 export class SectorsComponent implements OnInit {
-  allSectors: Sector[] = [];
-  currentSector: Sector | null = null;
-  sectorSections: SectorSection[] = [];
-  currentSection: SectorSection | null = null;
+  allSectors: any[] = [];
+  currentSector: any | null = null;
+  sectorSections: any[] = [];
+  currentSection: any | null = null;
 
   constructor(
     private sectorsService: SectorsService,
@@ -28,7 +27,7 @@ export class SectorsComponent implements OnInit {
     this.loadSectors();
     this.loadSectorSections();
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       const id = params['id'];
       const section = params['section'];
       if (id) {
@@ -39,28 +38,34 @@ export class SectorsComponent implements OnInit {
   }
 
   loadSectors() {
-    this.sectorsService.getAllSectors().subscribe(s => this.allSectors = s);
+    this.sectorsService.getAllSectors().subscribe((s) => (this.allSectors = s));
   }
 
   loadSectorSections() {
-    this.sectorsService.getSectorSections().subscribe(s => this.sectorSections = s);
+    this.sectorsService
+      .getSectorSections()
+      .subscribe((s) => (this.sectorSections = s));
   }
 
   loadSector(id: string) {
-    this.sectorsService.getSectorById(id).subscribe(s => this.currentSector = s || null);
+    this.sectorsService
+      .getSectorById(id)
+      .subscribe((s) => (this.currentSector = s || null));
   }
 
   loadSection(sectionId: string) {
-    this.currentSection = this.sectorSections.find(s => s.id === sectionId) || this.sectorSections[0];
+    this.currentSection =
+      this.sectorSections.find((s) => s.id === sectionId) ||
+      this.sectorSections[0];
   }
 
-  selectSector(sector: Sector) {
+  selectSector(sector: any) {
     this.currentSector = sector;
     this.currentSection = this.sectorSections[0];
     this.router.navigate(['/sectors', sector.id, 'about']);
   }
 
-  selectSection(section: SectorSection) {
+  selectSection(section: any) {
     this.currentSection = section;
     if (this.currentSector) {
       this.router.navigate(['/sectors', this.currentSector.id, section.route]);

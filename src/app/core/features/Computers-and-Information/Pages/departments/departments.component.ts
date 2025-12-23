@@ -2,22 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { DepartmentsService } from '../../Services/departments.service';
-import { Department, DepartmentSection } from '../../model/department.model';
 import { DepartmentContentComponent } from '../../Pages/departments/department-content/department-content.component';
-import { FooterComponent } from "../shared/footer/footer.component";
+import { FooterComponent } from '../shared/footer/footer.component';
 
 @Component({
   selector: 'app-departments',
   standalone: true,
-  imports: [CommonModule, RouterModule, DepartmentContentComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    RouterModule,
+    DepartmentContentComponent,
+    FooterComponent,
+  ],
   templateUrl: './departments.component.html',
- styleUrls: ['./departments.component.css']
+  styleUrls: ['./departments.component.css'],
 })
 export class DepartmentsComponent implements OnInit {
-  allDepartments: Department[] = [];
-  currentDepartment: Department | null = null;
-  departmentSections: DepartmentSection[] = [];
-  currentSection: DepartmentSection | null = null;
+  allDepartments: any[] = [];
+  currentDepartment: any | null = null;
+  departmentSections: any[] = [];
+  currentSection: any | null = null;
 
   constructor(
     private departmentsService: DepartmentsService,
@@ -28,9 +32,9 @@ export class DepartmentsComponent implements OnInit {
   ngOnInit() {
     this.loadDepartments();
     this.loadDepartmentSections();
-    
+
     // Subscribe to route parameters
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe((params) => {
       if (params['id']) {
         this.loadDepartment(params['id']);
         if (params['section']) {
@@ -44,39 +48,43 @@ export class DepartmentsComponent implements OnInit {
   }
 
   loadDepartments() {
-    this.departmentsService.getAllDepartments().subscribe(departments => {
+    this.departmentsService.getAllDepartments().subscribe((departments) => {
       this.allDepartments = departments;
     });
   }
 
   loadDepartmentSections() {
-    this.departmentsService.getDepartmentSections().subscribe(sections => {
+    this.departmentsService.getDepartmentSections().subscribe((sections) => {
       this.departmentSections = sections;
     });
   }
 
   loadDepartment(id: string) {
-    this.departmentsService.getDepartmentById(id).subscribe(department => {
+    this.departmentsService.getDepartmentById(id).subscribe((department) => {
       this.currentDepartment = department || null;
     });
   }
 
   loadSection(sectionId: string) {
-    this.departmentsService.getSectionById(sectionId).subscribe(section => {
+    this.departmentsService.getSectionById(sectionId).subscribe((section) => {
       this.currentSection = section || null;
     });
   }
 
-  selectDepartment(department: Department) {
+  selectDepartment(department: any) {
     this.currentDepartment = department;
     this.currentSection = this.departmentSections[0]; // Default to first section
     this.router.navigate(['/departments', department.id, 'about']);
   }
 
-  selectSection(section: DepartmentSection) {
+  selectSection(section: any) {
     this.currentSection = section;
     if (this.currentDepartment) {
-      this.router.navigate(['/departments', this.currentDepartment.id, section.route]);
+      this.router.navigate([
+        '/departments',
+        this.currentDepartment.id,
+        section.route,
+      ]);
     }
   }
 }
