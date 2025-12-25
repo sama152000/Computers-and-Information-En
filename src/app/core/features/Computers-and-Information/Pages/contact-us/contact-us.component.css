@@ -9,7 +9,11 @@
 
 .hero-section {
   position: relative;
-  background: linear-gradient(rgba(116, 10, 31, 0.555), rgba(116, 10, 31, 0.562)), url('/assets/slide4.jpg') center/cover no-repeat;
+  background: linear-gradient(
+      rgba(116, 10, 31, 0.555),
+      rgba(116, 10, 31, 0.562)
+    ),
+    url("/assets/slide4.jpg") center/cover no-repeat;
   color: white;
   padding: 120px 0 80px;
   text-align: center;
@@ -20,7 +24,7 @@
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 1rem;
-  text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .hero-subtitle {
@@ -34,7 +38,7 @@
   background: white;
   padding: 2rem;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
   transition: all 0.4s ease;
   height: 100%;
@@ -102,7 +106,7 @@
 
 .btn-email:hover {
   transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .social-card {
@@ -110,7 +114,7 @@
   padding: 2.5rem;
   border-radius: 16px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid #eee;
   height: 100%;
 }
@@ -158,7 +162,7 @@
 }
 
 .section-title::after {
-  content: '';
+  content: "";
   width: 100px;
   height: 4px;
   background: linear-gradient(90deg, #740a1f, transparent);
@@ -175,7 +179,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
 .departments-table th {
@@ -199,11 +203,9 @@
 .map-container {
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
   margin-top: 2rem;
 }
-
-
 
 /* Temporary override to fix large horizontal padding on contact-us page at max-width 576px */
 @media (max-width: 576px) {
@@ -218,17 +220,85 @@
   .row > [class*="col-"] {
     padding-left: 0.5rem !important;
     padding-right: 0.5rem !important;
-        width: 100% !important;
-
+    width: 100% !important;
   }
-  
-  .info-card, .email-card, .social-card {
+
+  .info-card,
+  .email-card,
+  .social-card {
     margin-bottom: 1.5rem;
   }
-  
+
   .departments-table th,
   .departments-table td {
     padding: 0.75rem 0.5rem;
     font-size: 0.85rem;
+  }
+}
+
+/* ============================= */
+/* WhatsApp Section */
+/* ============================= */
+.whatsapp-section {
+  margin-block: 2rem;
+}
+
+.whatsapp-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  background: linear-gradient(135deg, #eaeeec);
+  color: rgba(0, 0, 0, 0.596);
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+
+  box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3);
+}
+
+/* ============================= */
+/* Icon */
+/* ============================= */
+.whatsapp-icon {
+  width: 60px;
+  height: 60px;
+  background: #1ebe5d;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+/* ============================= */
+/* Info */
+/* ============================= */
+.whatsapp-info h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+.whatsapp-info p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin: 0.3rem 0;
+}
+
+.whatsapp-number {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.8px;
+}
+
+/* ============================= */
+/* Responsive */
+/* ============================= */
+@media (max-width: 576px) {
+  .whatsapp-card {
+    flex-direction: column;
+    text-align: center;
   }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../shared/header/header.component';
 import { HeroComponent } from './hero/hero.component';
+import { HomeDeanMessageComponent } from './dean-message/dean-message.component';
 import { VisionMissionComponent } from './vision-mission/vision-mission.component';
 import { ProgramsComponent } from './programs/programs.component';
 import { NewsComponent } from './news/news.component';
@@ -16,17 +17,16 @@ import { FooterComponent } from '../shared/footer/footer.component';
   imports: [
     CommonModule,
     HeroComponent,
+    HomeDeanMessageComponent,
     VisionMissionComponent,
     ProgramsComponent,
     NewsComponent,
     EventsComponent,
     ServicesComponent,
     StatisticsComponent,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './Home.component.html',
-  styleUrls: ['./Home.component.css']
+  styleUrls: ['./Home.component.css'],
 })
-export class HomeComponent {
-  
-}
+export class HomeComponent {}

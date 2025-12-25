@@ -1,70 +1,104 @@
 <div class="news-page">
-  <!-- Page Header -->
- 
-
   <!-- Main Content -->
   <section class="news-content">
     <div class="container">
       <!-- Tabs Navigation -->
       <div class="tabs-container">
         <div class="custom-tabs">
-          <button 
-            class="tab-btn" 
+          <button
+            class="tab-btn"
             [class.active]="activeTab === 'news'"
-            (click)="onTabChange('news')">
-            <i class="fas fa-newspaper"></i>
+            (click)="onTabChange('news')"
+          >
+            <i class="pi pi-megaphone"></i>
             News
           </button>
-          <button 
-            class="tab-btn" 
+          <button
+            class="tab-btn"
             [class.active]="activeTab === 'event'"
-            (click)="onTabChange('event')">
-            <i class="fas fa-calendar-alt"></i>
+            (click)="onTabChange('event')"
+          >
+            <i class="pi pi-calendar"></i>
             Events
           </button>
         </div>
       </div>
 
-      <!-- Loading State -->
-      <div *ngIf="loading" class="loading-container">
-        <div class="loading-spinner">
-          <div class="spinner"></div>
-          <p>Loading {{ activeTab === 'news' ? 'news' : 'events' }}...</p>
-        </div>
+      <!-- Loading State with Skeleton -->
+      <div *ngIf="isLoading" class="blog-grid">
+        <article
+          class="blog-card skeleton-card"
+          *ngFor="let i of [1, 2, 3, 4, 5, 6]"
+        >
+          <div class="card-image">
+            <p-skeleton width="100%" height="200px" />
+          </div>
+          <div class="blog-content">
+            <div class="card-meta">
+              <p-skeleton width="80px" height="1rem" />
+              <p-skeleton width="100px" height="1rem" />
+            </div>
+            <p-skeleton width="100%" height="1.5rem" styleClass="mb-2" />
+            <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+            <p-skeleton width="80%" height="1rem" />
+          </div>
+        </article>
+      </div>
+
+      <!-- Error State -->
+      <div *ngIf="hasError && !isLoading" class="error-container">
+        <i class="pi pi-exclamation-triangle error-icon"></i>
+        <p class="error-text">
+          Failed to load {{ activeTab === "news" ? "news" : "events" }}. Please
+          try again later.
+        </p>
       </div>
 
       <!-- News/Events Grid -->
-      <div *ngIf="!loading" class="blog-grid">
-        <article 
-          *ngFor="let item of newsItems" 
+      <div
+        *ngIf="!isLoading && !hasError && newsItems.length > 0"
+        class="blog-grid"
+      >
+        <article
+          *ngFor="let item of newsItems"
           class="blog-card"
-          (click)="navigateToDetails(item)">
+          (click)="navigateToDetails(item)"
+        >
           <div class="card-image">
-            <img [src]="item.imageUrl" [alt]="item.title" />
+            <img [src]="item.featuredImagePath" [alt]="item.title" />
             <div class="card-overlay">
-              <span class="card-type" [class.news-type]="item.type === 'news'" [class.event-type]="item.type === 'event'">
-                <i [class]="item.type === 'news' ? 'fas fa-newspaper' : 'fas fa-calendar-alt'"></i>
-                {{ item.type === 'news' ? 'News' : 'Event' }}
+              <span
+                class="card-type"
+                [class.news-type]="activeTab === 'news'"
+                [class.event-type]="activeTab === 'event'"
+              >
+                <i
+                  [class]="
+                    activeTab === 'news' ? 'pi pi-megaphone' : 'pi pi-calendar'
+                  "
+                ></i>
+                {{ activeTab === "news" ? "News" : "Event" }}
               </span>
             </div>
           </div>
           <div class="blog-content">
             <div class="card-meta">
-              <span class="card-category">{{ item.category }}</span>
+              <span class="card-category">{{ getMainCategory(item) }}</span>
               <span class="card-date">
-                <i class="fas fa-calendar"></i>
-                {{ formatDate(item.date) }}
+                <i class="pi pi-calendar"></i>
+                {{ formatDate(item.createdDate) }}
               </span>
             </div>
             <h3 class="card-title">{{ item.title }}</h3>
-            <p class="card-description">{{ item.description }}</p>
+            <p class="card-description">{{ getExcerpt(item.content) }}</p>
             <div class="card-footer">
-              <span class="card-author">
-                <i class="fas fa-user"></i>
-                {{ item.author }}
-              </span>
+              <div class="card-tags" *ngIf="item.tags && item.tags.length > 0">
+                <span class="tag" *ngFor="let tag of item.tags.slice(0, 2)">{{
+                  tag.name
+                }}</span>
+              </div>
               <span class="read-more">
-                Read More <i class="fas fa-arrow-right"></i>
+                Read More <i class="pi pi-arrow-right"></i>
               </span>
             </div>
           </div>
@@ -72,34 +106,45 @@
       </div>
 
       <!-- No Results -->
-      <div *ngIf="!loading && newsItems.length === 0" class="no-results">
+      <div
+        *ngIf="!isLoading && !hasError && newsItems.length === 0"
+        class="no-results"
+      >
         <div class="no-results-content">
-          <i class="fas fa-info-circle"></i>
-          <h3>No {{ activeTab === 'news' ? 'news' : 'events' }} found</h3>
-          <p>Check back later for new {{ activeTab === 'news' ? 'news' : 'events' }} updates.</p>
+          <i class="pi pi-info-circle"></i>
+          <h3>No {{ activeTab === "news" ? "news" : "events" }} found</h3>
+          <p>
+            Check back later for new
+            {{ activeTab === "news" ? "news" : "events" }} updates.
+          </p>
         </div>
       </div>
 
       <!-- Pagination -->
-      <div *ngIf="!loading && totalPages > 1" class="pagination-container">
+      <div
+        *ngIf="!isLoading && !hasError && totalPages > 1"
+        class="pagination-container"
+      >
         <nav class="pagination-nav">
           <ul class="pagination">
             <!-- Previous Button -->
             <li class="page-item" [class.disabled]="currentPage === 1">
-              <button 
-                class="page-link" 
+              <button
+                class="page-link"
                 (click)="onPageChange(currentPage - 1)"
-                [disabled]="currentPage === 1">
-                <i class="fas fa-chevron-left"></i>
+                [disabled]="currentPage === 1"
+              >
+                <i class="pi pi-chevron-left"></i>
                 Previous
               </button>
             </li>
 
             <!-- Page Numbers -->
-            <li 
-              *ngFor="let page of getPaginationArray()" 
-              class="page-item" 
-              [class.active]="page === currentPage">
+            <li
+              *ngFor="let page of getPaginationArray()"
+              class="page-item"
+              [class.active]="page === currentPage"
+            >
               <button class="page-link" (click)="onPageChange(page)">
                 {{ page }}
               </button>
@@ -107,12 +152,13 @@
 
             <!-- Next Button -->
             <li class="page-item" [class.disabled]="currentPage === totalPages">
-              <button 
-                class="page-link" 
+              <button
+                class="page-link"
                 (click)="onPageChange(currentPage + 1)"
-                [disabled]="currentPage === totalPages">
+                [disabled]="currentPage === totalPages"
+              >
                 Next
-                <i class="fas fa-chevron-right"></i>
+                <i class="pi pi-chevron-right"></i>
               </button>
             </li>
           </ul>

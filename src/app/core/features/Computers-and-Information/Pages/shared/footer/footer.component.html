@@ -6,89 +6,92 @@
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="footer-section">
             <div class="footer-logo-section">
-              <img src="assets/comp-logo.jpg" alt="CS Department Logo" class="footer-logo" />
+              <img
+                [src]="logo()?.url"
+                [alt]="logo()?.fileName"
+                class="footer-logo"
+              />
               <h4>Faculty of Computers & Information</h4>
               <p class="university-name">Luxor University</p>
             </div>
-            
           </div>
         </div>
-        
+
         <!-- Quick Links -->
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="footer-section">
-            <h5 class="footer-title">{{ footerSections[0]?.title }}</h5>
+            <h5 class="footer-title">Quick Links</h5>
             <ul class="footer-links">
-              <li *ngFor="let link of footerSections[0]?.links">
-                <a [routerLink]="link.route" [attr.href]="link.external ? link.route : null">{{ link.label }}</a>
+              <li *ngFor="let link of quickLinks">
+                <a [routerLink]="link.route">{{ link.label }}</a>
               </li>
             </ul>
           </div>
         </div>
-        
+
         <!-- Contact Info -->
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="footer-section">
             <h5 class="footer-title">Contact Info</h5>
             <div class="contact-info">
-              <div class="contact-item">
+              <div class="contact-item" *ngIf="contact?.address">
                 <i class="pi pi-map-marker"></i>
                 <div>
-                  <p>Luxor University Campus<br>Luxor, Egypt</p>
+                  <p>{{ contact?.address }}</p>
                 </div>
               </div>
-              <div class="contact-item">
+              <div class="contact-item" *ngIf="getPhoneNumbers().length > 0">
                 <i class="pi pi-phone"></i>
                 <div>
-                  <p>+20 123 456 789</p>
+                  <p *ngFor="let phone of getPhoneNumbers()">
+                    <a [href]="'tel:' + phone">{{ phone }}</a>
+                  </p>
                 </div>
               </div>
-              <div class="contact-item">
+              <div class="contact-item" *ngIf="contact?.email">
                 <i class="pi pi-envelope"></i>
                 <div>
-                  <p>info@csdept.edu</p>
+                  <p>
+                    <a [href]="'mailto:' + contact?.email">{{
+                      contact?.email
+                    }}</a>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        
+
         <!-- Social & Newsletter -->
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="footer-section">
             <h5 class="footer-title">Follow Us</h5>
             <div class="social-links">
-              <a href="#" class="social-link facebook">
-                <i class="pi pi-facebook"></i>
+              <a
+                *ngFor="let social of socialLinks"
+                [href]="social.url"
+                target="_blank"
+                class="social-link"
+                [ngClass]="social.className"
+                [title]="social.name"
+              >
+                <i [class]="social.icon"></i>
               </a>
-              <a href="#" class="social-link twitter">
-                <i class="pi pi-twitter"></i>
-              </a>
-              <a href="#" class="social-link linkedin">
-                <i class="pi pi-linkedin"></i>
-              </a>
-              <a href="#" class="social-link instagram">
-                <i class="pi pi-instagram"></i>
-              </a>
-              <a href="#" class="social-link youtube">
-                <i class="pi pi-youtube"></i>
-              </a>
-            </div>
-            
-           
             </div>
           </div>
         </div>
       </div>
     </div>
-  
+  </div>
+
   <!-- Footer Bottom -->
   <div class="footer-bottom">
     <div class="container-fluid">
       <div class="row align-items-center">
         <div class="col-md-6">
           <p class="copyright">
-            &copy; {{ currentYear }} Faculty of Computers & Information - Luxor University. All Rights Reserved.
+            &copy; {{ currentYear }} Faculty of Computers & Information - Luxor
+            University. All Rights Reserved.
           </p>
         </div>
         <div class="col-md-6">

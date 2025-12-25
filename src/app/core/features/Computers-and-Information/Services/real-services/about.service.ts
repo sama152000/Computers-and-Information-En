@@ -33,6 +33,7 @@ export interface About {
   history: string;
   goals: Goal[];
   pageId: string;
+  pageType: string;
   pageName: string;
   pageNameEn: string;
 }
@@ -123,6 +124,31 @@ export class AboutService {
                 page.pageName === 'عن الجامعة'
             );
             observer.next(aboutUniversity || null);
+            observer.complete();
+          } else {
+            observer.next(null);
+            observer.complete();
+          }
+        },
+        error: (error) => {
+          observer.error(error);
+        },
+      });
+    });
+  }
+
+  /**
+   * Get page by pageType
+   * @param pageType The page type to filter by (e.g., 'AboutUniversity', 'News')
+   * @returns Observable of About data for the specified page type
+   */
+  getByPageType(pageType: string): Observable<About | null> {
+    return new Observable((observer) => {
+      this.getAllAboutPages().subscribe({
+        next: (response) => {
+          if (response.success && response.data && response.data.length > 0) {
+            const page = response.data.find((p) => p.pageType === pageType);
+            observer.next(page || null);
             observer.complete();
           } else {
             observer.next(null);

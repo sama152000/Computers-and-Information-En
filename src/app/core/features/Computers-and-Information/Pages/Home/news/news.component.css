@@ -1,9 +1,8 @@
 .news-section {
   background: #d4d3d3;
   padding: var(--section-padding);
-   padding-left:var(--l-r-padding);
-    padding-right:var(--l-r-padding);
-
+  padding-left: var(--l-r-padding);
+  padding-right: var(--l-r-padding);
 }
 
 .news-grid {
@@ -14,19 +13,26 @@
   margin: 0 auto;
 }
 
+/* ============================= */
+/* News Card (مع @defer) */
+/* ============================= */
 .news-card {
   background: var(--white);
   border-radius: var(--border-radius-md);
   overflow: hidden;
   box-shadow: var(--shadow-light);
-  transition: var(--transition-slow);
+
+  /* animation */
   opacity: 0;
-  transform: translateY(30px);
+  transform: translateY(20px);
+  animation: fadeUp 0.6s ease forwards;
 }
 
-.news-card.visible {
-  opacity: 1;
-  transform: translateY(0);
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .news-card:hover {
@@ -34,6 +40,9 @@
   box-shadow: 0 15px 35px rgba(211, 47, 47, 0.2);
 }
 
+/* ============================= */
+/* Image */
+/* ============================= */
 .news-image {
   position: relative;
   height: 220px;
@@ -51,6 +60,9 @@
   transform: scale(1.05);
 }
 
+/* ============================= */
+/* Category */
+/* ============================= */
 .news-category {
   position: absolute;
   top: 1rem;
@@ -65,6 +77,9 @@
   letter-spacing: 0.5px;
 }
 
+/* ============================= */
+/* Content */
+/* ============================= */
 .news-content {
   padding: 2rem;
 }
@@ -101,20 +116,25 @@
   padding: 10px 20px;
 }
 
+/* ============================= */
 /* View All Button */
+/* ============================= */
 .btn-lg {
   padding: 15px 40px;
   font-size: 1.1rem;
   font-weight: 600;
 }
 
+/* ============================= */
 /* Responsive */
+/* ============================= */
 @media (max-width: 768px) {
-    .news-section {
+  .news-section {
     padding: 80px 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
-}
+  }
+
   .news-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -139,11 +159,12 @@
 }
 
 @media (max-width: 576px) {
-    .news-section {
+  .news-section {
     padding: 80px 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
-}
+  }
+
   .news-content {
     padding: 1.2rem;
   }

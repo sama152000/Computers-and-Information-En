@@ -1,17 +1,16 @@
+/* ============================= */
+/* Events Section */
+/* ============================= */
 .events-section {
-  background: url('/assets/bg3.jpg') center/cover no-repeat;
+  background: url("/assets/bg3.jpg") center/cover no-repeat;
   padding: var(--section-padding);
   position: relative;
 }
 
 .events-section::before {
-  content: '';
+  content: "";
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  /* background: rgba(0, 0, 0, 0.5); */
+  inset: 0;
   z-index: 1;
 }
 
@@ -25,6 +24,9 @@
   margin-bottom: 2rem;
 }
 
+/* ============================= */
+/* Timeline */
+/* ============================= */
 .timeline {
   position: relative;
   max-width: 1000px;
@@ -33,7 +35,7 @@
 }
 
 .timeline::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 50%;
@@ -44,22 +46,41 @@
   border-radius: 2px;
 }
 
+/* ============================= */
+/* Timeline Item (مع @defer) */
+/* ============================= */
 .timeline-item {
   position: relative;
   width: 50%;
   padding: 1rem;
+
   opacity: 0;
-  transform: translateX(-50px);
-  transition: all 0.6s ease;
+  transform: translateX(-40px);
+  animation: fadeSlideLeft 0.6s ease forwards;
 }
 
-.timeline-item.visible {
-  opacity: 1;
-  transform: translateX(0);
+.timeline-item.right {
+  left: 50%;
+  transform: translateX(40px);
+  animation: fadeSlideRight 0.6s ease forwards;
+}
+
+@keyframes fadeSlideLeft {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeSlideRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .timeline-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 2rem;
   width: 16px;
@@ -79,28 +100,25 @@
   right: -10px;
 }
 
-.timeline-item.right {
-  left: 50%;
-  transform: translateX(-50px);
-}
-
-.timeline-item.right.visible {
-  transform: translateX(0);
-}
-
 .timeline-item.right::before {
   left: -10px;
 }
 
+/* ============================= */
+/* Date */
+/* ============================= */
 .timeline-date {
   font-weight: 700;
-  color: var(--accent-gold);
+  color: rgb(16, 180, 114);
   font-size: 1.1rem;
   margin-bottom: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
 
+/* ============================= */
+/* Content Card */
+/* ============================= */
 .timeline-content {
   background: rgba(255, 255, 255, 0.95);
   border-radius: var(--border-radius-md);
@@ -119,6 +137,9 @@
   box-shadow: var(--shadow-heavy);
 }
 
+/* ============================= */
+/* Image */
+/* ============================= */
 .event-image {
   flex-shrink: 0;
 }
@@ -130,6 +151,9 @@
   border-radius: var(--border-radius-sm);
 }
 
+/* ============================= */
+/* Event Info */
+/* ============================= */
 .event-info h3 {
   color: var(--primary-red);
   font-size: 1rem;
@@ -143,63 +167,53 @@
   margin-bottom: 0.5rem;
 }
 
-.event-meta {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  margin-bottom: 0.5rem;
-}
-
-.event-time,
-.event-location {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-size: 0.9rem;
-  color: var(--text-light);
-}
-
-.event-time i,
-.event-location i {
-  color: var(--secondary-red);
-}
-
+/* ============================= */
+/* Buttons */
+/* ============================= */
 .btn-sm {
   padding: 8px 16px;
   font-size: 0.85rem;
 }
 
+/* ============================= */
 /* Responsive */
+/* ============================= */
 @media (max-width: 768px) {
   .timeline::before {
     left: 2rem;
   }
-  
+
   .timeline-item {
     width: 100%;
     left: 0 !important;
     text-align: left;
     padding-left: 4rem;
     padding-right: 1rem;
-    transform: translateX(0);
+
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 0.6s ease forwards;
   }
-  
+
   .timeline-item::before {
     left: 1.2rem !important;
   }
-  
+
   .timeline-content {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .event-image img {
     width: 100%;
     height: 200px;
   }
-  
-  .event-meta {
-    align-items: center;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -207,19 +221,19 @@
   .timeline {
     padding: 0 1rem;
   }
-  
+
   .timeline-item {
-      padding: 1rem 0 1rem 3rem;
-    }
-  
+    padding: 1rem 0 1rem 3rem;
+  }
+
   .timeline-content {
-      padding: 0.8rem;
-    }
-  
+    padding: 0.8rem;
+  }
+
   .event-info h3 {
     font-size: 1.1rem;
   }
-  
+
   .event-info p {
     font-size: 0.9rem;
   }

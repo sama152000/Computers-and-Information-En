@@ -1,62 +1,74 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-
-interface Event {
-  id: number;
-  title: string;
-  description: string;
-  date: Date;
-  time: string;
-  location: string;
-  image: string;
-}
+import { RouterModule, Router } from '@angular/router';
+import { NewsService } from '../../../Services/real-services/news.service';
+import { News } from '../../../model/news.model';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SkeletonModule],
   templateUrl: './events.component.html',
-  styleUrls: ['./events.component.css']
+  styleUrls: ['./events.component.css'],
 })
 export class EventsComponent implements OnInit {
-  events: Event[] = [
-    {
-      id: 1,
-      title: 'Awareness Seminar: "How to Protect Your Device and Data from Hacking',
-      description: 'Organized by Luxor Tech Society (LTS), the Faculty sponsored a cybersecurity awareness seminar for students.',
-      date: new Date('2025-11-05'),
-      time: '2:00 PM - 4:00 PM',
-      location: 'Main Auditorium',
-      image:  '/assets/new6.jpg'
-    },
-    {
-      id: 2,
-      title: 'Faculty Five-a-Side Football Championship Results',
-      description: 'As part of its ongoing support for student activities .',
-      date: new Date('2025-12-01'),
-      time: '10:00 AM - 3:00 PM',
-      location: 'Computer Lab 1',
-      image:  '/assets/new3.jpg'
-    },
-    {
-      id: 3,
-      title: 'Faculty Five-a-Side Football Championship Results',
-      description: 'As part of its ongoing support for student activities .',
-      date: new Date('2026-01-10'),
-      time: '9:00 AM - 5:00 PM',
-      location: 'University Hall',
-      image:  '/assets/new3.jpg'
-    }
-  ];
+  private readonly newsService = inject(NewsService);
+  private readonly router = inject(Router);
+
+  events: News[] = [];
+  isLoading = true;
+  hasError = false;
 
   ngOnInit() {
+    this.fetchEvents();
     this.observeElements();
+  }
+
+  fetchEvents(): void {
+    this.isLoading = true;
+    this.hasError = false;
+
+    this.newsService.getAll().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          // Filter only events
+          this.events = response.data
+            .filter((item) =>
+              item.postCategories?.some(
+                (cat) => cat.categoryName?.toLowerCase() === 'event'
+              )
+            )
+            .sort(
+              (a, b) =>
+                new Date(b.createdDate).getTime() -
+                new Date(a.createdDate).getTime()
+            )
+            .slice(0, 4);
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.hasError = true;
+        this.isLoading = false;
+      },
+    });
+  }
+
+  navigateToDetails(event: News): void {
+    this.router.navigate(['/news', 'event', event.id]);
+  }
+
+  getExcerpt(content: string, maxLength: number = 120): string {
+    if (!content) return '';
+    const stripped = content.replace(/<[^>]*>/g, '');
+    if (stripped.length <= maxLength) return stripped;
+    return stripped.substring(0, maxLength).trim() + '...';
   }
 
   private observeElements() {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
@@ -65,7 +77,7 @@ export class EventsComponent implements OnInit {
 
     setTimeout(() => {
       const elements = document.querySelectorAll('.timeline-item');
-      elements.forEach(el => observer.observe(el));
+      elements.forEach((el) => observer.observe(el));
     }, 100);
   }
 }

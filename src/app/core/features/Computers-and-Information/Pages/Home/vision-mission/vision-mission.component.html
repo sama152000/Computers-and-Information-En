@@ -1,8 +1,36 @@
 <section class="vision-mission-section">
   <div class="container-fluid">
+    <!-- Loading Skeleton -->
+    @if (isLoading) {
     <div class="vmg-container">
+      @for (item of [1, 2, 3, 4]; track item) {
+      <div class="vmg-card skeleton-card">
+        <div class="card-content">
+          <div class="icon-container">
+            <p-skeleton shape="circle" size="3rem" />
+          </div>
+          <p-skeleton width="60%" height="1.5rem" styleClass="mb-2" />
+          <p-skeleton width="100%" height="1rem" />
+          <p-skeleton width="80%" height="1rem" />
+        </div>
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Error State -->
+    @if (hasError && !isLoading) {
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>Failed to load data. Please try again later.</p>
+    </div>
+    }
+
+    <!-- Data Display -->
+    @if (!isLoading && !hasError && visionMissionData.length > 0) {
+    <div class="vmg-container">
+      @for (item of visionMissionData; track item.id; let i = $index) {
       <div
-        *ngFor="let item of visionMissionData; let i = index"
         class="vmg-card fade-in"
         [style.animation-delay.ms]="i * 200"
         (click)="navigateTo(item)"
@@ -15,8 +43,9 @@
           <h3>{{ item.title }}</h3>
           <p>{{ item.description }}</p>
         </div>
-        <div class="glow-ring"></div>
       </div>
+      }
     </div>
+    }
   </div>
 </section>

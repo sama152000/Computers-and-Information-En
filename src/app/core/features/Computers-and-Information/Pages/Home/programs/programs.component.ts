@@ -1,8 +1,9 @@
 // programs.component.ts
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ProgramsService } from '../../../Services/programs.service';
+import { ProgramsService } from '../../../Services/real-services/programs/programs.service';
+import { Program } from '../../../model/program.model';
 
 @Component({
   selector: 'app-programs',
@@ -12,22 +13,45 @@ import { ProgramsService } from '../../../Services/programs.service';
   styleUrls: ['./programs.component.css'],
 })
 export class ProgramsComponent implements OnInit {
-  programs: any[] = [];
+  private readonly programsService = inject(ProgramsService);
+  private readonly router = inject(Router);
 
-  constructor(
-    private programsService: ProgramsService,
-    private router: Router
-  ) {}
+  programs: Program[] = [];
+  isLoading = true;
 
   ngOnInit(): void {
-    this.programsService.getProgramsForHome().subscribe((data) => {
-      this.programs = data;
-      setTimeout(() => this.observeElements(), 100);
+    this.loadPrograms();
+  }
+
+  loadPrograms(): void {
+    this.isLoading = true;
+    this.programsService.getAll().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.programs = response.data;
+        }
+        this.isLoading = false;
+        setTimeout(() => this.observeElements(), 100);
+      },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
   navigateToProgram(programId: string): void {
-    this.router.navigate(['/programs', programId, 'overview']);
+    this.router.navigate(['/programs', programId, 'about']);
+  }
+
+  getProgramImage(program: Program): string {
+    if (program.programAttachments?.length) {
+      return program.programAttachments[0].url;
+    }
+    return '';
+  }
+
+  getProgramName(program: Program): string {
+    return program.pageTitle || 'Program';
   }
 
   private observeElements() {

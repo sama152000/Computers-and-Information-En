@@ -1,9 +1,20 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { DepartmentsService } from '../../Services/departments.service';
+import {
+  DepartmentsService,
+  Department,
+} from '../../Services/real-services/departments/departments.service';
 import { DepartmentContentComponent } from '../../Pages/departments/department-content/department-content.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { SkeletonModule } from 'primeng/skeleton';
+
+interface SectionConfig {
+  id: string;
+  title: string;
+  icon: string;
+  route: string;
+}
 
 @Component({
   selector: 'app-departments',
@@ -13,71 +24,97 @@ import { FooterComponent } from '../shared/footer/footer.component';
     RouterModule,
     DepartmentContentComponent,
     FooterComponent,
+    SkeletonModule,
   ],
   templateUrl: './departments.component.html',
   styleUrls: ['./departments.component.css'],
 })
 export class DepartmentsComponent implements OnInit {
-  allDepartments: any[] = [];
-  currentDepartment: any | null = null;
-  departmentSections: any[] = [];
-  currentSection: any | null = null;
+  private readonly departmentsService = inject(DepartmentsService);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
-  constructor(
-    private departmentsService: DepartmentsService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  allDepartments: Department[] = [];
+  currentDepartment: Department | null = null;
+  currentSection: SectionConfig | null = null;
+  isLoading = true;
+  hasError = false;
+
+  departmentSections: SectionConfig[] = [
+    { id: 'about', title: 'About', icon: 'pi pi-info-circle', route: 'about' },
+    {
+      id: 'vision',
+      title: 'Vision & Mission',
+      icon: 'pi pi-eye',
+      route: 'vision',
+    },
+    {
+      id: 'objectives',
+      title: 'Objectives',
+      icon: 'pi pi-check-circle',
+      route: 'objectives',
+    },
+    {
+      id: 'programs',
+      title: 'Programs',
+      icon: 'pi pi-book',
+      route: 'programs',
+    },
+    { id: 'staff', title: 'Staff', icon: 'pi pi-users', route: 'staff' },
+  ];
 
   ngOnInit() {
     this.loadDepartments();
-    this.loadDepartmentSections();
 
-    // Subscribe to route parameters
     this.route.params.subscribe((params) => {
       if (params['id']) {
         this.loadDepartment(params['id']);
-        if (params['section']) {
-          this.loadSection(params['section']);
-        } else {
-          // Default to 'about' section
-          this.loadSection('about');
-        }
+        this.loadSection(params['section'] || 'about');
       }
     });
   }
 
   loadDepartments() {
-    this.departmentsService.getAllDepartments().subscribe((departments) => {
-      this.allDepartments = departments;
-    });
-  }
+    this.isLoading = true;
+    this.hasError = false;
 
-  loadDepartmentSections() {
-    this.departmentsService.getDepartmentSections().subscribe((sections) => {
-      this.departmentSections = sections;
+    this.departmentsService.getAll().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.allDepartments = response.data;
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.hasError = true;
+        this.isLoading = false;
+      },
     });
   }
 
   loadDepartment(id: string) {
-    this.departmentsService.getDepartmentById(id).subscribe((department) => {
-      this.currentDepartment = department || null;
+    this.departmentsService.getById(id).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.currentDepartment = response.data;
+        }
+      },
     });
   }
 
   loadSection(sectionId: string) {
-    this.departmentsService.getSectionById(sectionId).subscribe((section) => {
-      this.currentSection = section || null;
-    });
+    this.currentSection =
+      this.departmentSections.find((s) => s.id === sectionId) ||
+      this.departmentSections[0];
   }
 
-  selectDepartment(department: any) {
+  selectDepartment(department: Department) {
     this.currentDepartment = department;
-    this.currentSection = this.departmentSections[0]; // Default to first section
+    this.currentSection = this.departmentSections[0];
     this.router.navigate(['/departments', department.id, 'about']);
   }
 
-  selectSection(section: any) {
+  selectSection(section: SectionConfig) {
     this.currentSection = section;
     if (this.currentDepartment) {
       this.router.navigate([
@@ -86,5 +123,17 @@ export class DepartmentsComponent implements OnInit {
         section.route,
       ]);
     }
+  }
+
+  getFeaturedImage(): string {
+    if (this.currentDepartment?.departmentAttachments?.length) {
+      const featured = this.currentDepartment.departmentAttachments.find(
+        (a) => a.isFeatured
+      );
+      return (
+        featured?.url || this.currentDepartment.departmentAttachments[0].url
+      );
+    }
+    return '';
   }
 }

@@ -1,10 +1,23 @@
-import { Component, OnInit, OnDestroy, ElementRef, HostListener } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  HostListener,
+  inject,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {
+  HeroSectionsService,
+  HeroSection,
+} from '../../../Services/real-services/hero-sections.service';
 
 interface HeroSlide {
-  id: number;
+  id: string;
   title: string;
   subtitle: string;
+  description: string;
   image: string;
 }
 
@@ -13,50 +26,68 @@ interface HeroSlide {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './hero.component.html',
-  styleUrls: ['./hero.component.css']
+  styleUrls: ['./hero.component.css'],
 })
 export class HeroComponent implements OnInit, OnDestroy {
+  private readonly heroSectionsService = inject(HeroSectionsService);
+  private readonly elRef = inject(ElementRef);
+
   currentSlide = 0;
   autoplayInterval: any;
 
-  constructor(private elRef: ElementRef) {}
-
-  slides: HeroSlide[] = [
-    {
-      id: 1,
-      title: 'Welcome to the Computer Science Department',
-      subtitle: 'Empowering innovation through technology and research',
-      image: 'assets/slide1.jpg'
-    },
-    {
-      id: 2,
-      title: 'Explore Our Programs',
-      subtitle: 'Undergraduate, Graduate, and Research Opportunities',
-      image: 'assets/slide2.jpg'
-    },
-    {
-      id: 3,
-      title: 'Hands-On Learning',
-      subtitle: 'Modern labs and real-world projects',
-      image: 'assets/slide3.jpg'
-    },
-    {
-      id: 4,
-      title: 'Innovate, Design, and Create',
-      subtitle: 'Our students shape the future of computing',
-      image: 'assets/slide4.jpg'
-    }
-  ];
+  // Signals for reactive state management
+  slides = signal<HeroSlide[]>([]);
+  isLoading = signal<boolean>(true);
+  error = signal<string | null>(null);
 
   ngOnInit() {
     this.setSliderHeight();
-    this.startAutoplay();
+    this.loadHeroSections();
     window.addEventListener('resize', this.onResize);
   }
 
   ngOnDestroy() {
     this.stopAutoplay();
     window.removeEventListener('resize', this.onResize);
+  }
+
+  /**
+   * Load hero sections from API
+   */
+  private loadHeroSections(): void {
+    this.isLoading.set(true);
+    this.error.set(null);
+
+    this.heroSectionsService.getAllHeroSections().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          // Filter only active hero sections and map to HeroSlide format
+          const activeSlides = response.data
+            .filter((section: HeroSection) => section.isActive)
+            .map((section: HeroSection) => ({
+              id: section.id,
+              title: section.title,
+              subtitle: section.subTitle,
+              description: section.description,
+              image:
+                section.heroAttachments?.[0]?.url || 'assets/default-hero.jpg',
+            }));
+
+          this.slides.set(activeSlides);
+
+          // Start autoplay only if we have slides
+          if (activeSlides.length > 0) {
+            this.startAutoplay();
+          }
+        }
+        this.isLoading.set(false);
+      },
+      error: (err) => {
+        console.error('Error loading hero sections:', err);
+        this.error.set('Failed to load hero sections');
+        this.isLoading.set(false);
+      },
+    });
   }
 
   @HostListener('window:resize')
@@ -85,11 +116,18 @@ export class HeroComponent implements OnInit, OnDestroy {
   }
 
   nextSlide() {
-    this.currentSlide = (this.currentSlide + 1) % this.slides.length;
+    const slidesLength = this.slides().length;
+    if (slidesLength > 0) {
+      this.currentSlide = (this.currentSlide + 1) % slidesLength;
+    }
   }
 
   previousSlide() {
-    this.currentSlide = this.currentSlide === 0 ? this.slides.length - 1 : this.currentSlide - 1;
+    const slidesLength = this.slides().length;
+    if (slidesLength > 0) {
+      this.currentSlide =
+        this.currentSlide === 0 ? slidesLength - 1 : this.currentSlide - 1;
+    }
   }
 
   goToSlide(index: number) {

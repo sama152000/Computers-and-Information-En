@@ -1,3 +1,54 @@
+/* Loading State */
+.hero-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  min-height: 500px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+.loading-spinner {
+  text-align: center;
+  color: white;
+}
+
+.loading-spinner i {
+  font-size: 3rem;
+  color: var(--primary-red, #dc3545);
+  margin-bottom: 1rem;
+}
+
+.loading-spinner p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Error State */
+.hero-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  min-height: 500px;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: white;
+  text-align: center;
+}
+
+.hero-error i {
+  font-size: 4rem;
+  color: #ffc107;
+  margin-bottom: 1rem;
+}
+
+.hero-error p {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Hero Slider */
 .hero-slider {
   position: relative;
   width: 100%;
@@ -187,7 +238,6 @@
   .hero-slider {
     height: 100vh !important;
     min-height: 350px !important;
-  ;
   }
 
   .hero-title {
@@ -204,8 +254,6 @@
 
   .hero-subtitle {
     font-size: 1.1rem;
-
-
   }
 
   .hero-actions {
@@ -241,5 +289,3 @@
     padding: 8px;
   }
 }
-
-

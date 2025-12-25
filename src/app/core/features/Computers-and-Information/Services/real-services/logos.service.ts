@@ -4,7 +4,7 @@
  * @version 2.0
  */
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, OnInit, WritableSignal } from '@angular/core';
 import { Observable, catchError, retry, timeout } from 'rxjs';
 import { API_ENDPOINTS } from '../../../../constants/api-endpoints';
 import { ApiResponse, PaginatedResponse } from '../../../../models/api.models';
@@ -27,6 +27,18 @@ export interface LogoAttachment {
 export class LogosService {
   private readonly http = inject(HttpClient);
   private readonly errorHandler = inject(ErrorHandlerService);
+
+  loadLogo(logo: WritableSignal<any>) {
+    this.getAllLogos().subscribe({
+      next: (res) => {
+        logo.set(res.data[0]);
+        // console.log(logo);
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   /**
    * Get logos with pagination

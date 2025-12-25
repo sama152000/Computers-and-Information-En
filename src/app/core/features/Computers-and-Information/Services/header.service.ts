@@ -9,16 +9,21 @@ import { SectorsService } from './sectors.service';
 import { ProgramsService } from './programs.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class HeaderService {
-  constructor(private departmentsService: DepartmentsService,
-     private unitsService: UnitsService, private servicesService: ServicesService, private sectorsService: SectorsService, private programsService: ProgramsService) {}
+  constructor(
+    private departmentsService: DepartmentsService,
+    private unitsService: UnitsService,
+    private servicesService: ServicesService,
+    private sectorsService: SectorsService,
+    private programsService: ProgramsService
+  ) {}
   private headerData: HeaderData = {
     logo: {
       url: './assets/logo.jpg',
       alt: 'Faculty of Computers and Information',
-      route: '/'
+      route: '/',
     },
     navigation: [
       {
@@ -37,15 +42,15 @@ export class HeaderService {
             route: 'about',
             fragment: 'vision-mission',
             queryParams: { tab: 'vision-mission' },
-            icon: 'pi pi-lightbulb'
+            icon: 'pi pi-eye',
           },
           {
             id: 21,
-            label: 'deans Message',
+            label: "Dean's Message",
             route: 'about',
             fragment: 'dean-message',
             queryParams: { tab: 'dean-message' },
-            icon: 'pi pi-check'
+            icon: 'pi pi-user',
           },
           {
             id: 22,
@@ -53,17 +58,33 @@ export class HeaderService {
             route: 'about',
             fragment: 'objectives',
             queryParams: { tab: 'objectives' },
-            icon: 'pi pi-shield'
+            icon: 'pi pi-check-circle',
           },
           {
             id: 23,
+            label: 'Our History',
+            route: 'about',
+            fragment: 'history',
+            queryParams: { tab: 'history' },
+            icon: 'pi pi-clock',
+          },
+          {
+            id: 24,
+            label: 'About Faculty',
+            route: 'about',
+            fragment: 'content',
+            queryParams: { tab: 'content' },
+            icon: 'pi pi-info-circle',
+          },
+          {
+            id: 25,
             label: 'Administrative Structure',
             route: 'about',
             fragment: 'admin-structure',
             queryParams: { tab: 'admin-structure' },
-            icon: 'pi pi-users'
-          }
-        ]
+            icon: 'pi pi-users',
+          },
+        ],
       },
       {
         id: 3,
@@ -99,21 +120,21 @@ export class HeaderService {
         id: 9,
         label: 'Contact',
         route: 'contact-us',
-      }
+      },
     ],
     languages: [
       {
         code: 'en',
         name: 'English',
-        flag: '🇺🇸'
+        flag: '🇺🇸',
       },
       {
         code: 'ar',
         name: 'العربية',
-        flag: '🇪🇬'
-      }
+        flag: '🇪🇬',
+      },
     ],
-    searchEnabled: true
+    searchEnabled: true,
   };
 
   getHeaderData(): Observable<HeaderData> {
@@ -127,52 +148,58 @@ export class HeaderService {
       this.unitsService.getAllUnits(),
       this.servicesService.getAllServices(),
       this.sectorsService.getAllSectors(),
-      this.programsService.getAllPrograms()
+      this.programsService.getAllPrograms(),
     ]).pipe(
       map(([navigation, departments, units, services, sectors, programs]) => {
-        const departmentItem = navigation.find(item => item.label === 'Department');
+        const departmentItem = navigation.find(
+          (item) => item.label === 'Department'
+        );
         if (departmentItem) {
           departmentItem.children = departments.map((dept, index) => ({
             id: 100 + index, // Start from 100 to avoid conflicts with existing ids
             label: dept.name,
             route: `departments/${dept.id}`,
-            icon: 'pi pi-users'
+            icon: 'pi pi-users',
           }));
         }
-        const unitsItem = navigation.find(item => item.label === 'Units');
+        const unitsItem = navigation.find((item) => item.label === 'Units');
         if (unitsItem) {
           unitsItem.children = units.map((unit, index) => ({
             id: 200 + index, // Start from 200 to avoid conflicts with existing ids
             label: unit.name,
             route: `units/${unit.id}`,
-            icon: 'pi pi-cog'
+            icon: 'pi pi-cog',
           }));
         }
-        const servicesItem = navigation.find(item => item.label === 'Services');
+        const servicesItem = navigation.find(
+          (item) => item.label === 'Services'
+        );
         if (servicesItem) {
           servicesItem.children = services.map((service, index) => ({
             id: 300 + index, // Start from 300 to avoid conflicts with existing ids
             label: service.name,
             route: `services/${service.id}`,
-            icon: 'pi pi-wrench'
+            icon: 'pi pi-wrench',
           }));
         }
-        const sectorsItem = navigation.find(item => item.label === 'Sectors');
+        const sectorsItem = navigation.find((item) => item.label === 'Sectors');
         if (sectorsItem) {
           sectorsItem.children = sectors.map((sector, index) => ({
             id: 400 + index, // Start from 400 to avoid conflicts with existing ids
             label: sector.name,
             route: `sectors/${sector.id}`,
-            icon: 'pi pi-building'
+            icon: 'pi pi-building',
           }));
         }
-        const programsItem = navigation.find(item => item.label === 'Programs');
+        const programsItem = navigation.find(
+          (item) => item.label === 'Programs'
+        );
         if (programsItem) {
           programsItem.children = programs.map((program, index) => ({
             id: 500 + index, // Start from 500 to avoid conflicts with existing ids
             label: program.name,
             route: `programs/${program.id}`,
-            icon: 'pi pi-graduation-cap'
+            icon: 'pi pi-graduation-cap',
           }));
         }
         return navigation;

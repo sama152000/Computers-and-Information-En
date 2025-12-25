@@ -1,0 +1,237 @@
+.content-section {
+  padding: var(--section-padding);
+  padding-left: var(--l-r-padding);
+  padding-right: var(--l-r-padding);
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.content-container {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Content Block */
+.content-block {
+  margin-bottom: 3rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.block-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.header-icon {
+  font-size: 1.8rem;
+  color: var(--secondary-red, #d32f2f);
+  background: linear-gradient(
+    135deg,
+    rgba(116, 10, 31, 0.1),
+    rgba(211, 47, 47, 0.1)
+  );
+  padding: 0.7rem;
+  border-radius: 50%;
+}
+
+.section-heading {
+  font-size: 2rem;
+  color: var(--primary-red, #740a1f);
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.block-content {
+  padding-left: 1.5rem;
+  border-left: 4px solid var(--secondary-red, #d32f2f);
+}
+
+.content-text {
+  font-size: 1.1rem;
+  line-height: 1.9;
+  color: var(--text-dark, #333);
+  text-align: justify;
+  margin: 0;
+  white-space: pre-line;
+}
+
+/* Mission & Vision Grid */
+.mission-vision-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.mv-card {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  animation: slideUp 0.8s ease-out both;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mv-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(
+    90deg,
+    var(--secondary-red, #d32f2f),
+    var(--primary-red, #740a1f)
+  );
+}
+
+.mv-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 40px rgba(116, 10, 31, 0.15);
+}
+
+.mission-card {
+  animation-delay: 0.1s;
+}
+
+.vision-card {
+  animation-delay: 0.2s;
+}
+
+.mv-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(
+    135deg,
+    rgba(116, 10, 31, 0.1),
+    rgba(211, 47, 47, 0.1)
+  );
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: var(--primary-red, #740a1f);
+  margin-bottom: 1.2rem;
+  transition: all 0.4s ease;
+}
+
+.mv-card:hover .mv-icon {
+  transform: scale(1.1) rotate(10deg);
+  background: linear-gradient(
+    135deg,
+    rgba(116, 10, 31, 0.15),
+    rgba(211, 47, 47, 0.15)
+  );
+}
+
+.mv-title {
+  font-size: 1.4rem;
+  color: var(--primary-red, #740a1f);
+  font-weight: 700;
+  margin: 0 0 1rem 0;
+}
+
+.mv-text {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-dark, #333);
+  margin: 0;
+  text-align: justify;
+}
+
+/* Skeleton Styles */
+:host ::ng-deep .mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+:host ::ng-deep .mb-3 {
+  margin-bottom: 1rem !important;
+}
+
+/* Error State Styles */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  text-align: center;
+  padding: 4rem 2rem;
+  min-height: 300px;
+}
+
+.error-icon {
+  font-size: 3rem;
+  color: var(--secondary-red, #d32f2f);
+}
+
+.error-text {
+  font-size: 1rem;
+  color: var(--text-light, #666);
+  margin: 0;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .mission-vision-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .content-section {
+    padding: 60px 5%;
+  }
+
+  .section-heading {
+    font-size: 1.6rem;
+  }
+
+  .content-text {
+    font-size: 1rem;
+  }
+
+  .mv-card {
+    padding: 1.5rem;
+  }
+
+  .mv-title {
+    font-size: 1.2rem;
+  }
+
+  .mv-text {
+    font-size: 0.95rem;
+  }
+}

@@ -1,33 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Statistic } from '../../../model/statistics.model';
-import { StatisticsService } from '../../../Services/statistics.service';
+import {
+  StatisticsService,
+  Statistic,
+} from '../../../Services/real-services/statistics.service';
 
 @Component({
   selector: 'app-statistics',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './statistics.component.html',
-  styleUrls: ['./statistics.component.css']
+  styleUrls: ['./statistics.component.css'],
 })
 export class StatisticsComponent implements OnInit {
+  private readonly statisticsService = inject(StatisticsService);
+
   displayValues: number[] = [];
-
   statistics: Statistic[] = [];
-
-  constructor(private statisticsService: StatisticsService) {}
+  isLoading = true;
 
   ngOnInit() {
-    this.statisticsService.getStatistics().subscribe(stats => {
-      this.statistics = stats;
-      this.displayValues = new Array(this.statistics.length).fill(0);
-      this.observeElements();
+    this.loadStatistics();
+  }
+
+  loadStatistics() {
+    this.isLoading = true;
+    this.statisticsService.getAllStatistics().subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          // Filter only active statistics
+          this.statistics = response.data.filter((s) => s.isActive);
+          this.displayValues = new Array(this.statistics.length).fill(0);
+          this.observeElements();
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.isLoading = false;
+      },
     });
   }
 
   private observeElements() {
     const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
           this.startCountAnimation();
@@ -37,35 +53,43 @@ export class StatisticsComponent implements OnInit {
 
     setTimeout(() => {
       const elements = document.querySelectorAll('.fade-in');
-      elements.forEach(el => observer.observe(el));
+      elements.forEach((el) => observer.observe(el));
     }, 100);
   }
 
   private startCountAnimation() {
     this.statistics.forEach((stat, index) => {
-      this.animateValue(index, 0, stat.value, 2000);
+      const numericValue = parseInt(stat.value, 10) || 0;
+      this.animateValue(index, 0, numericValue, 2000);
     });
   }
 
-  private animateValue(index: number, start: number, end: number, duration: number) {
+  private animateValue(
+    index: number,
+    start: number,
+    end: number,
+    duration: number
+  ) {
     const startTime = performance.now();
-    
+
     const animate = (currentTime: number) => {
       const elapsed = currentTime - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      
+
       // Easing function for smooth animation
       const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-      
-      this.displayValues[index] = Math.floor(start + (end - start) * easeOutQuart);
-      
+
+      this.displayValues[index] = Math.floor(
+        start + (end - start) * easeOutQuart
+      );
+
       if (progress < 1) {
         requestAnimationFrame(animate);
       } else {
         this.displayValues[index] = end;
       }
     };
-    
+
     requestAnimationFrame(animate);
   }
 }

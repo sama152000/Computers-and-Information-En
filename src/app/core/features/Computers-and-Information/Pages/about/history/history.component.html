@@ -1,0 +1,43 @@
+<!-- Loading State with PrimeNG Skeleton -->
+<section class="history-section" *ngIf="isLoading">
+  <div class="history-container">
+    <div class="history-header">
+      <p-skeleton width="200px" height="2.5rem" borderRadius="8px" />
+    </div>
+    <div class="history-content skeleton-content">
+      <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+      <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+      <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+      <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+      <p-skeleton width="90%" height="1rem" styleClass="mb-2" />
+      <p-skeleton width="80%" height="1rem" styleClass="mb-2" />
+      <p-skeleton width="70%" height="1rem" />
+    </div>
+  </div>
+</section>
+
+<!-- Error State -->
+<section class="history-section" *ngIf="hasError && !isLoading">
+  <div class="history-container">
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <p class="error-text">Failed to load history. Please try again later.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Content State -->
+<section class="history-section" *ngIf="historyData && !isLoading && !hasError">
+  <div class="history-container">
+    <div class="history-header">
+      <div class="header-decoration">
+        <i class="pi pi-clock header-icon"></i>
+        <h2 class="section-heading">Our History</h2>
+      </div>
+    </div>
+    <div class="history-content">
+      <div class="timeline-marker"></div>
+      <p class="history-text">{{ historyData.history }}</p>
+    </div>
+  </div>
+</section>

@@ -4,37 +4,37 @@ import { AboutService } from '../../../Services/real-services/about.service';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
-  selector: 'app-vision-mission-page',
+  selector: 'app-history',
   standalone: true,
   imports: [CommonModule, SkeletonModule],
-  templateUrl: './vision-mission-page.component.html',
-  styleUrls: ['./vision-mission-page.component.css'],
+  templateUrl: './history.component.html',
+  styleUrls: ['./history.component.css'],
 })
-export class VisionMissionpageComponent implements OnInit {
+export class HistoryComponent implements OnInit {
   private readonly aboutService = inject(AboutService);
 
-  visionMissionpageData: {
-    vision: string;
-    mission: string;
+  historyData: {
+    title: string;
+    history: string;
   } | null = null;
 
   isLoading = true;
   hasError = false;
 
   ngOnInit() {
-    this.loadVisionMission();
+    this.loadHistory();
   }
 
-  private loadVisionMission(): void {
+  private loadHistory(): void {
     this.isLoading = true;
     this.hasError = false;
 
     this.aboutService.getByPageType('AboutUniversity').subscribe({
       next: (data) => {
         if (data) {
-          this.visionMissionpageData = {
-            vision: data.vision,
-            mission: data.mission,
+          this.historyData = {
+            title: data.pageNameEn || 'Our History',
+            history: data.history,
           };
         }
         this.isLoading = false;

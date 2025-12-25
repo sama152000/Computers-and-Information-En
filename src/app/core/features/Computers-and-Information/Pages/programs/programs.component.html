@@ -1,16 +1,56 @@
-<div class="programs-page">
+<!-- Loading State -->
+<div class="programs-page" *ngIf="isLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <p-skeleton width="150px" height="1.5rem" styleClass="mb-3" />
+            <p-skeleton width="100%" height="50px" styleClass="mb-2" />
+            <p-skeleton width="100%" height="50px" styleClass="mb-2" />
+            <p-skeleton width="100%" height="50px" />
+          </div>
+        </aside>
+      </div>
+      <div class="col-lg-8">
+        <div class="program-content">
+          <p-skeleton width="250px" height="2rem" styleClass="mb-4" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="80%" height="1rem" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="programs-page" *ngIf="hasError && !isLoading">
+  <div class="container">
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <h2>Failed to load programs</h2>
+      <p>Please try again later.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content State -->
+<div class="programs-page" *ngIf="!isLoading && !hasError">
   <div class="container">
     <div class="row">
       <!-- Sidebar -->
       <div class="col-lg-4">
         <aside class="sidebar">
           <div class="sidebar-section" *ngIf="currentProgram">
-            <h3 class="sidebar-title">{{ currentProgram.name }}</h3>
+            <h3 class="sidebar-title">{{ getProgramName(currentProgram) }}</h3>
             <div class="nav-links">
-              <button class="nav-link-btn"
+              <button
+                class="nav-link-btn"
                 *ngFor="let section of programSections"
                 [class.active]="currentSection?.id === section.id"
-                (click)="selectSection(section)">
+                (click)="selectSection(section)"
+              >
                 <i [class]="section.icon + ' me-2'"></i>
                 {{ section.title }}
               </button>
@@ -20,13 +60,14 @@
           <div class="sidebar-section">
             <h3 class="sidebar-title">Academic Programs</h3>
             <div class="programs-list">
-              <button class="program-btn"
+              <button
+                class="program-btn"
                 *ngFor="let program of allPrograms"
                 [class.active]="currentProgram?.id === program.id"
-                (click)="selectProgram(program)">
+                (click)="selectProgram(program)"
+              >
                 <div class="program-info">
-                  <h5>{{ program.name }}</h5>
-                  <p>{{ program.degree }}</p>
+                  <h5>{{ getProgramName(program) }}</h5>
                 </div>
                 <i class="pi pi-chevron-right"></i>
               </button>
@@ -46,75 +87,117 @@
           </div>
 
           <div class="content-body">
-            <!-- Overview -->
-            <div *ngIf="currentSection.id === 'overview'" class="section-content">
-              <h3>Program Overview</h3>
-              <p class="description">{{ currentProgram.description }}</p>
-              <p>Welcome to the {{ currentProgram.name }}, a comprehensive program designed to equip students with cutting-edge knowledge and practical skills in the field. Our curriculum combines theoretical foundations with hands-on experience, preparing graduates for successful careers in technology and innovation.</p>
-              <p>The program emphasizes critical thinking, problem-solving, and collaboration, ensuring that our students are well-prepared to meet the challenges of the modern digital world. With experienced faculty, state-of-the-art facilities, and strong industry connections, we provide an environment conducive to academic excellence and professional growth.</p>
-              <h4>Vision</h4>
-              <p class="vision-text">{{ currentProgram.vision }}</p>
-              <h4 class="mt-4">Mission</h4>
-              <p class="mission-text">{{ currentProgram.mission }}</p>
-            </div>
-
-            <!-- About -->
+            <!-- About Section -->
             <div *ngIf="currentSection.id === 'about'" class="section-content">
-              <h3>{{ currentProgram.name }}</h3>
-              <p class="description">{{ currentProgram.description }}</p>
-              <div class="program-details">
-                <p><strong>Degree:</strong> {{ currentProgram.degree }}</p>
-                <p><strong>Duration:</strong> {{ currentProgram.duration }}</p>
-                <p><strong>Credit Hours:</strong> {{ currentProgram.creditHours }}</p>
-                <p><strong>Department:</strong> {{ currentProgram.department }}</p>
-                <p><strong>Start Year:</strong> {{ currentProgram.startYear }}</p>
-                <p *ngIf="currentProgram.accreditation"><strong>Accreditation:</strong> {{ currentProgram.accreditation }}</p>
+              <div class="featured-image" *ngIf="getFeaturedImage()">
+                <img
+                  [src]="getFeaturedImage()"
+                  [alt]="getProgramName(currentProgram)"
+                />
+              </div>
+              <h3>{{ getProgramName(currentProgram) }}</h3>
+              <p class="description">{{ currentProgram.about }}</p>
+            </div>
+
+            <!-- Vision & Mission Section -->
+            <div *ngIf="currentSection.id === 'vision'" class="section-content">
+              <div class="vm-cards">
+                <div class="vm-card">
+                  <div class="vm-icon"><i class="pi pi-eye"></i></div>
+                  <h4>Program Vision</h4>
+                  <p>{{ currentProgram.vision || "No vision available." }}</p>
+                </div>
+                <div class="vm-card">
+                  <div class="vm-icon"><i class="pi pi-compass"></i></div>
+                  <h4>Program Mission</h4>
+                  <p>{{ currentProgram.mission || "No mission available." }}</p>
+                </div>
               </div>
             </div>
 
-            <!-- Vision & Mission -->
-            <div *ngIf="currentSection.id === 'vision-mission'" class="section-content">
-              <h4>Vision</h4>
-              <p class="vision-text">{{ currentProgram.vision }}</p>
-              <h4 class="mt-4">Mission</h4>
-              <p class="mission-text">{{ currentProgram.mission }}</p>
-            </div>
-
-            <!-- Objectives -->
-            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
-              <h3>Program Objectives</h3>
-              <ul class="objectives-list">
-                <li *ngFor="let obj of currentProgram.objectives">{{ obj }}</li>
-              </ul>
-            </div>
-
-            <!-- Admission Requirements -->
-            <div *ngIf="currentSection.id === 'admission'" class="section-content">
-              <h3>Admission Requirements</h3>
-              <ul class="objectives-list">
-                <li *ngFor="let req of currentProgram.admissionRequirements">{{ req }}</li>
-              </ul>
-            </div>
-
-            <!-- Key Courses -->
-            <div *ngIf="currentSection.id === 'courses'" class="section-content">
-              <h3>Key Courses</h3>
-              <ul class="research-list">
-                <li *ngFor="let course of currentProgram.courses">{{ course }}</li>
-              </ul>
-            </div>
-
-            <!-- Coordinator -->
-            <div *ngIf="currentSection.id === 'coordinator'" class="section-content">
-              <h3>Program Coordinator</h3>
-              <div class="supervisor-card text-center p-4">
-                <h4>{{ currentProgram.coordinator?.name }}</h4>
-                <p class="text-muted">{{ currentProgram.coordinator?.position }}</p>
-                <p *ngIf="currentProgram.coordinator?.email">
-                  <strong>Email:</strong>
-                  <a href="mailto:{{ currentProgram.coordinator?.email }}">{{ currentProgram.coordinator?.email }}</a>
-                </p>
+            <!-- Objectives Section -->
+            <div
+              *ngIf="currentSection.id === 'objectives'"
+              class="section-content"
+            >
+              <h3>Program Goals & Objectives</h3>
+              <div class="objectives-grid" *ngIf="currentProgram.goals?.length">
+                <div
+                  class="objective-card"
+                  *ngFor="let goal of currentProgram.goals"
+                >
+                  <div class="goal-number">{{ goal.index }}</div>
+                  <p>{{ goal.goalName }}</p>
+                </div>
               </div>
+              <p *ngIf="!currentProgram.goals?.length" class="text-muted">
+                No objectives available.
+              </p>
+            </div>
+
+            <!-- Details Section -->
+            <div
+              *ngIf="currentSection.id === 'details'"
+              class="section-content"
+            >
+              <h3>Program Details</h3>
+              <div class="details-list" *ngIf="programDetails.length > 0">
+                <div class="detail-item" *ngFor="let detail of programDetails">
+                  <h4>{{ detail.title }}</h4>
+                  <p class="category-badge" *ngIf="detail.programCategory">
+                    {{ detail.programCategory }}
+                  </p>
+                  <p class="detail-content">{{ detail.content }}</p>
+                </div>
+              </div>
+              <p *ngIf="programDetails.length === 0" class="text-muted">
+                No details available.
+              </p>
+            </div>
+
+            <!-- Staff Section -->
+            <div *ngIf="currentSection.id === 'staff'" class="section-content">
+              <h3>Program Staff</h3>
+
+              <!-- Program Leader -->
+              <div class="leader-section" *ngIf="programLeader">
+                <h4>Program Coordinator</h4>
+                <div class="leader-card">
+                  <div class="leader-avatar">
+                    <i class="pi pi-user"></i>
+                  </div>
+                  <div class="leader-info">
+                    <h5>{{ programLeader.memberName }}</h5>
+                    <span class="badge">Program Coordinator</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Staff Members -->
+              <div class="members-section" *ngIf="programMembers.length > 0">
+                <h4>Staff Members</h4>
+                <div class="members-grid">
+                  <div
+                    class="member-card"
+                    *ngFor="let member of programMembers"
+                    [class.leader]="member.isLeader"
+                  >
+                    <div class="member-avatar">
+                      <i class="pi pi-user"></i>
+                    </div>
+                    <div class="member-info">
+                      <h5>{{ member.memberName }}</h5>
+                      <span class="badge" *ngIf="member.isLeader"
+                        >Coordinator</span
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <p *ngIf="programMembers.length === 0" class="text-muted">
+                No staff members available.
+              </p>
             </div>
           </div>
         </div>
@@ -123,12 +206,35 @@
         <div class="default-content" *ngIf="!currentProgram">
           <div class="welcome-section">
             <h2>Academic Programs</h2>
-            <p>Select a program to explore its curriculum, objectives, admission requirements, and coordinator information.</p>
+            <p>
+              Select a program to explore its curriculum, objectives, and
+              coordinator information.
+            </p>
             <div class="programs-grid">
-              <div class="program-card" *ngFor="let program of allPrograms" (click)="selectProgram(program)">
-                <h4>{{ program.name }}</h4>
-                <p>{{ program.degree }}</p>
-                <span class="learn-more">Explore Program <i class="pi pi-arrow-right"></i></span>
+              <div
+                class="program-card"
+                *ngFor="let program of allPrograms"
+                (click)="selectProgram(program)"
+              >
+                <div
+                  class="program-image"
+                  *ngIf="program.programAttachments?.length"
+                >
+                  <img
+                    [src]="program.programAttachments[0].url"
+                    [alt]="getProgramName(program)"
+                  />
+                </div>
+                <div
+                  class="program-icon"
+                  *ngIf="!program.programAttachments?.length"
+                >
+                  <i class="pi pi-book"></i>
+                </div>
+                <h4>{{ getProgramName(program) }}</h4>
+                <span class="learn-more">
+                  Explore Program <i class="pi pi-arrow-right"></i>
+                </span>
               </div>
             </div>
           </div>
@@ -138,5 +244,4 @@
   </div>
 </div>
 
-
-  <app-footer></app-footer>
+<app-footer></app-footer>

@@ -1,225 +1,106 @@
-<div class="units-page">
+<!-- Loading State -->
+<div class="services-page" *ngIf="isLoading">
   <div class="container">
-    <div class="row">
-      <!-- Left Sidebar -->
-      <div class="col-lg-4">
-        <aside class="sidebar">
-          <!-- Service Sections Sidebar -->
-          <div class="sidebar-section" *ngIf="currentService">
-            <h3 class="sidebar-title">{{ currentService.name }}</h3>
-            <div class="nav-links">
-              <button
-                class="nav-link-btn"
-                *ngFor="let section of serviceSections"
-                [class.active]="currentSection?.id === section.id"
-                (click)="selectSection(section)">
-                <i [class]="section.icon + ' me-2'"></i>
-                {{ section.title }}
-              </button>
-            </div>
+    <div class="page-header">
+      <p-skeleton width="300px" height="2.5rem" styleClass="mb-3" />
+      <p-skeleton width="500px" height="1.2rem" />
+    </div>
+    <div class="services-grid">
+      <div class="service-card-skeleton" *ngFor="let i of [1, 2, 3, 4, 5, 6]">
+        <p-skeleton shape="circle" size="60px" styleClass="mb-3" />
+        <p-skeleton width="80%" height="1.5rem" styleClass="mb-2" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-1" />
+        <p-skeleton width="90%" height="1rem" />
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="services-page" *ngIf="hasError && !isLoading">
+  <div class="container">
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <h2>Failed to load services</h2>
+      <p>Please try again later.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content State -->
+<div class="services-page" *ngIf="!isLoading && !hasError">
+  <div class="container">
+    <!-- Page Header -->
+    <div class="page-header">
+      <h1>Faculty Services</h1>
+      <p>
+        Explore the various services offered by the Faculty of Computers and
+        Information
+      </p>
+    </div>
+
+    <!-- Services Grid -->
+    <div
+      class="services-grid row justify-content-center"
+      *ngIf="!selectedService"
+    >
+      <div
+        class="col-12 col-md-6 col-lg-3 d-flex mb-3"
+        *ngFor="let service of allServices"
+      >
+        <div class="service-card w-100" (click)="selectService(service)">
+          <div class="service-icon">
+            <i [class]="getIconClass(service.iconPath)"></i>
           </div>
 
-          <!-- Other Services List -->
-          <div class="sidebar-section">
-            <h3 class="sidebar-title">Faculty Services</h3>
-            <div class="units-list">
-              <button
-                class="unit-btn"
-                *ngFor="let service of allServices"
-                [class.active]="currentService?.id === service.id"
-                (click)="selectService(service)">
-                <div class="unit-info">
-                  <h5>{{ service.name }}</h5>
-                </div>
-                <i class="pi pi-chevron-right"></i>
-              </button>
-            </div>
-          </div>
+          <h3 class="service-title">{{ service.title }}</h3>
 
+          <p class="service-description">
+            {{ service.description }}
+          </p>
 
-        </aside>
+          <span class="learn-more">
+            Learn More <i class="pi pi-arrow-right"></i>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div
+      class="empty-state"
+      *ngIf="allServices.length === 0 && !selectedService"
+    >
+      <i class="pi pi-inbox"></i>
+      <h3>No services available</h3>
+      <p>Check back later for updates.</p>
+    </div>
+
+    <!-- Service Detail View -->
+    <div class="service-detail" *ngIf="selectedService">
+      <div class="detail-header">
+        <button class="back-btn" (click)="clearSelection()">
+          <i class="pi pi-arrow-left"></i>
+          Back to Services
+        </button>
       </div>
 
-      <!-- Main Content Area -->
-      <div class="col-lg-8">
-        <div class="unit-content" *ngIf="currentService && currentSection">
-          <div class="content-header">
-            <h2 class="content-title">
-              <i [class]="currentSection.icon + ' me-3'"></i>
-              {{ currentSection.title }}
-            </h2>
-          </div>
-
-          <div class="content-body">
-            <!-- About Section -->
-            <div *ngIf="currentSection.id === 'about'" class="section-content">
-              <div class="department-overview">
-                <h3>{{ currentService.name }}</h3>
-                <p class="description">{{ currentService.description }}</p>
-
-                <div class="establishment-info" *ngIf="currentService.establishmentInfo">
-                  <h4>Establishment Information</h4>
-                  <p>{{ currentService.establishmentInfo }}</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Vision Section -->
-            <div *ngIf="currentSection.id === 'vision'" class="section-content">
-              <div class="vision-content">
-                <h3>Service Vision</h3>
-                <p class="vision-text">{{ currentService.vision }}</p>
-              </div>
-            </div>
-
-            <!-- Mission Section -->
-            <div *ngIf="currentSection.id === 'mission'" class="section-content">
-              <div class="mission-content">
-                <h3>Service Mission</h3>
-                <p class="mission-text">{{ currentService.mission }}</p>
-              </div>
-            </div>
-
-            <!-- Objectives Section -->
-            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
-              <div class="objectives-content">
-                <h3>Service Objectives</h3>
-                <ul class="objectives-list">
-                  <li *ngFor="let objective of currentService.objectives" class="objective-item">
-                    {{ objective }}
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Services Offered Section -->
-            <div *ngIf="currentSection.id === 'services'" class="section-content">
-              <div class="research-content">
-                <h3>Services Offered</h3>
-                <div class="research-areas">
-                  <div class="row">
-                    <div class="col-12">
-                      <ul class="research-list">
-                        <li *ngFor="let srv of currentService.servicesOffered">{{ srv }}</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Administrative Structure Section -->
-            <div *ngIf="currentSection.id === 'structure'" class="section-content">
-              <div class="structure-content">
-                <h3>Service Organizational Structure</h3>
-                <ul class="org-list">
-                  <li *ngFor="let item of currentService.organizationalStructure">{{ item }}</li>
-                </ul>
-
-                <h3>Administrative Structure</h3>
-                <ul class="admin-list">
-                  <li><strong>Head of Service</strong></li>
-                  <li><strong>Teaching Staff</strong></li>
-                  <li *ngFor="let staff of (currentService.teachingStaff || [])" class="staff-member">
-                    {{ staff.name }} – {{ staff.position }}
-                    <a href="#" class="cv-link" *ngIf="staff.cvUrl">View CV</a>
-                  </li>
-                  <li *ngIf="currentService && currentService.teachingAssistants && currentService.teachingAssistants.length > 0"><strong>Teaching Assistants</strong></li>
-                  <li *ngFor="let assistant of (currentService.teachingAssistants || [])" class="staff-member">
-                    {{ assistant.name }}
-                    <span class="text-muted" *ngIf="!assistant.cvUrl">(CV not available)</span>
-                    <a href="#" class="cv-link" *ngIf="assistant.cvUrl">View CV</a>
-                  </li>
-                  <li *ngIf="currentService && currentService.administrativeStaff && currentService.administrativeStaff.length > 0"><strong>Administrative Staff</strong></li>
-                  <li *ngFor="let admin of (currentService.administrativeStaff || [])">{{ admin.name }}</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Teaching Staff Section -->
-            <div *ngIf="currentSection.id === 'staff'" class="section-content">
-              <div class="staff-content">
-                <h3>Teaching Staff</h3>
-                <div class="table-responsive" *ngIf="currentService && currentService.teachingStaff && currentService.teachingStaff.length > 0">
-                  <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let staff of (currentService.teachingStaff || []); let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ staff.name }}</td>
-                        <td>{{ staff.position }}</td>
-                        <td>
-                          <a [href]="'mailto:' + staff.email" *ngIf="staff.email">{{ staff.email }}</a>
-                          <span *ngIf="!staff.email" class="text-muted">Not available</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Teaching Assistants -->
-                <h4 *ngIf="currentService && currentService.teachingAssistants && currentService.teachingAssistants.length > 0">Teaching Assistants</h4>
-                <div class="table-responsive" *ngIf="currentService && currentService.teachingAssistants && currentService.teachingAssistants.length > 0">
-                  <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let assistant of (currentService.teachingAssistants || []); let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ assistant.name }}</td>
-                        <td>{{ assistant.position }}</td>
-                        <td>
-                          <a [href]="'mailto:' + assistant.email" *ngIf="assistant.email">{{ assistant.email }}</a>
-                          <span *ngIf="!assistant.email" class="text-muted">Not available</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <!-- Supervisor Card -->
-            <div class="supervisor-card text-center mt-5 p-4 border rounded shadow-sm" *ngIf="currentService.supervisor">
-              <h4 class="mb-1">{{ currentService.supervisor.name }}</h4>
-              <p class="text-muted mb-0">{{ currentService.supervisor.position }}</p>
-            </div>
-
-            <!-- Back to Services Button -->
-            <div class="back-to-units text-center mt-4">
-              <button class="btn btn-primary btn-lg" (click)="goToServices()">
-                <i class="pi pi-arrow-left me-2"></i>
-                Back to Services
-              </button>
-            </div>
-          </div>
+      <div class="detail-content">
+        <div class="detail-icon">
+          <i [class]="getIconClass(selectedService.iconPath)"></i>
+        </div>
+        <h2 class="detail-title">{{ selectedService.title }}</h2>
+        <div class="detail-description">
+          <p>{{ selectedService.description }}</p>
         </div>
 
-        <!-- Default Content when no service is selected -->
-        <div class="default-content" *ngIf="!currentService">
-          <div class="welcome-section">
-            <h2>Welcome to Our Services</h2>
-            <p>Select a service from the sidebar to explore detailed information about our academic programs, faculty, research areas, and more.</p>
-            <div class="units-grid">
-              <div class="unit-card" *ngFor="let service of allServices" (click)="selectService(service)">
-                <h4>{{ service.name }}</h4>
-                <span class="learn-more">Learn More <i class="pi pi-arrow-right"></i></span>
-              </div>
-            </div>
-          </div>
+        <div class="status-badge" [class.active]="selectedService.isActive">
+          <i
+            class="pi"
+            [class.pi-check-circle]="selectedService.isActive"
+            [class.pi-times-circle]="!selectedService.isActive"
+          ></i>
+          {{ selectedService.isActive ? "Active Service" : "Inactive Service" }}
         </div>
       </div>
     </div>

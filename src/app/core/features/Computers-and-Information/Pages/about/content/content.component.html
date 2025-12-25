@@ -1,0 +1,81 @@
+<!-- Loading State with PrimeNG Skeleton -->
+<section class="content-section" *ngIf="isLoading">
+  <div class="content-container">
+    <!-- About Content Skeleton -->
+    <div class="content-block">
+      <div class="block-header">
+        <p-skeleton width="180px" height="2rem" borderRadius="8px" />
+      </div>
+      <div class="block-content">
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="90%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="85%" height="1rem" />
+      </div>
+    </div>
+
+    <!-- Mission & Vision Skeleton -->
+    <div class="mission-vision-grid">
+      <div class="mv-card">
+        <p-skeleton width="120px" height="1.5rem" styleClass="mb-3" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="80%" height="1rem" />
+      </div>
+      <div class="mv-card">
+        <p-skeleton width="100px" height="1.5rem" styleClass="mb-3" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+        <p-skeleton width="85%" height="1rem" />
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Error State -->
+<section class="content-section" *ngIf="hasError && !isLoading">
+  <div class="content-container">
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <p class="error-text">Failed to load content. Please try again later.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Content State -->
+<section class="content-section" *ngIf="contentData && !isLoading && !hasError">
+  <div class="content-container">
+    <!-- About Content -->
+    <div class="content-block">
+      <div class="block-header">
+        <i class="pi pi-info-circle header-icon"></i>
+        <h2 class="section-heading">{{ contentData.title }}</h2>
+      </div>
+      <div class="block-content">
+        <p class="content-text">{{ contentData.content }}</p>
+      </div>
+    </div>
+
+    <!-- Mission & Vision Cards -->
+    <div class="mission-vision-grid">
+      <!-- Mission Card -->
+      <div class="mv-card mission-card">
+        <div class="mv-icon">
+          <i class="pi pi-compass"></i>
+        </div>
+        <h3 class="mv-title">Our Mission</h3>
+        <p class="mv-text">{{ contentData.mission }}</p>
+      </div>
+
+      <!-- Vision Card -->
+      <div class="mv-card vision-card">
+        <div class="mv-icon">
+          <i class="pi pi-eye"></i>
+        </div>
+        <h3 class="mv-title">Our Vision</h3>
+        <p class="mv-text">{{ contentData.vision }}</p>
+      </div>
+    </div>
+  </div>
+</section>

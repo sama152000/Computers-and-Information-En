@@ -1,4 +1,42 @@
-<div class="sectors-page">
+<!-- Loading State -->
+<div class="sectors-page" *ngIf="isLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <p-skeleton width="150px" height="1.5rem" styleClass="mb-3" />
+            <p-skeleton width="100%" height="40px" styleClass="mb-2" />
+            <p-skeleton width="100%" height="40px" styleClass="mb-2" />
+            <p-skeleton width="100%" height="40px" />
+          </div>
+        </aside>
+      </div>
+      <div class="col-lg-8">
+        <div class="sector-content">
+          <p-skeleton width="200px" height="2rem" styleClass="mb-4" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="80%" height="1rem" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="sectors-page" *ngIf="hasError && !isLoading">
+  <div class="container">
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <h2>Failed to load sectors</h2>
+      <p>Please try again later.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content State -->
+<div class="sectors-page" *ngIf="!isLoading && !hasError">
   <div class="container">
     <div class="row">
       <!-- Sidebar -->
@@ -7,10 +45,12 @@
           <div class="sidebar-section" *ngIf="currentSector">
             <h3 class="sidebar-title">{{ currentSector.name }}</h3>
             <div class="nav-links">
-              <button class="nav-link-btn"
+              <button
+                class="nav-link-btn"
                 *ngFor="let section of sectorSections"
                 [class.active]="currentSection?.id === section.id"
-                (click)="selectSection(section)">
+                (click)="selectSection(section)"
+              >
                 <i [class]="section.icon + ' me-2'"></i>
                 {{ section.title }}
               </button>
@@ -20,12 +60,15 @@
           <div class="sidebar-section">
             <h3 class="sidebar-title">Scientific Sections</h3>
             <div class="sectors-list">
-              <button class="sector-btn"
+              <button
+                class="sector-btn"
                 *ngFor="let sector of allSectors"
                 [class.active]="currentSector?.id === sector.id"
-                (click)="selectSector(sector)">
+                (click)="selectSector(sector)"
+              >
                 <div class="sector-info">
                   <h5>{{ sector.name }}</h5>
+                  <small *ngIf="sector.subTitle">{{ sector.subTitle }}</small>
                 </div>
                 <i class="pi pi-chevron-right"></i>
               </button>
@@ -47,69 +90,133 @@
           <div class="content-body">
             <!-- About -->
             <div *ngIf="currentSection.id === 'about'" class="section-content">
+              <div class="sector-image" *ngIf="getFeaturedImage()">
+                <img
+                  [src]="getFeaturedImage()"
+                  [alt]="currentSector.name"
+                  class="featured-img"
+                />
+              </div>
               <h3>{{ currentSector.name }}</h3>
-              <p class="description">{{ currentSector.description }}</p>
-              <p *ngIf="currentSector.establishmentYear">
-                <strong>Establishment Year:</strong> {{ currentSector.establishmentYear }}
+              <p class="subtitle" *ngIf="currentSector.subTitle">
+                {{ currentSector.subTitle }}
               </p>
+              <p class="description">{{ currentSector.about }}</p>
             </div>
 
             <!-- Vision & Mission -->
             <div *ngIf="currentSection.id === 'vision'" class="section-content">
-              <h4>Vision</h4>
-              <p class="vision-text">{{ currentSector.vision }}</p>
-              <h4 class="mt-4">Mission</h4>
-              <p class="mission-text">{{ currentSector.mission }}</p>
+              <div class="vm-card vision-card">
+                <div class="vm-icon"><i class="pi pi-eye"></i></div>
+                <h4>Vision</h4>
+                <p class="vision-text">
+                  {{ currentSector.vision || "No vision available." }}
+                </p>
+              </div>
+              <div class="vm-card mission-card">
+                <div class="vm-icon"><i class="pi pi-compass"></i></div>
+                <h4>Mission</h4>
+                <p class="mission-text">
+                  {{ currentSector.mission || "No mission available." }}
+                </p>
+              </div>
             </div>
 
             <!-- Objectives -->
-            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
-              <h3>Department Objectives</h3>
-              <ul class="modern-list">
-                <li *ngFor="let obj of currentSector.objectives">{{ obj }}</li>
-              </ul>
-            </div>
-
-            <!-- Research Areas -->
-            <div *ngIf="currentSection.id === 'research'" class="section-content">
-              <h3>Scientific Research Areas</h3>
-              <ul class="research-list">
-                <li *ngFor="let area of currentSector.researchAreas">{{ area }}</li>
-              </ul>
+            <div
+              *ngIf="currentSection.id === 'objectives'"
+              class="section-content"
+            >
+              <h3>Section Goals</h3>
+              <div
+                class="objectives-grid"
+                *ngIf="currentSector.goals && currentSector.goals.length > 0"
+              >
+                <div
+                  class="objective-card"
+                  *ngFor="let goal of currentSector.goals"
+                >
+                  <div class="goal-number">{{ goal.index }}</div>
+                  <p>{{ goal.goalName }}</p>
+                </div>
+              </div>
+              <p
+                *ngIf="!currentSector.goals || currentSector.goals.length === 0"
+                class="text-muted"
+              >
+                No objectives available.
+              </p>
             </div>
 
             <!-- Programs -->
-            <div *ngIf="currentSection.id === 'programs'" class="section-content">
+            <div
+              *ngIf="currentSection.id === 'programs'"
+              class="section-content"
+            >
               <h3>Academic Programs</h3>
-              <ul class="objectives-list">
-                <li *ngFor="let prog of currentSector.programs">{{ prog }}</li>
-              </ul>
-              <div *ngIf="currentSector.labs">
-                <h4 class="mt-4">Specialized Laboratories</h4>
-                <ul class="objectives-list">
-                  <li *ngFor="let lab of currentSector.labs">{{ lab }}</li>
-                </ul>
+              <div class="programs-list" *ngIf="sectorPrograms.length > 0">
+                <div class="program-card" *ngFor="let prog of sectorPrograms">
+                  <i class="pi pi-graduation-cap"></i>
+                  <div class="program-info">
+                    <h5>{{ prog.programName }}</h5>
+                  </div>
+                </div>
               </div>
+              <p *ngIf="sectorPrograms.length === 0" class="text-muted">
+                No programs available.
+              </p>
             </div>
 
             <!-- Staff -->
             <div *ngIf="currentSection.id === 'staff'" class="section-content">
-              <h3>Head of Department</h3>
-              <div class="director-card text-center p-4 mb-4">
-                <h5>{{ currentSector.headOfDepartment.name }}</h5>
-                <p class="text-muted">{{ currentSector.headOfDepartment.position }}</p>
-                <p *ngIf="currentSector.headOfDepartment.office">Office: {{ currentSector.headOfDepartment.office }}</p>
+              <h3>Staff Members</h3>
+
+              <!-- Section Leader -->
+              <div class="leader-card" *ngIf="sectorLeader">
+                <h4>Section Leader</h4>
+                <div class="member-card leader">
+                  <i class="pi pi-user"></i>
+                  <div class="member-info">
+                    <h5>{{ sectorLeader.memberName }}</h5>
+                    <span class="badge">Leader</span>
+                  </div>
+                </div>
               </div>
+
+              <!-- Other Members -->
+              <div class="members-grid" *ngIf="sectorMembers.length > 0">
+                <div
+                  class="member-card"
+                  *ngFor="let member of sectorMembers"
+                  [class.leader]="member.isLeader"
+                >
+                  <i class="pi pi-user"></i>
+                  <div class="member-info">
+                    <h5>{{ member.memberName }}</h5>
+                    <span class="badge" *ngIf="member.isLeader">Leader</span>
+                  </div>
+                </div>
+              </div>
+              <p *ngIf="sectorMembers.length === 0" class="text-muted">
+                No staff members available.
+              </p>
             </div>
 
-            <!-- Contact -->
-            <div *ngIf="currentSection.id === 'contact'" class="section-content">
-              <h3>Contact Information</h3>
-              <div class="contact-card p-4 border rounded">
-                <p><strong>Email:</strong> <a href="mailto:{{ currentSector.contactInfo?.email }}">{{ currentSector.contactInfo?.email }}</a></p>
-                <p><strong>Phone:</strong> {{ currentSector.contactInfo?.phone }}</p>
-                <p><strong>Location:</strong> {{ currentSector.contactInfo?.location }}</p>
+            <!-- Details -->
+            <div
+              *ngIf="currentSection.id === 'details'"
+              class="section-content"
+            >
+              <h3>Additional Details</h3>
+              <div class="details-list" *ngIf="sectorDetails.length > 0">
+                <div class="detail-card" *ngFor="let detail of sectorDetails">
+                  <h4>{{ detail.title }}</h4>
+                  <p>{{ detail.content }}</p>
+                </div>
               </div>
+              <p *ngIf="sectorDetails.length === 0" class="text-muted">
+                No additional details available.
+              </p>
             </div>
           </div>
         </div>
@@ -117,11 +224,35 @@
         <!-- Default View -->
         <div class="default-content" *ngIf="!currentSector">
           <h2>Scientific Sections of the Faculty</h2>
-          <p>Choose a section from the list to view its full details, programs, scientific research, and faculty members.</p>
+          <p>
+            Choose a section from the list to view its full details, programs,
+            scientific research, and faculty members.
+          </p>
           <div class="sectors-grid">
-            <div class="sector-card" *ngFor="let sector of allSectors" (click)="selectSector(sector)">
-              <h4>{{ sector.name }}</h4>
-              <span class="learn-more">View Details <i class="pi pi-arrow-right"></i></span>
+            <div
+              class="sector-card"
+              *ngFor="let sector of allSectors"
+              (click)="selectSector(sector)"
+            >
+              <div
+                class="sector-card-image"
+                *ngIf="
+                  sector.sectorAttachments &&
+                  sector.sectorAttachments.length > 0
+                "
+              >
+                <img
+                  [src]="sector.sectorAttachments[0].url"
+                  [alt]="sector.name"
+                />
+              </div>
+              <div class="sector-card-content">
+                <h4>{{ sector.name }}</h4>
+                <p *ngIf="sector.subTitle">{{ sector.subTitle }}</p>
+                <span class="learn-more"
+                  >View Details <i class="pi pi-arrow-right"></i
+                ></span>
+              </div>
             </div>
           </div>
         </div>
@@ -130,4 +261,4 @@
   </div>
 </div>
 
-  <app-footer></app-footer>
+<app-footer></app-footer>

@@ -1,32 +1,46 @@
 <section class="news-section">
   <div class="container-fluid">
     <h2 class="section-title">Latest News</h2>
-    
+
     <div class="news-grid">
-      <div 
-        *ngFor="let article of newsArticles; let i = index"
-        class="news-card fade-in"
-        [style.animation-delay.ms]="i * 200"
-      >
+      @for (article of newsArticles; track article.id) { @defer (on viewport) {
+      <div class="news-card visible">
         <div class="news-image">
-          <img [src]="article.imageUrl" [alt]="article.title" />
-          <div class="news-category">{{ article.category }}</div>
+          <img [src]="article.featuredImagePath" [alt]="article.title" />
+          <div class="news-category">News</div>
         </div>
+
         <div class="news-content">
           <h3>{{ article.title }}</h3>
+
           <div class="news-date">
             <i class="pi pi-calendar"></i>
-            {{ article.date | date:'MMMM dd, yyyy' }}
+            {{ article.createdDate | date : "MMMM dd, yyyy" }}
           </div>
-          <p>{{ article.excerpt }}</p>
-          <button class="btn btn-primary-custom" (click)="navigateToDetails(article)">
+
+          <p>{{ article.content | slice : 0 : 120 }}...</p>
+
+          <button
+            class="btn btn-primary-custom"
+            (click)="navigateToDetails(article)"
+          >
             Read More
-            <i class="pi pi-arrow-right me-2 "></i>
+            <i class="pi pi-arrow-right me-2"></i>
           </button>
         </div>
       </div>
+      } @placeholder {
+      <div class="news-card placeholder">
+        <div class="news-image skeleton"></div>
+        <div class="news-content">
+          <div class="skeleton title"></div>
+          <div class="skeleton text"></div>
+          <div class="skeleton text short"></div>
+        </div>
+      </div>
+      } }
     </div>
-    
+
     <div class="text-center mt-5">
       <button class="btn btn-secondary-custom btn-lg">
         <i class="pi pi-list me-2"></i>
@@ -35,4 +49,3 @@
     </div>
   </div>
 </section>
-

@@ -1,47 +1,127 @@
-<div class="units-page">
+<!-- Loading State -->
+<div class="units-page" *ngIf="isLoading">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4">
+        <aside class="sidebar">
+          <div class="sidebar-section">
+            <p-skeleton width="150px" height="1.5rem" styleClass="mb-3" />
+            <p-skeleton width="100%" height="40px" styleClass="mb-2" />
+            <p-skeleton width="100%" height="40px" styleClass="mb-2" />
+            <p-skeleton width="100%" height="40px" />
+          </div>
+        </aside>
+      </div>
+      <div class="col-lg-8">
+        <div class="unit-content">
+          <p-skeleton width="200px" height="2rem" styleClass="mb-4" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="100%" height="1rem" styleClass="mb-2" />
+          <p-skeleton width="80%" height="1rem" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="units-page" *ngIf="hasError && !isLoading">
+  <div class="container">
+    <div class="error-container">
+      <i class="pi pi-exclamation-triangle error-icon"></i>
+      <h2>Failed to load data</h2>
+      <p>Please try again later.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Content State -->
+<div class="units-page" *ngIf="!isLoading && !hasError">
   <div class="container">
     <div class="row">
       <!-- Left Sidebar -->
       <div class="col-lg-4">
         <aside class="sidebar">
-          <!-- Unit Sections Sidebar -->
-          <div class="sidebar-section" *ngIf="currentUnit">
-            <h3 class="sidebar-title">{{ currentUnit.name }}</h3>
+          <!-- Current Item Sections -->
+          <div class="sidebar-section" *ngIf="currentUnit || currentCenter">
+            <h3 class="sidebar-title">{{ getCurrentName() }}</h3>
             <div class="nav-links">
               <button
                 class="nav-link-btn"
-                *ngFor="let section of unitSections"
+                *ngFor="let section of getCurrentSections()"
                 [class.active]="currentSection?.id === section.id"
-                (click)="selectSection(section)">
+                (click)="selectSection(section)"
+              >
                 <i [class]="section.icon + ' me-2'"></i>
                 {{ section.title }}
               </button>
             </div>
           </div>
 
-          <!-- Other Units List -->
+          <!-- Tabs for Units/Centers -->
           <div class="sidebar-section">
+            <div class="tabs-toggle">
+              <button
+                class="toggle-btn"
+                [class.active]="activeTab === 'unit'"
+                (click)="onTabChange('unit')"
+              >
+                <i class="pi pi-building me-2"></i>
+                Units
+              </button>
+              <button
+                class="toggle-btn"
+                [class.active]="activeTab === 'center'"
+                (click)="onTabChange('center')"
+              >
+                <i class="pi pi-home me-2"></i>
+                Centers
+              </button>
+            </div>
+          </div>
+
+          <!-- Units List -->
+          <div class="sidebar-section" *ngIf="activeTab === 'unit'">
             <h3 class="sidebar-title">Faculty Units</h3>
             <div class="units-list">
               <button
                 class="unit-btn"
                 *ngFor="let unit of allUnits"
                 [class.active]="currentUnit?.id === unit.id"
-                (click)="selectUnit(unit)">
+                (click)="selectUnit(unit)"
+              >
                 <div class="unit-info">
-                  <h5>{{ unit.name }}</h5>
+                  <h5>{{ unit.unitTitleEn || unit.unitTitle }}</h5>
                 </div>
                 <i class="pi pi-chevron-right"></i>
               </button>
             </div>
           </div>
 
-
+          <!-- Centers List -->
+          <div class="sidebar-section" *ngIf="activeTab === 'center'">
+            <h3 class="sidebar-title">Faculty Centers</h3>
+            <div class="units-list">
+              <button
+                class="unit-btn"
+                *ngFor="let center of allCenters"
+                [class.active]="currentCenter?.id === center.id"
+                (click)="selectCenter(center)"
+              >
+                <div class="unit-info">
+                  <h5>{{ center.centerNameEn || center.centerName }}</h5>
+                  <small *ngIf="center.subTitle">{{ center.subTitle }}</small>
+                </div>
+                <i class="pi pi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
         </aside>
       </div>
 
       <!-- Main Content Area -->
       <div class="col-lg-8">
+        <!-- Unit Content -->
         <div class="unit-content" *ngIf="currentUnit && currentSection">
           <div class="content-header">
             <h2 class="content-title">
@@ -53,184 +133,245 @@
           <div class="content-body">
             <!-- About Section -->
             <div *ngIf="currentSection.id === 'about'" class="section-content">
-              <div class="department-overview">
-                <h3>{{ currentUnit.name }}</h3>
-                <p class="description">{{ currentUnit.description }}</p>
-
-                <div class="establishment-info" *ngIf="currentUnit.establishmentInfo">
-                  <h4>Establishment Information</h4>
-                  <p>{{ currentUnit.establishmentInfo }}</p>
-                </div>
+              <div class="featured-image" *ngIf="getFeaturedImage()">
+                <img [src]="getFeaturedImage()" [alt]="getCurrentName()" />
+              </div>
+              <h3>{{ currentUnit.unitTitleEn || currentUnit.unitTitle }}</h3>
+              <p class="description">{{ currentUnit.content }}</p>
+              <div class="history-section" *ngIf="currentUnit.history">
+                <h4>History</h4>
+                <p>{{ currentUnit.history }}</p>
               </div>
             </div>
 
-            <!-- Vision Section -->
+            <!-- Vision & Mission Section -->
             <div *ngIf="currentSection.id === 'vision'" class="section-content">
-              <div class="vision-content">
-                <h3>Unit Vision</h3>
-                <p class="vision-text">{{ currentUnit.vision }}</p>
+              <div class="vm-card vision-card">
+                <div class="vm-icon"><i class="pi pi-eye"></i></div>
+                <h4>Vision</h4>
+                <p>{{ currentUnit.vision || "No vision available." }}</p>
               </div>
-            </div>
-
-            <!-- Mission Section -->
-            <div *ngIf="currentSection.id === 'mission'" class="section-content">
-              <div class="mission-content">
-                <h3>Unit Mission</h3>
-                <p class="mission-text">{{ currentUnit.mission }}</p>
+              <div class="vm-card mission-card">
+                <div class="vm-icon"><i class="pi pi-compass"></i></div>
+                <h4>Mission</h4>
+                <p>{{ currentUnit.mission || "No mission available." }}</p>
               </div>
             </div>
 
             <!-- Objectives Section -->
-            <div *ngIf="currentSection.id === 'objectives'" class="section-content">
-              <div class="objectives-content">
-                <h3>Unit Objectives</h3>
-                <ul class="objectives-list">
-                  <li *ngFor="let objective of currentUnit.objectives" class="objective-item">
-                    {{ objective }}
-                  </li>
-                </ul>
+            <div
+              *ngIf="currentSection.id === 'objectives'"
+              class="section-content"
+            >
+              <h3>Unit Goals</h3>
+              <div
+                class="objectives-grid"
+                *ngIf="currentUnit.goals && currentUnit.goals.length > 0"
+              >
+                <div
+                  class="objective-card"
+                  *ngFor="let goal of currentUnit.goals"
+                >
+                  <div class="goal-number">{{ goal.index }}</div>
+                  <p>{{ goal.goalName }}</p>
+                </div>
               </div>
+              <p
+                *ngIf="!currentUnit.goals || currentUnit.goals.length === 0"
+                class="text-muted"
+              >
+                No goals available.
+              </p>
             </div>
 
-            <!-- Research Areas Section -->
-            <div *ngIf="currentSection.id === 'research'" class="section-content">
-              <div class="research-content">
-                <h3>Scientific Research Areas</h3>
-                <div class="research-areas">
-                  <div class="row">
-                    <div class="col-12">
-                      <ul class="research-list">
-                        <li *ngFor="let area of currentUnit.researchAreas">{{ area }}</li>
-                      </ul>
-                    </div>
+            <!-- Members Section -->
+            <div
+              *ngIf="currentSection.id === 'members'"
+              class="section-content"
+            >
+              <h3>Unit Members</h3>
+
+              <!-- Leader -->
+              <div class="leader-card" *ngIf="unitLeader">
+                <h4>Unit Leader</h4>
+                <div class="member-card leader">
+                  <i class="pi pi-user"></i>
+                  <div class="member-info">
+                    <h5>{{ unitLeader.memberName }}</h5>
+                    <span class="badge">Leader</span>
                   </div>
                 </div>
+              </div>
 
-                <!-- Research Grants -->
-                <div class="research-grants" *ngIf="currentUnit.researchGrants && currentUnit.researchGrants.length > 0">
-                  <h4>Research Grants & Awards</h4>
-                  <ul class="awards-list">
-                    <li *ngFor="let grant of currentUnit.researchGrants" class="award-item">
-                      <strong>{{ grant.year }}:</strong>
-                      <span class="grant-description">
-                        {{ grant.description || grant.title }}
-                        <em *ngIf="grant.principalInvestigator"> - {{ grant.principalInvestigator }}</em>
-                      </span>
-                    </li>
-                  </ul>
+              <!-- Other Members -->
+              <div class="members-grid" *ngIf="unitMembers.length > 0">
+                <div
+                  class="member-card"
+                  *ngFor="let member of unitMembers"
+                  [class.leader]="member.isLeader"
+                >
+                  <i class="pi pi-user"></i>
+                  <div class="member-info">
+                    <h5>{{ member.memberName }}</h5>
+                    <span class="badge" *ngIf="member.isLeader">Leader</span>
+                  </div>
                 </div>
               </div>
+              <p *ngIf="unitMembers.length === 0" class="text-muted">
+                No members available.
+              </p>
             </div>
+          </div>
 
-            <!-- Administrative Structure Section -->
-            <div *ngIf="currentSection.id === 'structure'" class="section-content">
-              <div class="structure-content">
-                <h3>Unit Organizational Structure</h3>
-                <ul class="org-list">
-                  <li *ngFor="let item of currentUnit.organizationalStructure">{{ item }}</li>
-                </ul>
-
-                <h3>Administrative Structure</h3>
-                <ul class="admin-list">
-                  <li><strong>Head of Unit</strong></li>
-                  <li><strong>Teaching Staff</strong></li>
-                  <li *ngFor="let staff of (currentUnit.teachingStaff || [])" class="staff-member">
-                    {{ staff.name }} – {{ staff.position }}
-                    <a href="#" class="cv-link" *ngIf="staff.cvUrl">View CV</a>
-                  </li>
-                  <li *ngIf="currentUnit && currentUnit.teachingAssistants && currentUnit.teachingAssistants.length > 0"><strong>Teaching Assistants</strong></li>
-                  <li *ngFor="let assistant of (currentUnit.teachingAssistants || [])" class="staff-member">
-                    {{ assistant.name }}
-                    <span class="text-muted" *ngIf="!assistant.cvUrl">(CV not available)</span>
-                    <a href="#" class="cv-link" *ngIf="assistant.cvUrl">View CV</a>
-                  </li>
-                  <li *ngIf="currentUnit && currentUnit.administrativeStaff && currentUnit.administrativeStaff.length > 0"><strong>Administrative Staff</strong></li>
-                  <li *ngFor="let admin of (currentUnit.administrativeStaff || [])">{{ admin.name }}</li>
-                </ul>
-              </div>
-            </div>
-
-            <!-- Teaching Staff Section -->
-            <div *ngIf="currentSection.id === 'staff'" class="section-content">
-              <div class="staff-content">
-                <h3>Teaching Staff</h3>
-                <div class="table-responsive" *ngIf="currentUnit && currentUnit.teachingStaff && currentUnit.teachingStaff.length > 0">
-                  <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let staff of (currentUnit.teachingStaff || []); let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ staff.name }}</td>
-                        <td>{{ staff.position }}</td>
-                        <td>
-                          <a [href]="'mailto:' + staff.email" *ngIf="staff.email">{{ staff.email }}</a>
-                          <span *ngIf="!staff.email" class="text-muted">Not available</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-
-                <!-- Teaching Assistants -->
-                <h4 *ngIf="currentUnit && currentUnit.teachingAssistants && currentUnit.teachingAssistants.length > 0">Teaching Assistants</h4>
-                <div class="table-responsive" *ngIf="currentUnit && currentUnit.teachingAssistants && currentUnit.teachingAssistants.length > 0">
-                  <table class="table table-bordered table-hover">
-                    <thead class="table-light">
-                      <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Position</th>
-                        <th>Email</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr *ngFor="let assistant of (currentUnit.teachingAssistants || []); let i = index">
-                        <td>{{ i + 1 }}</td>
-                        <td>{{ assistant.name }}</td>
-                        <td>{{ assistant.position }}</td>
-                        <td>
-                          <a [href]="'mailto:' + assistant.email" *ngIf="assistant.email">{{ assistant.email }}</a>
-                          <span *ngIf="!assistant.email" class="text-muted">Not available</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-
-            <!-- Supervisor Card -->
-            <div class="supervisor-card text-center mt-5 p-4 border rounded shadow-sm" *ngIf="currentUnit.supervisor">
-              <h4 class="mb-1">{{ currentUnit.supervisor.name }}</h4>
-              <p class="text-muted mb-0">{{ currentUnit.supervisor.position }}</p>
-            </div>
-
-            <!-- Back to Units Button -->
-            <div class="back-to-units text-center mt-4">
-              <button class="btn btn-primary btn-lg" (click)="goToUnits()">
-                <i class="pi pi-arrow-left me-2"></i>
-                Back to Units
-              </button>
-            </div>
+          <!-- Back Button -->
+          <div class="back-to-units text-center mt-4">
+            <button class="btn btn-primary btn-lg" (click)="goToUnits()">
+              <i class="pi pi-arrow-left me-2"></i>
+              Back to List
+            </button>
           </div>
         </div>
 
-        <!-- Default Content when no unit is selected -->
-        <div class="default-content" *ngIf="!currentUnit">
+        <!-- Center Content -->
+        <div class="unit-content" *ngIf="currentCenter && currentSection">
+          <div class="content-header">
+            <h2 class="content-title">
+              <i [class]="currentSection.icon + ' me-3'"></i>
+              {{ currentSection.title }}
+            </h2>
+          </div>
+
+          <div class="content-body">
+            <!-- About Section -->
+            <div *ngIf="currentSection.id === 'about'" class="section-content">
+              <div class="featured-image" *ngIf="getFeaturedImage()">
+                <img [src]="getFeaturedImage()" [alt]="getCurrentName()" />
+              </div>
+              <h3>
+                {{ currentCenter.centerNameEn || currentCenter.centerName }}
+              </h3>
+              <p class="subtitle" *ngIf="currentCenter.subTitle">
+                {{ currentCenter.subTitle }}
+              </p>
+              <p class="description">{{ currentCenter.about }}</p>
+              <div class="location-info" *ngIf="currentCenter.place">
+                <i class="pi pi-map-marker"></i>
+                <span>{{ currentCenter.place }}</span>
+              </div>
+            </div>
+
+            <!-- Vision & Mission Section -->
+            <div *ngIf="currentSection.id === 'vision'" class="section-content">
+              <div class="vm-card vision-card">
+                <div class="vm-icon"><i class="pi pi-eye"></i></div>
+                <h4>Vision</h4>
+                <p>{{ currentCenter.vision || "No vision available." }}</p>
+              </div>
+              <div class="vm-card mission-card">
+                <div class="vm-icon"><i class="pi pi-compass"></i></div>
+                <h4>Mission</h4>
+                <p>{{ currentCenter.mission || "No mission available." }}</p>
+              </div>
+            </div>
+
+            <!-- Objectives Section -->
+            <div
+              *ngIf="currentSection.id === 'objectives'"
+              class="section-content"
+            >
+              <h3>Center Goals</h3>
+              <div
+                class="objectives-grid"
+                *ngIf="currentCenter.goals && currentCenter.goals.length > 0"
+              >
+                <div
+                  class="objective-card"
+                  *ngFor="let goal of currentCenter.goals; let i = index"
+                >
+                  <div class="goal-number">{{ i + 1 }}</div>
+                  <p>{{ goal.goalName }}</p>
+                </div>
+              </div>
+              <p
+                *ngIf="!currentCenter.goals || currentCenter.goals.length === 0"
+                class="text-muted"
+              >
+                No goals available.
+              </p>
+            </div>
+          </div>
+
+          <!-- Back Button -->
+          <div class="back-to-units text-center mt-4">
+            <button class="btn btn-primary btn-lg" (click)="goToUnits()">
+              <i class="pi pi-arrow-left me-2"></i>
+              Back to List
+            </button>
+          </div>
+        </div>
+
+        <!-- Default Content when nothing is selected -->
+        <div class="default-content" *ngIf="!currentUnit && !currentCenter">
           <div class="welcome-section">
-            <h2>Welcome to Our Units</h2>
-            <p>Select a unit from the sidebar to explore detailed information about our academic programs, faculty, research areas, and more.</p>
-            <div class="units-grid">
-              <div class="unit-card" *ngFor="let unit of allUnits" (click)="selectUnit(unit)">
-                <h4>{{ unit.name }}</h4>
-                <span class="learn-more">Learn More <i class="pi pi-arrow-right"></i></span>
+            <h2>Welcome to Units & Centers</h2>
+            <p>
+              Select a {{ activeTab === "unit" ? "unit" : "center" }} from the
+              sidebar to explore detailed information.
+            </p>
+
+            <!-- Units Grid -->
+            <div class="units-grid" *ngIf="activeTab === 'unit'">
+              <div
+                class="unit-card"
+                *ngFor="let unit of allUnits"
+                (click)="selectUnit(unit)"
+              >
+                <div
+                  class="card-image"
+                  *ngIf="
+                    unit.unitAttachments && unit.unitAttachments.length > 0
+                  "
+                >
+                  <img
+                    [src]="unit.unitAttachments[0].url"
+                    [alt]="unit.unitTitleEn || unit.unitTitle"
+                  />
+                </div>
+                <div class="card-content">
+                  <h4>{{ unit.unitTitleEn || unit.unitTitle }}</h4>
+                  <span class="learn-more"
+                    >Learn More <i class="pi pi-arrow-right"></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Centers Grid -->
+            <div class="units-grid" *ngIf="activeTab === 'center'">
+              <div
+                class="unit-card"
+                *ngFor="let center of allCenters"
+                (click)="selectCenter(center)"
+              >
+                <div
+                  class="card-image"
+                  *ngIf="
+                    center.centerAttachments &&
+                    center.centerAttachments.length > 0
+                  "
+                >
+                  <img
+                    [src]="center.centerAttachments[0].url"
+                    [alt]="center.centerNameEn || center.centerName"
+                  />
+                </div>
+                <div class="card-content">
+                  <h4>{{ center.centerNameEn || center.centerName }}</h4>
+                  <p *ngIf="center.subTitle">{{ center.subTitle }}</p>
+                  <span class="learn-more"
+                    >Learn More <i class="pi pi-arrow-right"></i
+                  ></span>
+                </div>
               </div>
             </div>
           </div>

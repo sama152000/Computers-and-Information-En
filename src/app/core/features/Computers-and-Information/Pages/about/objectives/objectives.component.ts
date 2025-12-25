@@ -1,20 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AboutService } from '../../../Services/about.service';
+import {
+  AboutService,
+  Goal,
+} from '../../../Services/real-services/about.service';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-objectives',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SkeletonModule],
   templateUrl: './objectives.component.html',
   styleUrls: ['./objectives.component.css'],
 })
 export class ObjectivesComponent implements OnInit {
-  objectives: any[] = [];
+  private readonly aboutService = inject(AboutService);
 
-  constructor(private aboutService: AboutService) {}
+  objectives: Goal[] = [];
+  isLoading = true;
+  hasError = false;
 
   ngOnInit() {
-    this.objectives = this.aboutService.getObjectives();
+    this.loadObjectives();
+  }
+
+  private loadObjectives(): void {
+    this.isLoading = true;
+    this.hasError = false;
+
+    this.aboutService.getByPageType('AboutUniversity').subscribe({
+      next: (data) => {
+        if (data && data.goals) {
+          this.objectives = data.goals.sort((a, b) => a.index - b.index);
+        }
+        this.isLoading = false;
+      },
+      error: () => {
+        this.hasError = true;
+        this.isLoading = false;
+      },
+    });
   }
 }

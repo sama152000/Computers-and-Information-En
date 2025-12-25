@@ -1,7 +1,25 @@
-<section class="hero-slider">
+<!-- Loading State -->
+<div *ngIf="isLoading()" class="hero-loading">
+  <div class="loading-spinner">
+    <i class="pi pi-spin pi-spinner"></i>
+    <p>Loading...</p>
+  </div>
+</div>
+
+<!-- Error State -->
+<div *ngIf="error() && !isLoading()" class="hero-error">
+  <i class="pi pi-exclamation-triangle"></i>
+  <p>{{ error() }}</p>
+</div>
+
+<!-- Hero Slider -->
+<section
+  class="hero-slider"
+  *ngIf="!isLoading() && !error() && slides().length > 0"
+>
   <div class="slide-container">
-    <div 
-      *ngFor="let slide of slides; let i = index" 
+    <div
+      *ngFor="let slide of slides(); let i = index"
       class="slide"
       [class.active]="i === currentSlide"
     >
@@ -12,8 +30,8 @@
           <div class="row">
             <div class="col-lg-12 col-md-10 mx-auto text-center">
               <h2 class="hero-title fade-in">{{ slide.title }}</h2>
-              <p class="hero-subtitle fade-in">{{ slide.subtitle }}</p>
-              <div class="hero-actions fade-in">
+              <p class="hero-subtitle fade-in">{{ slide.description }}</p>
+              <!-- <div class="hero-actions fade-in">
                 <button class="btn btn-primary-custom me-3">
                   <i class="pi pi-arrow-left me-2"></i>
                   Learn More
@@ -22,7 +40,7 @@
                   <i class="pi pi-play me-2"></i>
                   Watch Video
                 </button>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
@@ -32,8 +50,8 @@
 
   <!-- Navigation Dots -->
   <div class="slider-dots">
-    <button 
-      *ngFor="let slide of slides; let i = index"
+    <button
+      *ngFor="let slide of slides(); let i = index"
       class="dot"
       [class.active]="i === currentSlide"
       (click)="goToSlide(i)"

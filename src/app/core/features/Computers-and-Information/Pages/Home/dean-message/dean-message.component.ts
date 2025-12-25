@@ -5,13 +5,13 @@ import { DeanSpeech } from '../../../model/deanspeech.model';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
-  selector: 'app-dean-message',
+  selector: 'app-home-dean-message',
   standalone: true,
   imports: [CommonModule, SkeletonModule],
   templateUrl: './dean-message.component.html',
   styleUrls: ['./dean-message.component.css'],
 })
-export class DeanMessageComponent implements OnInit {
+export class HomeDeanMessageComponent implements OnInit {
   private readonly deanSpeechsService = inject(DeanSpeechsService);
 
   deanData: {

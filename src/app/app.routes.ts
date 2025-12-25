@@ -44,6 +44,20 @@ export const routes: Routes = [
               ).then((m) => m.ObjectivesComponent),
           },
           {
+            path: 'history',
+            loadComponent: () =>
+              import(
+                './core/features/Computers-and-Information/Pages/about/history/history.component'
+              ).then((m) => m.HistoryComponent),
+          },
+          {
+            path: 'content',
+            loadComponent: () =>
+              import(
+                './core/features/Computers-and-Information/Pages/about/content/content.component'
+              ).then((m) => m.ContentComponent),
+          },
+          {
             path: 'admin-structure',
             loadComponent: () =>
               import(

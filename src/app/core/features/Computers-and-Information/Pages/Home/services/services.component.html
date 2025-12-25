@@ -1,48 +1,59 @@
 <section class="services-section">
   <div class="container-fluid">
     <h2 class="section-title">Services</h2>
-    
-    <div class="services-carousel">
-      <div class="services-track" [style.transform]="'translateX(' + transformPosition + 'px)'">
-        <div
-          *ngFor="let service of displayServices; let i = index"
-          class="service-card"
-          [class.active]="i === currentIndex"
-        >
-          <div class="service-icon">
-            <i [class]="service.icon" style="color: var(--primary-red);"></i>
-          </div>
-          <h3>{{ service.title }}</h3>
-          <p>{{ service.description }}</p>
-          <!-- <div class="service-features">
-            <div *ngFor="let feature of service.features" class="feature-item">
-              <i class="pi pi-check"></i>
-              <span>{{ feature }}</span>
+
+    <!-- Loading State -->
+    @if (isLoading) {
+    <div class="skeleton-container">
+      @for (item of [1, 2, 3]; track item) {
+      <div class="skeleton-card">
+        <p-skeleton shape="circle" size="80px" styleClass="mb-3" />
+        <p-skeleton width="60%" height="1.5rem" styleClass="mb-2" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-1" />
+        <p-skeleton width="100%" height="1rem" styleClass="mb-1" />
+        <p-skeleton width="80%" height="1rem" styleClass="mb-3" />
+        <p-skeleton width="100%" height="2.5rem" />
+      </div>
+      }
+    </div>
+    }
+
+    <!-- Carousel -->
+    @if (!isLoading && services.length > 0) {
+    <p-carousel
+      [value]="services"
+      [numVisible]="3"
+      [numScroll]="1"
+      [circular]="services.length > 3"
+      [autoplayInterval]="6000"
+      [responsiveOptions]="responsiveOptions"
+      [showIndicators]="true"
+      [showNavigators]="true"
+    >
+      <ng-template let-service #item>
+        <div class="service-card-wrapper">
+          <div class="service-card">
+            <div class="service-icon">
+              <i [class]="getIconClass(service.iconPath)"></i>
             </div>
-          </div> -->
-          <button class="btn btn-primary-custom">
-            Learn More
-            <i class="pi pi-arrow-right me-2"></i>
-          </button>
+            <h3>{{ service.title }}</h3>
+            <p>{{ service.description }}</p>
+            <button class="btn btn-primary-custom" routerLink="/services">
+              Learn More
+              <i class="pi pi-arrow-right"></i>
+            </button>
+          </div>
         </div>
-      </div>
+      </ng-template>
+    </p-carousel>
+    }
+
+    <!-- Empty State -->
+    @if (!isLoading && services.length === 0) {
+    <div class="empty-state">
+      <i class="pi pi-inbox"></i>
+      <p>No services available</p>
     </div>
-    
-    <div class="carousel-controls">
-      <button class="control-btn prev" (click)="previousSlide()">
-        <i class="pi pi-chevron-left"></i>
-      </button>
-      <div class="carousel-indicators">
-        <button
-          *ngFor="let service of services; let i = index"
-          class="indicator"
-          [class.active]="i === activeIndex"
-          (click)="goToSlide(i)"
-        ></button>
-      </div>
-      <button class="control-btn next" (click)="nextSlide()">
-        <i class="pi pi-chevron-right"></i>
-      </button>
-    </div>
+    }
   </div>
 </section>

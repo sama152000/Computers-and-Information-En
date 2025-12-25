@@ -1,5 +1,6 @@
 <!-- Loading State with PrimeNG Skeleton -->
-<section class="dean-section" *ngIf="isLoading">
+@if (isLoading) {
+<section class="dean-section">
   <div class="dean-container">
     <!-- Photo Skeleton -->
     <div class="dean-photo-wrapper">
@@ -26,9 +27,11 @@
     </div>
   </div>
 </section>
+}
 
 <!-- Error State -->
-<section class="dean-section error-section" *ngIf="hasError && !isLoading">
+@if (hasError && !isLoading) {
+<section class="dean-section error-section">
   <div class="error-container">
     <i class="pi pi-exclamation-triangle error-icon"></i>
     <p class="error-text">
@@ -36,9 +39,11 @@
     </p>
   </div>
 </section>
+}
 
 <!-- Content State -->
-<section class="dean-section" *ngIf="deanData && !isLoading && !hasError">
+@if (deanData && !isLoading && !hasError) {
+<section class="dean-section">
   <div class="dean-container">
     <div class="dean-photo-wrapper">
       <div class="dean-photo">
@@ -59,3 +64,4 @@
     </div>
   </div>
 </section>
+}

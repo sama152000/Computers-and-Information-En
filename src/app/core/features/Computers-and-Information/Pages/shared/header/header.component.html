@@ -4,27 +4,25 @@
     <div class="row align-items-center">
       <div class="col-md-6">
         <div class="social-icons">
-          <a href="#" class="social-link">
-            <i class="pi pi-facebook"></i>
-          </a>
-          <a href="#" class="social-link">
-            <i class="pi pi-twitter"></i>
-          </a>
-          <a href="#" class="social-link">
-            <i class="pi pi-linkedin"></i>
-          </a>
-          <a href="#" class="social-link">
-            <i class="pi pi-instagram"></i>
+          <a
+            *ngFor="let social of socialLinks"
+            [href]="social.url"
+            target="_blank"
+            class="social-link"
+            [title]="social.name"
+          >
+            <i [class]="social.icon"></i>
           </a>
         </div>
       </div>
       <div class="col-md-6 text-end">
-        <div class="col-md-6 text-end">
-        <a class="lang-btn" href="https://computers-and-information-ar.vercel.app/home">
+        <a
+          class="lang-btn"
+          href="https://computers-and-information-ar.vercel.app/home"
+        >
           <i class="pi pi-globe me-2"></i>
-         عربي
+          عربي
         </a>
-      </div>
       </div>
     </div>
   </div>
@@ -37,7 +35,7 @@
       <div class="col-lg-6">
         <div class="logo-section d-flex align-items-center">
           <div class="logo-frame">
-            <img src="assets/comp-logo.jpg" alt="CS Logo" class="logo" />
+            <img [src]="logo()?.url" [alt]="logo()?.fileName" class="logo" />
           </div>
           <div class="dept-info ms-3">
             <h1 class="dept-title">Faculty of Computers and Information</h1>
@@ -46,14 +44,39 @@
         </div>
       </div>
       <div class="col-lg-6">
-        <div class="contact-info d-flex justify-content-end align-items-center gap-4">
-          <div class="contact-item">
-            <i class="pi pi-envelope"></i>
-            <span>info@csdept.edu</span>
+        <div
+          class="contact-info d-flex justify-content-end align-items-center gap-3"
+        >
+          <!-- Email -->
+          <div class="contact-item" *ngIf="contact?.email">
+            <div class="icon-wrapper">
+              <i class="pi pi-envelope"></i>
+            </div>
+            <a [href]="'mailto:' + contact?.email" class="contact-link">
+              {{ contact?.email }}
+            </a>
           </div>
-          <div class="contact-item">
-            <i class="pi pi-phone"></i>
-            <span>+20 123 456 789</span>
+
+          <!-- Separator -->
+          <span
+            class="separator"
+            *ngIf="contact?.email && getPhoneNumbers().length"
+            >|</span
+          >
+
+          <!-- Phone Numbers -->
+          <div class="contact-item phones" *ngIf="getPhoneNumbers().length > 0">
+            <div class="icon-wrapper">
+              <i class="pi pi-phone"></i>
+            </div>
+            <div class="phone-numbers">
+              <ng-container
+                *ngFor="let phone of getPhoneNumbers(); let last = last"
+              >
+                <a [href]="'tel:' + phone" class="contact-link">{{ phone }}</a>
+                <span *ngIf="!last" class="phone-divider">,</span>
+              </ng-container>
+            </div>
           </div>
         </div>
       </div>
@@ -67,40 +90,29 @@
     <button
       class="navbar-toggler"
       type="button"
-      data-bs-toggle="collapse"
-      data-bs-target="#navbarNav"
       [attr.aria-expanded]="!isNavbarCollapsed"
       (click)="$event.stopPropagation(); toggleNavbar()"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    
-    <div class="collapse navbar-collapse" [class.show]="!isNavbarCollapsed" id="navbarNav">
+
+    <div
+      class="collapse navbar-collapse"
+      [class.show]="!isNavbarCollapsed"
+      id="navbarNav"
+    >
       <ul class="navbar-nav mx-auto">
-        <li class="nav-item dropdown" *ngFor="let item of navigationItems">
-          <ng-container *ngIf="item.children && item.children.length > 0; else singleLink">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{item.id}}" role="button" [attr.aria-expanded]="item.isOpen" (click)="$event.stopPropagation(); toggleDropdown(item, $event)">
-              <i [class]="item.icon + ' me-2'" *ngIf="item.icon"></i>{{ item.label }}
-            </a>
-            <ul class="dropdown-menu" [class.show]="item.isOpen" [attr.aria-labelledby]="'navbarDropdown' + item.id" (click)="$event.stopPropagation()">
-              <li *ngFor="let child of item.children">
-                <a
-                  class="dropdown-item"
-                  [routerLink]="child.route"
-                  [fragment]="child.fragment"
-                  [queryParams]="child.queryParams"
-                  routerLinkActive="active"
-                  (click)="closeDropdown(item)">
-                  <i [class]="child.icon + ' me-2'" *ngIf="child.icon"></i>{{ child.label }}
-                </a>
-              </li>
-            </ul>
-          </ng-container>
-          <ng-template #singleLink>
-            <a class="nav-link" [routerLink]="item.route" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-              <i [class]="item.icon + ' me-2'" *ngIf="item.icon"></i>{{ item.label }}
-            </a>
-          </ng-template>
+        <li class="nav-item" *ngFor="let link of navLinks">
+          <a
+            class="nav-link"
+            [routerLink]="link.route"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: link.route === '/home' }"
+            (click)="closeNavbar()"
+          >
+            <i [class]="link.icon + ' me-2'" *ngIf="link.icon"></i>
+            {{ link.label }}
+          </a>
         </li>
       </ul>
     </div>

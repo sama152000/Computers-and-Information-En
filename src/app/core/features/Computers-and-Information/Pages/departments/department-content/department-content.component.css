@@ -1,205 +1,494 @@
+.department-content {
+  background: var(--white);
+  border-radius: var(--border-radius-md);
+  padding: 2.5rem;
+  box-shadow: var(--shadow-light);
+  min-height: 600px;
+}
+
+.content-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--primary-red);
+}
+
+.content-title {
+  color: var(--primary-red);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Featured Image */
+.featured-image {
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.featured-image img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+/* Subtitle */
+.subtitle {
+  font-size: 1rem;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+}
+
+/* Vision & Mission Cards */
+.vm-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.vm-card {
+  background: linear-gradient(135deg, var(--light-gray) 0%, #f8f8f8 100%);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid #eee;
+  transition: all 0.3s ease;
+}
+
+.vm-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.vm-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--primary-red) 0%, #c41230 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.vm-icon i {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.vm-card h4 {
+  color: var(--primary-red);
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Objectives Grid */
+.objectives-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.objective-card {
+  background: var(--white);
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.objective-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 5px 20px rgba(116, 10, 31, 0.1);
+  border-color: var(--primary-red);
+}
+
+.goal-number {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, var(--primary-red) 0%, #c41230 100%);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.objective-card p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Programs Grid */
+.programs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.program-card {
+  background: var(--light-gray);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.program-card:hover {
+  background: var(--primary-red);
+  transform: translateY(-3px);
+}
+
+.program-card:hover h5,
+.program-card:hover .program-icon i {
+  color: white;
+}
+
+.program-icon {
+  margin-bottom: 1rem;
+}
+
+.program-icon i {
+  font-size: 2rem;
+  color: var(--primary-red);
+  transition: all 0.3s ease;
+}
+
+.program-card h5 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+  transition: all 0.3s ease;
+}
+
+/* Staff Section */
+.leader-section {
+  margin-bottom: 2rem;
+}
+
+.leader-card {
+  background: linear-gradient(135deg, var(--primary-red) 0%, #c41230 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.leader-avatar {
+  width: 60px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.leader-avatar i {
+  font-size: 1.5rem;
+  color: white;
+}
+
+.leader-info h5 {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem 0;
+}
+
+.leader-info .badge {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+}
+
+/* Members Grid */
+.members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.member-card {
+  background: var(--light-gray);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.member-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.member-card.leader {
+  border: 2px solid var(--primary-red);
+}
+
+.member-avatar {
+  width: 45px;
+  height: 45px;
+  background: #ddd;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.member-avatar i {
+  font-size: 1.25rem;
+  color: #888;
+}
+
+.member-info h5 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+}
+
+.member-info .badge {
+  background: var(--primary-red);
+  color: white;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+  font-size: 0.7rem;
+}
+
+/* Details Section */
+.details-section {
+  margin-top: 2rem;
+}
+
+.detail-item {
+  background: var(--light-gray);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.detail-item h4 {
+  color: var(--primary-red);
+  margin: 0 0 0.5rem 0;
+}
+
+.detail-item p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.text-muted {
+  color: var(--text-light);
+  font-style: italic;
+}
+
+.section-content h3 {
+  color: var(--text-dark);
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.section-content h4 {
+  color: var(--primary-red);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 2rem 0 1rem 0;
+}
+
+.description,
+.vision-text,
+.mission-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-dark);
+  margin-bottom: 1.5rem;
+}
+
+.objectives-list,
+.org-list,
+.admin-list,
+.research-list,
+.awards-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.objectives-list li,
+.org-list li,
+.admin-list li,
+.research-list li {
+  position: relative;
+  padding: 0.75rem 0 0.75rem 2rem;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.objectives-list li::before,
+.org-list li::before,
+.admin-list li::before,
+.research-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  color: var(--primary-red);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.objectives-list li:hover,
+.org-list li:hover,
+.admin-list li:hover,
+.research-list li:hover {
+  background-color: rgba(220, 53, 69, 0.05);
+  padding-left: 2.5rem;
+  transform: translateX(5px);
+}
+
+.staff-member {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cv-link {
+  color: var(--primary-red);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.cv-link:hover {
+  color: var(--dark-red);
+  text-decoration: underline;
+}
+
+.table {
+  margin-top: 1rem;
+}
+
+.table th {
+  background: var(--light-gray);
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.supervisor-card {
+  background: var(--light-gray);
+  border: 1px solid #e0e0e0 !important;
+}
+
+.supervisor-card h4 {
+  color: var(--primary-red);
+  margin-bottom: 0.5rem !important;
+}
+
+.back-to-departments {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--light-gray);
+}
+
+.back-to-departments .btn {
+  background: var(--primary-red);
+  border: 2px solid var(--primary-red);
+  color: var(--white);
+  font-weight: 600;
+  padding: 0.75rem 2rem;
+  border-radius: var(--border-radius-md);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.back-to-departments .btn:hover {
+  background: var(--dark-red);
+  border-color: var(--dark-red);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.back-to-departments .btn i {
+  font-size: 1.1rem;
+}
+
+.research-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.research-list li {
+  position: relative;
+  padding: 0.75rem 0 0.75rem 2rem;
+  line-height: 1.6;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.research-list li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  top: 0.75rem;
+  color: var(--primary-red);
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.research-list li:hover {
+  background-color: rgba(220, 53, 69, 0.05);
+  padding-left: 2.5rem;
+  transform: translateX(5px);
+}
+
+.awards-list .award-item {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--light-gray);
+  border-radius: var(--border-radius-sm);
+}
+
+.grant-description {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 768px) {
   .department-content {
-      background: var(--white);
-      border-radius: var(--border-radius-md);
-      padding: 2.5rem;
-      box-shadow: var(--shadow-light);
-      min-height: 600px;
-    }
+    padding: 1.5rem;
+  }
 
-    .content-header {
-      margin-bottom: 2rem;
-      padding-bottom: 1rem;
-      border-bottom: 2px solid var(--primary-red);
-    }
+  .content-title {
+    font-size: 1.5rem;
+  }
 
-    .content-title {
-      color: var(--primary-red);
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0;
-      display: flex;
-      align-items: center;
-    }
-
-    .section-content h3 {
-      color: var(--text-dark);
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-
-    .section-content h4 {
-      color: var(--primary-red);
-      font-size: 1.2rem;
-      font-weight: 600;
-      margin: 2rem 0 1rem 0;
-    }
-
-    .description, .vision-text, .mission-text {
-      font-size: 1.1rem;
-      line-height: 1.8;
-      color: var(--text-dark);
-      margin-bottom: 1.5rem;
-    }
-
-    .objectives-list, .org-list, .admin-list, .research-list, .awards-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .objectives-list li, .org-list li, .admin-list li, .research-list li {
-      position: relative;
-      padding: 0.75rem 0 0.75rem 2rem;
-      line-height: 1.6;
-      transition: all 0.3s ease;
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
-    }
-
-    .objectives-list li::before, .org-list li::before, .admin-list li::before, .research-list li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      top: 0.75rem;
-      color: var(--primary-red);
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .objectives-list li:hover, .org-list li:hover, .admin-list li:hover, .research-list li:hover {
-      background-color: rgba(220, 53, 69, 0.05);
-      padding-left: 2.5rem;
-      transform: translateX(5px);
-    }
-
-    .staff-member {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .cv-link {
-      color: var(--primary-red);
-      text-decoration: none;
-      font-weight: 500;
-      font-size: 0.9rem;
-    }
-
-    .cv-link:hover {
-      color: var(--dark-red);
-      text-decoration: underline;
-    }
-
-    .table {
-      margin-top: 1rem;
-    }
-
-    .table th {
-      background: var(--light-gray);
-      color: var(--text-dark);
-      font-weight: 600;
-    }
-
-    .table td {
-      vertical-align: middle;
-    }
-
-    .supervisor-card {
-      background: var(--light-gray);
-      border: 1px solid #e0e0e0 !important;
-    }
-
-    .supervisor-card h4 {
-      color: var(--primary-red);
-      margin-bottom: 0.5rem !important;
-    }
-
-    .back-to-departments {
-      margin-top: 3rem;
-      padding-top: 2rem;
-      border-top: 1px solid var(--light-gray);
-    }
-
-    .back-to-departments .btn {
-      background: var(--primary-red);
-      border: 2px solid var(--primary-red);
-      color: var(--white);
-      font-weight: 600;
-      padding: 0.75rem 2rem;
-      border-radius: var(--border-radius-md);
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .back-to-departments .btn:hover {
-      background: var(--dark-red);
-      border-color: var(--dark-red);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .back-to-departments .btn i {
-      font-size: 1.1rem;
-    }
-
-    .research-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .research-list li {
-      position: relative;
-      padding: 0.75rem 0 0.75rem 2rem;
-      line-height: 1.6;
-      transition: all 0.3s ease;
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
-    }
-
-    .research-list li::before {
-      content: "▸";
-      position: absolute;
-      left: 0;
-      top: 0.75rem;
-      color: var(--primary-red);
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-
-    .research-list li:hover {
-      background-color: rgba(220, 53, 69, 0.05);
-      padding-left: 2.5rem;
-      transform: translateX(5px);
-    }
-
-    .awards-list .award-item {
-      margin-bottom: 1.5rem;
-      padding: 1rem;
-      background: var(--light-gray);
-      border-radius: var(--border-radius-sm);
-    }
-
-    .grant-description {
-      display: block;
-      margin-top: 0.5rem;
-    }
-
-    @media (max-width: 768px) {
-      .department-content {
-        padding: 1.5rem;
-      }
-
-      .content-title {
-        font-size: 1.5rem;
-      }
-
-      .research-areas .row {
-        flex-direction: column;
-        gap: 1rem;
-      }
-    }
+  .research-areas .row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

@@ -4,37 +4,41 @@ import { AboutService } from '../../../Services/real-services/about.service';
 import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
-  selector: 'app-vision-mission-page',
+  selector: 'app-content',
   standalone: true,
   imports: [CommonModule, SkeletonModule],
-  templateUrl: './vision-mission-page.component.html',
-  styleUrls: ['./vision-mission-page.component.css'],
+  templateUrl: './content.component.html',
+  styleUrls: ['./content.component.css'],
 })
-export class VisionMissionpageComponent implements OnInit {
+export class ContentComponent implements OnInit {
   private readonly aboutService = inject(AboutService);
 
-  visionMissionpageData: {
-    vision: string;
+  contentData: {
+    title: string;
+    content: string;
     mission: string;
+    vision: string;
   } | null = null;
 
   isLoading = true;
   hasError = false;
 
   ngOnInit() {
-    this.loadVisionMission();
+    this.loadContent();
   }
 
-  private loadVisionMission(): void {
+  private loadContent(): void {
     this.isLoading = true;
     this.hasError = false;
 
     this.aboutService.getByPageType('AboutUniversity').subscribe({
       next: (data) => {
         if (data) {
-          this.visionMissionpageData = {
-            vision: data.vision,
+          this.contentData = {
+            title: data.pageNameEn || 'About Faculty',
+            content: data.content,
             mission: data.mission,
+            vision: data.vision,
           };
         }
         this.isLoading = false;

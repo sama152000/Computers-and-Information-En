@@ -1,77 +1,148 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  inject,
+  OnInit,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, NavigationEnd } from '@angular/router';
-import { HeaderService } from '../../../Services/header.service';
-import { HeaderData, NavigationItem } from '../../../model/header.model';
+import { RouterModule } from '@angular/router';
+import { LogosService } from '../../../Services/real-services/logos.service';
+import { ContactsService } from '../../../Services/real-services/contacts.service';
+
+interface NavLink {
+  label: string;
+  route: string;
+  icon?: string;
+}
+
+interface Contact {
+  id: string;
+  address: string;
+  phone: string;
+  email: string;
+  facebook: string;
+  twitter: string;
+  instagram: string;
+  linkedIn: string;
+  youTube: string;
+  whatsApp: string;
+  mapLocation: string;
+  webSite: string;
+  fax: string;
+}
+
+interface SocialLink {
+  name: string;
+  url: string;
+  icon: string;
+}
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
+  private readonly contactsService = inject(ContactsService);
+  private readonly logosService = inject(LogosService);
+
   isNavbarCollapsed = true;
-  headerData!: HeaderData;
-  navigationItems: NavigationItem[] = [];
+  logo: WritableSignal<any> = signal(null);
+  contact: Contact | null = null;
+  socialLinks: SocialLink[] = [];
 
-  constructor(private headerService: HeaderService, private router: Router) {}
+  navLinks: NavLink[] = [
+    { label: 'Home', route: '/home', icon: 'pi pi-home' },
+    { label: 'About', route: '/about', icon: 'pi pi-info-circle' },
+    { label: 'Departments', route: '/departments', icon: 'pi pi-sitemap' },
+    { label: 'Programs', route: '/programs', icon: 'pi pi-book' },
+    { label: 'News', route: '/news', icon: 'pi pi-megaphone' },
+    { label: 'Services', route: '/services', icon: 'pi pi-cog' },
+    { label: 'Contact', route: '/contact-us', icon: 'pi pi-envelope' },
+  ];
 
-  ngOnInit() {
-    this.headerService.getHeaderData().subscribe(data => {
-      this.headerData = data;
-    });
-    this.headerService.getNavigationItems().subscribe(items => {
-      this.navigationItems = items;
-      // Initialize isOpen property for items with children
-      this.navigationItems.forEach(item => {
-        if (item.children && item.children.length > 0) {
-          item['isOpen'] = false;
+  ngOnInit(): void {
+    this.loadLogo();
+    this.loadContactInfo();
+  }
+
+  loadLogo() {
+    this.logosService.loadLogo(this.logo);
+  }
+
+  loadContactInfo() {
+    this.contactsService.getAllContacts().subscribe({
+      next: (response) => {
+        if (response.success && response.data && response.data.length > 0) {
+          this.contact = response.data[0];
+          this.extractSocialLinks();
         }
-      });
+      },
     });
+  }
 
-    // Close dropdowns on navigation
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        this.closeAllDropdowns();
-      }
-    });
+  private extractSocialLinks(): void {
+    if (!this.contact) return;
+
+    this.socialLinks = [];
+
+    if (this.contact.facebook) {
+      this.socialLinks.push({
+        name: 'Facebook',
+        url: this.contact.facebook,
+        icon: 'pi pi-facebook',
+      });
+    }
+    if (this.contact.twitter) {
+      this.socialLinks.push({
+        name: 'Twitter',
+        url: this.contact.twitter,
+        icon: 'pi pi-twitter',
+      });
+    }
+    if (this.contact.instagram) {
+      this.socialLinks.push({
+        name: 'Instagram',
+        url: this.contact.instagram,
+        icon: 'pi pi-instagram',
+      });
+    }
+    if (this.contact.linkedIn) {
+      this.socialLinks.push({
+        name: 'LinkedIn',
+        url: this.contact.linkedIn,
+        icon: 'pi pi-linkedin',
+      });
+    }
+    if (this.contact.youTube) {
+      this.socialLinks.push({
+        name: 'YouTube',
+        url: this.contact.youTube,
+        icon: 'pi pi-youtube',
+      });
+    }
+  }
+
+  getPhoneNumbers(): string[] {
+    if (!this.contact?.phone) return [];
+    return this.contact.phone.split(',').map((p) => p.trim());
   }
 
   toggleNavbar() {
     this.isNavbarCollapsed = !this.isNavbarCollapsed;
   }
 
-  toggleDropdown(item: NavigationItem, event: Event) {
-    // Prevent default link behavior
-    event.preventDefault();
-    event.stopPropagation();
-    // Toggle dropdown visibility
-    item['isOpen'] = !item['isOpen'];
-  }
-
-  closeDropdown(item: NavigationItem) {
-    // Close dropdown after navigation
-    item['isOpen'] = false;
-    // Also close navbar on mobile
+  closeNavbar() {
     this.isNavbarCollapsed = true;
-  }
-
-  closeAllDropdowns() {
-    this.navigationItems.forEach(item => {
-      if (item.children && item.children.length > 0) {
-        item['isOpen'] = false;
-      }
-    });
   }
 
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: Event) {
-    this.closeAllDropdowns();
-    // Close navbar on mobile when clicking outside
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 992) {
       this.isNavbarCollapsed = true;
     }
   }

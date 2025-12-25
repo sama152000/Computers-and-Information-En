@@ -1,178 +1,217 @@
 .vision-mission-section {
   background: radial-gradient(circle at center, #e7e4e4 60%, #b5acac 100%);
   padding: var(--section-padding);
-   padding-left:var(--l-r-padding);
-    padding-right:var(--l-r-padding);
-      position: relative;
+  /* padding-left: var(--l-r-padding); */
+  /* padding-right: var(--l-r-padding); */
+  position: relative;
   overflow: hidden;
 }
 
 .vmg-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 60px;
-  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
 }
 
 .vmg-card {
   position: relative;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, #121212, #000);
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
   color: var(--white);
+  border-radius: 20px;
+  padding: 2rem 1.5rem;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   text-align: center;
-  overflow: hidden;
+  min-height: 280px;
   cursor: pointer;
-  transition: var(--transition-slow);
+  transition: all 0.4s ease;
   opacity: 0;
-  transform: translateY(50px) scale(0.8);
+  transform: translateY(30px);
+  border: 2px solid transparent;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .vmg-card.visible {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(0);
 }
 
-.glow-ring {
-  position: absolute;
-  inset: -45px;
-  border-radius: 50%;
-  background: conic-gradient(
-    from 0deg,
-    var(--secondary-red),
-    var(--light-red),
-    var(--secondary-red),
-    #555,
-    var(--secondary-red)
-  );
-  z-index: 0;
-  animation: rotateRing 4s linear infinite;
-  filter: blur(1.5px);
-}
-
-.glow-ring::after {
+.vmg-card::before {
   content: "";
   position: absolute;
-  inset: 48px;
-  background: radial-gradient(circle at 30% 30%, #0a0a0a, #111);
-  border-radius: 50%;
+  inset: 0;
+  border-radius: 20px;
+  padding: 2px;
+  background: linear-gradient(
+    135deg,
+    var(--secondary-red),
+    var(--light-red),
+    transparent
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.vmg-card:hover::before {
+  opacity: 1;
 }
 
 .card-content {
   position: relative;
   z-index: 2;
-  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
 }
 
 .icon-container {
   margin-bottom: 1.5rem;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--secondary-red), var(--light-red));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.3s ease;
 }
 
 .icon-container i {
-  font-size: 3rem;
-  color: var(--light-red);
-  animation: pulse 2s infinite;
+  font-size: 2rem;
+  color: var(--white);
 }
 
 .vmg-card h3 {
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--light-red);
   margin-bottom: 1rem;
   font-weight: 700;
 }
 
 .vmg-card p {
-  font-size: 0.95rem;
-  line-height: 1.6;
-  color: #ddd;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #bbb;
+  flex-grow: 1;
 }
 
 .vmg-card:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(211, 47, 47, 0.4);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(211, 47, 47, 0.3);
 }
 
-.vmg-card:hover .glow-ring {
-  animation-duration: 2s;
-  filter: blur(2px);
+.vmg-card:hover .icon-container {
+  transform: scale(1.1);
 }
 
-.vmg-card:hover .icon-container i {
+.vmg-card:hover h3 {
   color: var(--white);
-  transform: scale(1.2);
 }
 
-/* Animations */
-@keyframes rotateRing {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-/* Responsive */
-@media (max-width: 992px) {
+/* Responsive - Large Tablets */
+@media (max-width: 1200px) {
   .vmg-container {
-    gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
-  
+
   .vmg-card {
-    width: 250px;
-    height: 250px;
+    min-height: 250px;
   }
-  
+}
+
+/* Responsive - Tablets */
+@media (max-width: 768px) {
+  .vision-mission-section {
+    padding: 60px 1rem;
+  }
+
+  .vmg-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .vmg-card {
+    min-height: 220px;
+    padding: 1.5rem 1rem;
+  }
+
+  .icon-container {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+
   .icon-container i {
-    font-size: 2.5rem;
+    font-size: 1.5rem;
   }
-  
+
   .vmg-card h3 {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
-  
+
+  .vmg-card p {
+    font-size: 0.85rem;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 576px) {
+  .vmg-container {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .vmg-card {
+    min-height: auto;
+    padding: 1.5rem;
+  }
+
   .vmg-card p {
     font-size: 0.9rem;
   }
 }
 
-@media (max-width: 768px) {
-  .vision-mission-section {
-    padding: 60px 0;
-  }
-  
-  .vmg-container {
-    flex-direction: column;
-    gap: 30px;
-  }
-  
-  .vmg-card {
-    width: 220px;
-    height: 220px;
-  }
-  
-  .card-content {
-    padding: 1.5rem;
-  }
-  
-  .icon-container i {
-    font-size: 2rem;
-  }
-  
-  .vmg-card h3 {
-    font-size: 1.1rem;
-  }
-  
-  .vmg-card p {
-    font-size: 0.85rem;
-  }
+/* Error Container */
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  text-align: center;
+  color: var(--secondary-red);
+  grid-column: 1 / -1;
+}
+
+.error-container i {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.error-container p {
+  font-size: 1.1rem;
+  color: #333;
+}
+
+/* Skeleton Card Styles */
+.skeleton-card {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+.skeleton-card .card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
 }

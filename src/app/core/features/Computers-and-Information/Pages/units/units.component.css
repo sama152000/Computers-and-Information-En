@@ -90,6 +90,81 @@
   color: var(--white);
 }
 
+/* ============================= */
+/* Tabs Toggle Section */
+/* ============================= */
+.tabs-toggle {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
+  border-radius: 12px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.25rem;
+  background: transparent;
+  border: none;
+  border-radius: 10px;
+  color: #666;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-btn i {
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.toggle-btn:hover {
+  color: var(--primary-red);
+  background: rgba(116, 10, 31, 0.08);
+}
+
+.toggle-btn:hover i {
+  transform: scale(1.1);
+}
+
+.toggle-btn.active {
+  background: linear-gradient(135deg, var(--primary-red) 0%, #c41230 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(116, 10, 31, 0.35);
+}
+
+.toggle-btn.active i {
+  color: white;
+  transform: scale(1.1);
+}
+
+.toggle-btn.active:hover {
+  box-shadow: 0 6px 20px rgba(116, 10, 31, 0.45);
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+  .tabs-toggle {
+    flex-direction: row;
+    padding: 0.4rem;
+  }
+
+  .toggle-btn {
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .toggle-btn i {
+    font-size: 1rem;
+  }
+}
+
 /* Units List */
 .units-list {
   display: flex;
@@ -328,20 +403,29 @@
   margin: 2rem 0 1rem 0;
 }
 
-.description, .vision-text, .mission-text {
+.description,
+.vision-text,
+.mission-text {
   font-size: 1.1rem;
   line-height: 1.8;
   color: var(--text-dark);
   margin-bottom: 1.5rem;
 }
 
-.objectives-list, .org-list, .admin-list, .research-list, .awards-list {
+.objectives-list,
+.org-list,
+.admin-list,
+.research-list,
+.awards-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.objectives-list li, .org-list li, .admin-list li, .research-list li {
+.objectives-list li,
+.org-list li,
+.admin-list li,
+.research-list li {
   position: relative;
   padding: 0.75rem 0 0.75rem 2rem;
   line-height: 1.6;
@@ -350,7 +434,10 @@
   margin-bottom: 0.5rem;
 }
 
-.objectives-list li::before, .org-list li::before, .admin-list li::before, .research-list li::before {
+.objectives-list li::before,
+.org-list li::before,
+.admin-list li::before,
+.research-list li::before {
   content: "▸";
   position: absolute;
   left: 0;
@@ -360,7 +447,10 @@
   font-size: 1.2rem;
 }
 
-.objectives-list li:hover, .org-list li:hover, .admin-list li:hover, .research-list li:hover {
+.objectives-list li:hover,
+.org-list li:hover,
+.admin-list li:hover,
+.research-list li:hover {
   background-color: rgba(220, 53, 69, 0.05);
   padding-left: 2.5rem;
   transform: translateX(5px);
