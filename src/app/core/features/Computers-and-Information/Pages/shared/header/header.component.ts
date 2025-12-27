@@ -57,11 +57,13 @@ export class HeaderComponent implements OnInit {
 
   navLinks: NavLink[] = [
     { label: 'Home', route: '/home', icon: 'pi pi-home' },
-    { label: 'About', route: '/about', icon: 'pi pi-info-circle' },
-    { label: 'Departments', route: '/departments', icon: 'pi pi-sitemap' },
+    { label: 'About', route: '/about', icon: 'pi pi-building' },
     { label: 'Programs', route: '/programs', icon: 'pi pi-book' },
+    { label: 'Sectors', route: '/Sectors', icon: 'pi pi-sitemap' },
     { label: 'News', route: '/news', icon: 'pi pi-megaphone' },
-    { label: 'Services', route: '/services', icon: 'pi pi-cog' },
+    { label: 'Services', route: '/services', icon: 'pi pi-briefcase' },
+    { label: 'Units', route: '/units', icon: 'pi pi-th-large' },
+    { label: 'Departments', route: '/departments', icon: 'pi pi-users' },
     { label: 'Contact', route: '/contact-us', icon: 'pi pi-envelope' },
   ];
 

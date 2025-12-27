@@ -33,15 +33,10 @@ import { FormsModule } from '@angular/forms';
 export class AboutComponent implements OnInit, AfterViewInit {
   tabs = [
     { id: 'dean-message', label: "Dean's Message", icon: 'pi pi-user' },
+    { id: 'content', label: 'Content', icon: 'pi pi-book' },
     { id: 'vision-mission', label: 'Vision & Mission', icon: 'pi pi-eye' },
     { id: 'objectives', label: 'Objectives', icon: 'pi pi-check-circle' },
     { id: 'history', label: 'Our History', icon: 'pi pi-clock' },
-    { id: 'content', label: 'About Faculty', icon: 'pi pi-info-circle' },
-    // {
-    //   id: 'admin-structure',
-    //   label: 'Administrative Structure',
-    //   icon: 'pi pi-users',
-    // },
   ];
 
   constructor(private route: ActivatedRoute) {}
