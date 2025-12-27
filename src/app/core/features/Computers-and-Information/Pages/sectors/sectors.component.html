@@ -88,14 +88,10 @@
           </div>
 
           <div class="content-body">
-            <!-- About -->
+            <!-- About Section -->
             <div *ngIf="currentSection.id === 'about'" class="section-content">
-              <div class="sector-image" *ngIf="getFeaturedImage()">
-                <img
-                  [src]="getFeaturedImage()"
-                  [alt]="currentSector.name"
-                  class="featured-img"
-                />
+              <div class="featured-image" *ngIf="getFeaturedImage()">
+                <img [src]="getFeaturedImage()" [alt]="currentSector.name" />
               </div>
               <h3>{{ currentSector.name }}</h3>
               <p class="subtitle" *ngIf="currentSector.subTitle">
@@ -104,30 +100,30 @@
               <p class="description">{{ currentSector.about }}</p>
             </div>
 
-            <!-- Vision & Mission -->
+            <!-- Vision & Mission Section -->
             <div *ngIf="currentSection.id === 'vision'" class="section-content">
               <div class="vm-card vision-card">
                 <div class="vm-icon"><i class="pi pi-eye"></i></div>
-                <h4>Vision</h4>
-                <p class="vision-text">
+                <h4>Section Vision</h4>
+                <p>
                   {{ currentSector.vision || "No vision available." }}
                 </p>
               </div>
               <div class="vm-card mission-card">
                 <div class="vm-icon"><i class="pi pi-compass"></i></div>
-                <h4>Mission</h4>
-                <p class="mission-text">
+                <h4>Section Mission</h4>
+                <p>
                   {{ currentSector.mission || "No mission available." }}
                 </p>
               </div>
             </div>
 
-            <!-- Objectives -->
+            <!-- Objectives Section -->
             <div
               *ngIf="currentSection.id === 'objectives'"
               class="section-content"
             >
-              <h3>Section Goals</h3>
+              <h3>Section Goals & Objectives</h3>
               <div
                 class="objectives-grid"
                 *ngIf="currentSector.goals && currentSector.goals.length > 0"
@@ -148,7 +144,7 @@
               </p>
             </div>
 
-            <!-- Programs -->
+            <!-- Programs Section -->
             <div
               *ngIf="currentSection.id === 'programs'"
               class="section-content"
@@ -167,7 +163,7 @@
               </p>
             </div>
 
-            <!-- Staff -->
+            <!-- Staff Section -->
             <div *ngIf="currentSection.id === 'staff'" class="section-content">
               <h3>Staff Members</h3>
 
@@ -202,7 +198,7 @@
               </p>
             </div>
 
-            <!-- Details -->
+            <!-- Details Section -->
             <div
               *ngIf="currentSection.id === 'details'"
               class="section-content"
@@ -260,5 +256,3 @@
     </div>
   </div>
 </div>
-
-<app-footer></app-footer>

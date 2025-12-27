@@ -59,7 +59,7 @@ export class HeaderComponent implements OnInit {
     { label: 'Home', route: '/home', icon: 'pi pi-home' },
     { label: 'About', route: '/about', icon: 'pi pi-building' },
     { label: 'Programs', route: '/programs', icon: 'pi pi-book' },
-    { label: 'Sectors', route: '/Sectors', icon: 'pi pi-sitemap' },
+    { label: 'Sectors', route: '/sectors', icon: 'pi pi-sitemap' },
     { label: 'News', route: '/news', icon: 'pi pi-megaphone' },
     { label: 'Services', route: '/services', icon: 'pi pi-briefcase' },
     { label: 'Units', route: '/units', icon: 'pi pi-th-large' },

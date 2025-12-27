@@ -134,14 +134,14 @@ export const routes: Routes = [
           ).then((m) => m.UnitsComponent),
       },
       {
-        path: 'units/:id',
+        path: 'units/:type/:id',
         loadComponent: () =>
           import(
             './core/features/Computers-and-Information/Pages/units/units.component'
           ).then((m) => m.UnitsComponent),
       },
       {
-        path: 'units/:id/:section',
+        path: 'units/:type/:id/:section',
         loadComponent: () =>
           import(
             './core/features/Computers-and-Information/Pages/units/units.component'

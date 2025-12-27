@@ -148,12 +148,12 @@
             <div *ngIf="currentSection.id === 'vision'" class="section-content">
               <div class="vm-card vision-card">
                 <div class="vm-icon"><i class="pi pi-eye"></i></div>
-                <h4>Vision</h4>
+                <h4>Unit Vision</h4>
                 <p>{{ currentUnit.vision || "No vision available." }}</p>
               </div>
               <div class="vm-card mission-card">
                 <div class="vm-icon"><i class="pi pi-compass"></i></div>
-                <h4>Mission</h4>
+                <h4>Unit Mission</h4>
                 <p>{{ currentUnit.mission || "No mission available." }}</p>
               </div>
             </div>
@@ -163,7 +163,7 @@
               *ngIf="currentSection.id === 'objectives'"
               class="section-content"
             >
-              <h3>Unit Goals</h3>
+              <h3>Unit Goals & Objectives</h3>
               <div
                 class="objectives-grid"
                 *ngIf="currentUnit.goals && currentUnit.goals.length > 0"
@@ -264,12 +264,12 @@
             <div *ngIf="currentSection.id === 'vision'" class="section-content">
               <div class="vm-card vision-card">
                 <div class="vm-icon"><i class="pi pi-eye"></i></div>
-                <h4>Vision</h4>
+                <h4>Center Vision</h4>
                 <p>{{ currentCenter.vision || "No vision available." }}</p>
               </div>
               <div class="vm-card mission-card">
                 <div class="vm-icon"><i class="pi pi-compass"></i></div>
-                <h4>Mission</h4>
+                <h4>Center Mission</h4>
                 <p>{{ currentCenter.mission || "No mission available." }}</p>
               </div>
             </div>
@@ -279,7 +279,7 @@
               *ngIf="currentSection.id === 'objectives'"
               class="section-content"
             >
-              <h3>Center Goals</h3>
+              <h3>Center Goals & Objectives</h3>
               <div
                 class="objectives-grid"
                 *ngIf="currentCenter.goals && currentCenter.goals.length > 0"
@@ -380,5 +380,3 @@
     </div>
   </div>
 </div>
-
-<app-footer></app-footer>
